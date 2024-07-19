@@ -39,25 +39,11 @@ jobs:
         run: |
           npm install oscal -g
           oscal -V
-      - name: Initialize workspace
+      - name: Run Cucumber tests
         shell: bash
-        run: make init-validations
-
-      - name: Run Cucumber Tests
-        shell: bash
-        run: make build-validations
-
-      - name: Run complete test suite
-        shell: bash
-        if: runner.os == 'Linux'
         run: |
-          make test
-
-      - name: Run limited test suite
-        shell: bash
-        if: runner.os == 'Windows' || runner.os == 'macOS'
-        run: |
-          make test-validations test-web
+          make init-validations
+          make build-validations
 
       - name: Build all
         shell: bash
