@@ -37,12 +37,10 @@ jobs:
           node-version: ${{ steps.nvmrc.outputs.NODE_VERSION }}
       - name: Install OSCAL CLI
         run: |
-          npm install oscal -g
-          oscal -V
+          make init-validations
       - name: Run Cucumber tests
         shell: bash
         run: |
-          make init-validations
           make build-validations
 
       - name: Build all

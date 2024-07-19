@@ -12,7 +12,7 @@ init-validations:
 	npm install oscal -g
 	npm install --only=dev
 	npm install
-
+	@oscal -V
 # Validation
 .PHONY: build-validations
 build-validations:
