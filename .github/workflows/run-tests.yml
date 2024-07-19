@@ -35,19 +35,15 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ steps.nvmrc.outputs.NODE_VERSION }}
-
-      - name: Install required Python version
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.10"
-
-      # Initialize the workspace with submodules and dependencies.
+      - name: Install OSCAL CLI
+        run: |
+          npm install oscal -g
+          oscal -V
       - name: Initialize workspace
         shell: bash
-        run: make init
+        run: make init-validations
 
-      # Compile Schematron to XSL.
-      - name: Compile Schematron
+      - name: Run Cucumber Tests
         shell: bash
         run: make build-validations
 
