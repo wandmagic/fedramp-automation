@@ -16,7 +16,7 @@ init-validations:
 .PHONY: build-validations
 build-validations:
 	@echo "Running Cucumber Tests"
-	@npm run test
+	npm run test
 
 clean-validations:
 	@echo "Nothing to clean"

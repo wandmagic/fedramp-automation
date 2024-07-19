@@ -35,7 +35,10 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ steps.nvmrc.outputs.NODE_VERSION }}
-
+      - name: Install OSCAL CLI
+        run: |
+          npm install oscal -g
+          oscal -V
       - name: Initialize workspace
         shell: bash
         run: make init-validations
