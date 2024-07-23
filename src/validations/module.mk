@@ -11,13 +11,13 @@ init-validations:
 	@echo "Installing OSCAL CLI..."
 	npm install oscal -g
 	npm install --only=dev
-	npm install
-	@oscal -V
+	oscal -V
+
 # Validation
 .PHONY: build-validations
 build-validations:
 	@echo "Running Cucumber Tests"
-	npm run test
+	@npm run test
 
 clean-validations:
 	@echo "Nothing to clean"
