@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metaschema-meta-constraints xmlns="http://csrc.nist.gov/ns/oscal/metaschema/1.0">
+	<!-- ================== -->
+	<!-- FedRAMP Extensions -->
+	<!-- ================== -->
+
+	<context>
+		<metapath target="/system-security-plan/system-implementation/component"/>
+		<constraints>
+			<expect id="component-has-asset-type" target="." test="count(prop[@name eq 'asset-type']) gt 0" level="ERROR">
+				<message>A component must have at least one asset type.</message>
+			</expect>
+		</constraints>
+	</context>
+
+</metaschema-meta-constraints>

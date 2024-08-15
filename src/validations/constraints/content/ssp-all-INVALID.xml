@@ -138,7 +138,8 @@
         <p>Primary database server</p>
       </description>
       <prop name="asset-id" value="DB-001" ns="http://csrc.nist.gov/ns/oscal"/>
-      <prop name="asset-type" value="database"/>
+      <prop name="asset-type" value="unsupported-asset-type"/>
+      <prop name="asset-type" value="unsupported-asset-type-2"/>
       <prop name="allows-authenticated-scan" value="unsupported-scan"/>
       <prop name="public" value="unsupported-public"/>
       <prop name="virtual" value="unsupported-virtual"/>

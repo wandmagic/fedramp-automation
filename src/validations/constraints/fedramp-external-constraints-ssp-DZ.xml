@@ -51,13 +51,6 @@
 					<message>SSP asset identifiers must be unique.</message>
 				</expect>
 
-				<expect id="component-has-asset-type" target="component" test="prop[@name eq 'asset-type']" level="ERROR">
-					<message>A component must have an asset type.</message>
-				</expect>
-
-				<expect id="component-has-one-asset-type" target="component" test="prop[@name eq 'asset-type'][2]" level="ERROR">
-					<message>A component must have only one asset type.</message>
-				</expect>
 			</constraints>
 		</context>
 
