@@ -9,10 +9,8 @@ REV5_TEMPLATES = ./dist/content/rev5/templates
 .PHONY: init-validations
 init-validations:
 	@echo "Installing OSCAL CLI..."
-	npm install oscal -g
-	npm install --only=dev
-	oscal use oscal-cli-2.0.2.rc1
-	oscal -V
+	npm install 
+	$(OSCAL_CLI) use oscal-cli-2.0.2.rc1
 
 # Validation
 .PHONY: build-validations
