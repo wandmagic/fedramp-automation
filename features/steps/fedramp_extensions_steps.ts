@@ -449,6 +449,15 @@ function extractConstraints(xmlObject: any): string[] {
       if (Array.isArray(obj)) {
         obj.forEach(searchForConstraints);
       } else {
+        // Check for 'expect' elements directly
+        if (obj.expect && Array.isArray(obj.expect)) {
+          obj.expect.forEach((expectItem: any) => {
+            if (expectItem.$ && expectItem.$.id) {
+              constraints.push(expectItem.$.id);
+            }
+          });
+        }
+        // Check for 'constraints' elements
         if (obj.constraints && Array.isArray(obj.constraints)) {
           obj.constraints.forEach((constraint: any) => {
             Object.values(constraint).forEach((value: any) => {
@@ -462,6 +471,7 @@ function extractConstraints(xmlObject: any): string[] {
             });
           });
         }
+        // Recursively search all object properties
         Object.values(obj).forEach(searchForConstraints);
       }
     }
@@ -610,4 +620,27 @@ When("I analyze the YAML test files for each constraint ID", function () {
 
   console.log(`Analyzed ${yamlTestFiles.length} YAML test files`);
   console.log("Test results:", testResults);
+});
+
+// New step definition for the "Ensuring full test coverage for "<constraint_id>"" scenario
+Then("I should have both FAIL and PASS tests for constraint ID {string}", function (constraintId) {
+  const testCoverage = testResults[constraintId];
+
+  if (!testCoverage) {
+    console.log(`${constraintId}: No tests found`);
+    expect.fail(`Constraint ${constraintId} has no tests`);
+  } else if (!testCoverage.pass) {
+    console.log(`${constraintId}: Missing positive test`);
+    expect.fail(`Constraint ${constraintId} is missing a positive test`);
+  } else if (!testCoverage.fail) {
+    console.log(`${constraintId}: Missing negative test`);
+    expect.fail(`Constraint ${constraintId} is missing a negative test`);
+  } else {
+    console.log(`${constraintId}: Fully covered`);
+  }
+
+  expect(constraintIds).to.include(
+    constraintId,
+    `Constraint ${constraintId} is not in the extracted constraints list`
+  );
 });

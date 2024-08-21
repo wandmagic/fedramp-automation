@@ -14,8 +14,14 @@ init-validations:
 
 # Validation
 .PHONY: build-validations
-build-validations:
+test-validations:
 	@echo "Running Cucumber Tests"
+	@npm run test:all
+
+# Validation
+.PHONY: build-coverage
+build-validations:
+	@echo "Testing constraint coverage"
 	@npm run test
 
 clean-validations:
