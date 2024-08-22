@@ -104,21 +104,9 @@ async function getConstraintIds() {
     const filePath = join(constraintDir, file);
     const fileContent = readFileSync(filePath, "utf8");
     const result = (await parseXmlString(fileContent)) as any;
-
-    const contexts = result["metaschema-meta-constraints"]?.context || [];
-    for (const context of contexts) {
-      const constraints = context.constraints?.[0] || {};
-      for (const constraintType in constraints) {
-        if (Array.isArray(constraints[constraintType])) {
-          const ids = constraints[constraintType]
-            .filter((constraint) => constraint.$ && constraint.$.id)
-            .map((constraint) => constraint.$.id);
-          allConstraintIds = [...allConstraintIds, ...ids];
-        }
-      }
-    }
+    const fileConstraints=extractConstraints(result)
+    allConstraintIds=[...allConstraintIds,...fileConstraints];
   }
-
   // Remove duplicates and sort
   allConstraintIds = [...new Set(allConstraintIds)].sort();
 
@@ -437,10 +425,11 @@ When(
       constraintIds = [...constraintIds, ...constraints];
     }
     constraintIds = [...new Set(constraintIds)].sort();
+
+    console.log(`Extracted ${constraintIds.length} unique constraint IDs`);
     console.log(`Extracted ${constraintIds.length} unique constraint IDs`);
   }
 );
-
 function extractConstraints(xmlObject: any): string[] {
   const constraints: string[] = [];
 
@@ -449,27 +438,9 @@ function extractConstraints(xmlObject: any): string[] {
       if (Array.isArray(obj)) {
         obj.forEach(searchForConstraints);
       } else {
-        // Check for 'expect' elements directly
-        if (obj.expect && Array.isArray(obj.expect)) {
-          obj.expect.forEach((expectItem: any) => {
-            if (expectItem.$ && expectItem.$.id) {
-              constraints.push(expectItem.$.id);
-            }
-          });
-        }
-        // Check for 'constraints' elements
-        if (obj.constraints && Array.isArray(obj.constraints)) {
-          obj.constraints.forEach((constraint: any) => {
-            Object.values(constraint).forEach((value: any) => {
-              if (Array.isArray(value)) {
-                value.forEach((item: any) => {
-                  if (item.$ && item.$.id) {
-                    constraints.push(item.$.id);
-                  }
-                });
-              }
-            });
-          });
+        // Check if the current object has an 'id' field
+        if (obj.$ && obj.$.id) {
+          constraints.push(obj.$.id);
         }
         // Recursively search all object properties
         Object.values(obj).forEach(searchForConstraints);
