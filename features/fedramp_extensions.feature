@@ -7,6 +7,7 @@ Scenario Outline: Validating OSCAL documents with metaschema constraints
 #BEGIN_DYNAMIC_CONSTRAINT_FILES
   | fedramp-external-allowed-values.xml |
   | fedramp-external-constraints.xml |
+  | oec.xml |
   | oscal-external-constraints.xml |
 #END_DYNAMIC_CONSTRAINT_FILES
   When I process the constraint unit test "<test_file>"
@@ -37,6 +38,8 @@ Examples:
   | interconnection-security-PASS.yaml |
   | privilege-level-FAIL.yaml |
   | privilege-level-PASS.yaml |
+  | resource-referenced-FAIL.yaml |
+  | resource-referenced-PASS.yaml |
   | response-point-FAIL.yaml |
   | response-point-PASS.yaml |
   | scan-type-FAIL.yaml |
@@ -70,6 +73,7 @@ Examples:
   | interconnection-security |
   | privilege-level |
   | prop-response-point-has-cardinality-one |
+  | resource-is-referenced |
   | scan-type |
   | user-type |
 #END_DYNAMIC_CONSTRAINT_IDS
