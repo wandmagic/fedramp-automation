@@ -57,6 +57,8 @@ Examples:
   | interconnection-direction-PASS.yaml |
   | interconnection-security-FAIL.yaml |
   | interconnection-security-PASS.yaml |
+  | party-has-responsibility-FAIL.yaml |
+  | party-has-responsibility-PASS.yaml |
   | privilege-level-FAIL.yaml |
   | privilege-level-PASS.yaml |
   | resource-has-base64-or-rlink-FAIL.yaml |
@@ -105,6 +107,7 @@ Examples:
   | information-type-system |
   | interconnection-direction |
   | interconnection-security |
+  | party-has-responsibility |
   | privilege-level |
   | prop-response-point-has-cardinality-one |
   | resource-has-base64-or-rlink |

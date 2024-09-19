@@ -73,6 +73,9 @@
         <expect id="data-center-alternate" target="." test="count(/location/prop[@name eq 'data-center'][@class eq 'alternate']) &gt; 0">
             <message>There must be one or more alternate data center(s).</message>
         </expect>
+        <expect id="party-has-responsibility" target="." test="every $person in //party[@type='person'] satisfies exists(.//responsible-party[party-uuid = $person/@uuid])">
+            <message>One or more persons do not have any assigned responsibilities.</message>
+        </expect>
     </constraints>
 </context>
 </metaschema-meta-constraints>
