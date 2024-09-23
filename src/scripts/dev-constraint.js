@@ -62,6 +62,7 @@ async function getAllConstraints() {
     const files = fs.readdirSync(constraintsDir).filter(file => file.endsWith('.xml') && file !== ignoreDocument);
     let allConstraints = [];
     let allContext = {};
+    let allTarget = {};
 
     for (const file of files) {
         const filePath = path.join(constraintsDir, file);
@@ -82,9 +83,10 @@ async function getAllConstraints() {
                 // Find the 'metapath' element within the context
                 const metapathElement = contextElement.querySelector('metapath');
                 const context = metapathElement ? metapathElement.getAttribute('target') : '';
-
+                const target = constraintElement.getAttribute("target")
                 allConstraints.push(id);
                 allContext[id] = context;
+                allTarget[id] = target;
 
                 console.log(`Constraint ${id} context: ${context}`); // Debug log
             } else {
@@ -93,7 +95,7 @@ async function getAllConstraints() {
         });
     }
 
-    return { constraints: [...new Set(allConstraints)].sort(), allContext };
+    return { constraints: [...new Set(allConstraints)].sort(), allContext,allTarget };
 }
 
 function analyzeTestFiles() {
@@ -130,7 +132,7 @@ function analyzeTestFiles() {
 
 
 
-async function scaffoldTest(constraintId,context) {
+async function scaffoldTest(constraintId,context,target) {
     const { confirm } = await prompt([
         {
             type: 'confirm',
@@ -155,6 +157,7 @@ async function scaffoldTest(constraintId,context) {
     ]);
 
     console.log(`Context for ${constraintId}:\n${context}`);
+    console.log(`Target for ${constraintId}:\n${target}`);
 
     const { useTemplate } = await prompt([
         {
@@ -179,19 +182,23 @@ async function scaffoldTest(constraintId,context) {
             const dom = new JSDOM(templateXml, { contentType: "text/xml" });
             const document = dom.window.document;
 
-            console.log(`Context for ${constraintId}: ${context}`); // Debug log
-
             if (!context || typeof context !== 'string' || context.trim() === '') {
                 throw new Error('Invalid or empty context');
             }
 
             // Prepare the XPath
+            let xpathExpression;
             const contextParts = context.split('/').filter(part => part !== '');
-            let xpathExpression = '//' + contextParts[contextParts.length - 1];
+            if (contextParts.length === 1) {
+                // If context has only one element, combine it with the target
+                xpathExpression = `//${contextParts[0]}/${target}`;
+            } else {
+                xpathExpression = context;
+            }
 
             console.log(`Attempting to evaluate XPath: ${xpathExpression}`);
 
-            // Use XPath to select the nodes specified by the context
+            // Use XPath to select the nodes specified by the context or target
             const xpathResult = document.evaluate(
                 xpathExpression, 
                 document, 
@@ -248,7 +255,7 @@ async function scaffoldTest(constraintId,context) {
                 console.log(`Created new ${model}-${constraintId}-INVALID.xml file`);
                 invalidContent = `../content/${model}-${constraintId}-INVALID.xml`;
             } else {
-                throw new Error('Could not find the specified context in the template.');
+                throw new Error('Could not find the specified context or target in the template.');
             }
         } catch (error) {
             console.log(`Warning: ${error.message}. Using the full template.`);
@@ -256,7 +263,7 @@ async function scaffoldTest(constraintId,context) {
             fs.copyFileSync(templatePath, newInvalidPath);
             invalidContent = `../content/${model}-${constraintId}-INVALID.xml`;
         }
-    } else {
+    }else {
         const contentDir = path.join(__dirname, '..', '..', 'src', 'validations', 'constraints', 'content');
         const contentFiles = fs.readdirSync(contentDir).filter(file => file.endsWith('.xml'));
         const { selectedContent } = await prompt([
@@ -416,7 +423,7 @@ async function runCucumberTest(constraintId, testFiles) {
 
 
 async function main() {
-    const {constraints:allConstraints,allContext} = await getAllConstraints();
+    const {constraints:allConstraints,allContext,allTarget} = await getAllConstraints();
     console.log(`Found ${allConstraints.length} constraints.`);
     const selectedConstraints = await selectConstraints(allConstraints);
     console.log(`Selected ${selectedConstraints.length} constraints for analysis.`);
@@ -430,8 +437,10 @@ async function main() {
         if (!testCoverage) {
             console.log(`${constraintId}: No tests found`);
             var context = allContext[constraintId]
+            var target = allTarget[constraintId]
             console.log(`${context}: constraint context`);
-            const scaffold = await scaffoldTest(constraintId,context);
+            console.log(`${target}: constraint target`);
+            const scaffold = await scaffoldTest(constraintId,context,target);
             if (scaffold) {
                 const passed = await runCucumberTest(constraintId, { pass_file: `${constraintId}-PASS.yaml`, fail_file: `${constraintId}-FAIL.yaml` });
                 console.log(`${constraintId}: Test ${passed ? 'passed' : 'failed'}`);
