@@ -393,7 +393,7 @@ async function runCucumberTest(constraintId, testFiles) {
 
     if (scenarioLines.length === 0) {
         console.error(`No scenarios found for constraintId: ${constraintId}`);
-        execSync("npm run test:coverage",{stdio:'ignore'});
+        execSync(cucumberCommand+" --tags @full-coverage",{stdio:'ignore'});
         scenarioLines = getScenarioLineNumbers(featureFile, constraintId,testFiles);
         if(scenarioLines.length===0){
         return false;
