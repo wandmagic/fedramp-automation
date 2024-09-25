@@ -1,0 +1,9 @@
+test-case:
+  name: Negative Test for leveraged-PE-controls-implemented-requirement
+  description: >-
+    This test case validates the behavior of constraint
+    leveraged-PE-controls-implemented-requirement
+  content: ../content/ssp-leveraged-PE-controls-implemented-requirement-INVALID.xml
+  expectations:
+    - constraint-id: leveraged-PE-controls-implemented-requirement
+      result: fail

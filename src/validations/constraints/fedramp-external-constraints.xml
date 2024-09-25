@@ -141,6 +141,29 @@
             <expect id="missing-response-components" target="implemented-requirement" test="count(./by-component) gt 0">
                 <message>Each implemented requirement must have at least one by-component reference to the source component implementing it.</message>
             </expect>
+
+
+            <expect id="incomplete-all-implemented-requirements" 
+            target="implemented-requirement" 
+            test="exists(description) and exists(statement)"
+            level="WARNING">
+      <message>Implemented requirement {control-id} is incomplete. Both description and statement elements should be present.</message>
+    </expect>
+  
+    <expect id="extraneous-implemented-requirements"
+            target="."
+            test="every $ir in implemented-requirement satisfies $ir/@control-id = //import-profile//include-control/@control-id"
+            level="WARNING">
+      <message>There are implemented requirements that do not correspond to any controls included in the import-profile.</message>
+    </expect>
+  
+    <expect id="leveraged-PE-controls-implemented-requirement"
+            target="implemented-requirement[starts-with(@control-id, 'pe-')]"
+            test="exists(.//by-component/inherited)"
+            level="WARNING">
+      <message>Physical and Environmental Protection (PE) control {control-id} should be inherited from the leveraged authorization.</message>
+    </expect>
+
         </constraints>
     </context>
 </metaschema-meta-constraints>
