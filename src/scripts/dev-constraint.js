@@ -393,10 +393,10 @@ async function runCucumberTest(constraintId, testFiles) {
 
     if (scenarioLines.length === 0) {
         console.error(`No scenarios found for constraintId: ${constraintId}`);
-        execSync("npm run-script test:coverage", {
+        execSync("npm run test:coverage", {
             shell: true,
             stdio: 'ignore',
-            cwd: path.join(__dirname, '..', '..') 
+            cwd: path.join(__dirname,  '..') 
           });     
         scenarioLines = getScenarioLineNumbers(featureFile, constraintId,testFiles);
         if(scenarioLines.length===0){
