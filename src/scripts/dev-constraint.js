@@ -86,7 +86,7 @@ async function getAllConstraints() {
                 allConstraints.push(id);
                 allContext[id] = context;
 
-                console.log(`Constraint ${id} context: ${context}`); // Debug log
+//                console.log(`Constraint ${id} context: ${context}`); // Debug log
             } else {
                 console.log(`Warning: No context found for constraint ${id}`);
             }
