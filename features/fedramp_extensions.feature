@@ -17,6 +17,8 @@ Examples:
 #BEGIN_DYNAMIC_TEST_CASES
   | address-type-FAIL.yaml |
   | address-type-PASS.yaml |
+  | all-required-controls-implemented-FAIL.yaml |
+  | all-required-controls-implemented-PASS.yaml |
   | attachment-type-FAIL.yaml |
   | attachment-type-PASS.yaml |
   | authorization-type-FAIL.yaml |
@@ -43,6 +45,8 @@ Examples:
   | data-center-us-PASS.yaml |
   | deployment-model-FAIL.yaml |
   | deployment-model-PASS.yaml |
+  | extraneous-implemented-requirements-FAIL.yaml |
+  | extraneous-implemented-requirements-PASS.yaml |
   | has-authenticator-assurance-level-FAIL.yaml |
   | has-authenticator-assurance-level-PASS.yaml |
   | has-authorization-boundary-diagram-FAIL.yaml |
@@ -105,6 +109,10 @@ Examples:
   | has-separation-of-duties-matrix-PASS.yaml |
   | has-user-guide-FAIL.yaml |
   | has-user-guide-PASS.yaml |
+  | incomplete-all-implemented-requirements-FAIL.yaml |
+  | incomplete-all-implemented-requirements-PASS.yaml |
+  | index-resolved-profile-required-controls-FAIL.yaml |
+  | index-resolved-profile-required-controls-PASS.yaml |
   | information-type-system-FAIL.yaml |
   | information-type-system-PASS.yaml |
   | interconnection-direction-FAIL.yaml |
@@ -155,6 +163,7 @@ Examples:
 | constraint_id |
 #BEGIN_DYNAMIC_CONSTRAINT_IDS
   | address-type |
+  | all-required-controls-implemented |
   | attachment-type |
   | authorization-type |
   | categorization-has-correct-system-attribute |
@@ -168,6 +177,7 @@ Examples:
   | data-center-country-code |
   | data-center-primary |
   | deployment-model |
+  | extraneous-implemented-requirements |
   | has-authenticator-assurance-level |
   | has-authorization-boundary-diagram |
   | has-authorization-boundary-diagram-caption |
@@ -199,6 +209,8 @@ Examples:
   | has-rules-of-behavior |
   | has-separation-of-duties-matrix |
   | has-user-guide |
+  | incomplete-implemented-requirements |
+  | index-resolved-profile-required-controls |
   | information-type-system |
   | interconnection-direction |
   | interconnection-security |
