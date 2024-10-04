@@ -188,16 +188,21 @@ xsi:schemaLocation="http://csrc.nist.gov/ns/oscal/metaschema/1.0 https://raw.git
                 <!-- Extraneous Implemented Requirements -->
 
                 <expect id="extraneous-implemented-requirements" target="control-implementation"
-                        test="not(count($implemented-ids) gt count($all-control-ids))" level="WARNING">
-                    <message>{count($implemented-ids)  - count($all-control-ids) } Extraneous Implemented Requirements</message>
-                </expect>
+                test="not(count($implemented-ids) gt count($all-control-ids))" level="WARNING">
+            <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://example.com/extraneous-requirements-help"/>
+            <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-text" value="The number of implemented requirements should not exceed the total number of control IDs."/>
+            <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-markdown" value="# Extraneous Implemented Requirements\n\nThis warning occurs when there are more implemented requirements than expected control IDs.\n\nExtraneous IDs: {string-join(tokenize($implemented-ids[not(. = $all-control-ids)], '\s+'), ', ')}\n\nPlease review and remove any unnecessary implementations."/>
+            <message>{count($implemented-ids) - count($all-control-ids)} Extraneous Implemented Requirements. Extraneous IDs: {string-join(tokenize($implemented-ids[not(. = $all-control-ids)], '\s+'), ', ')}</message>
+            </expect>
             
-                <!-- Incomplete Implemented Requirements -->
-                <expect id="incomplete-implemented-requirements" target="control-implementation"
-                        test="not(count($implemented-ids) lt count($all-control-ids))" level="WARNING">
-                    <message>Missing {count($all-control-ids) - count($implemented-ids) } Implemented Requirements</message>
-                </expect>
-                </constraints>
+            <expect id="incomplete-implemented-requirements" target="control-implementation"
+                    test="not(count($implemented-ids) lt count($all-control-ids))" level="ERROR">
+                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://example.com/incomplete-requirements-help"/>
+                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-text" value="All control IDs must have corresponding implemented requirements."/>
+                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-markdown" value="# Incomplete Implemented Requirements\n\nThis error occurs when there are fewer implemented requirements than expected control IDs.\n\nMissing IDs: {string-join(tokenize($all-control-ids[not(. = $implemented-ids)], '\s+'), ', ')}\n\nPlease implement the missing requirements to ensure complete coverage."/>
+                <message>Missing {count($all-control-ids) - count($implemented-ids)} Implemented Requirements. Missing IDs: {tokenize($all-control-ids[not(. = $implemented-ids)], '\s+'), ', '}</message>
+            </expect>
+                    </constraints>
     </context>
 </metaschema-meta-constraints>
  
