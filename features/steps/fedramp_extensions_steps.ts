@@ -9,12 +9,51 @@ import {
   existsSync,
 } from "fs";
 import { load } from "js-yaml";
-import { executeOscalCliCommand, validateFile, validateWithSarif } from "oscal";
+import { executeOscalCliCommand, validateFile } from "oscal";
 import { dirname, join,parse } from "path";
 import { Exception, Log, Result } from "sarif";
 import { fileURLToPath } from "url";
 import { parseString } from "xml2js";
 import { promisify } from "util";
+
+
+async function validateWithSarif(args:string[]): Promise<any> {
+  try {
+    const encodedArgs = encodeURIComponent(args.join(" "));
+    const url = `http://localhost:8888/validate?content=${encodedArgs} `;
+    
+    const response = await fetch(url);
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error during validation:', error);
+    throw error;
+  }
+}
+
+async function resolveProfile(args:string[]): Promise<any> {
+  try {
+    const encodedArgs = encodeURIComponent(args.join(" "));
+    const url = `http://localhost:8888/resolve?content=${encodedArgs} `;
+    
+    const response = await fetch(url);
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error during validation:', error);
+    throw error;
+  }
+}
 
 const parseXmlString = promisify(parseString);
 const DEFAULT_TIMEOUT = 60000;
@@ -202,7 +241,7 @@ async function processTestCase({ "test-case": testCase }: any) {
   if (testCase.pipeline) {
     for (const step of testCase.pipeline) {
       if (step.action === "resolve-profile") {
-        await executeOscalCliCommand("resolve-profile", [
+        await resolveProfile([
           contentPath,
           processedContentPath,
           "--to=XML",
