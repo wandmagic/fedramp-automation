@@ -1,59 +1,22 @@
 import { Given, Then, When, setDefaultTimeout } from "@cucumber/cucumber";
 import { expect } from "chai";
 import {
+  existsSync,
+  mkdirSync,
   readFileSync,
   readdirSync,
   unlinkSync,
   writeFileSync,
-  mkdirSync,
-  existsSync,
 } from "fs";
 import { load } from "js-yaml";
-import { executeOscalCliCommand, validateFile } from "oscal";
-import { dirname, join,parse } from "path";
-import { Exception, Log, Result } from "sarif";
+import { resolveProfile, resolveProfileDocument, validateDocument, } from "oscal";
+import { dirname, join, parse } from "path";
+import { Log } from "sarif";
 import { fileURLToPath } from "url";
-import { parseString } from "xml2js";
 import { promisify } from "util";
+import { parseString } from "xml2js";
 
 
-async function validateWithSarif(args:string[]): Promise<any> {
-  try {
-    const encodedArgs = encodeURIComponent(args.join(" "));
-    const url = `http://localhost:8888/validate?content=${encodedArgs} `;
-    
-    const response = await fetch(url);
-    
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error('Error during validation:', error);
-    throw error;
-  }
-}
-
-async function resolveProfile(args:string[]): Promise<any> {
-  try {
-    const encodedArgs = encodeURIComponent(args.join(" "));
-    const url = `http://localhost:8888/resolve?content=${encodedArgs} `;
-    
-    const response = await fetch(url);
-    
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error('Error during validation:', error);
-    throw error;
-  }
-}
 
 const parseXmlString = promisify(parseString);
 const DEFAULT_TIMEOUT = 60000;
@@ -241,12 +204,9 @@ async function processTestCase({ "test-case": testCase }: any) {
   if (testCase.pipeline) {
     for (const step of testCase.pipeline) {
       if (step.action === "resolve-profile") {
-        await resolveProfile([
-          contentPath,
-          processedContentPath,
-          "--to=XML",
-          "--overwrite",
-        ]);
+        const response=await resolveProfileDocument(
+          contentPath,processedContentPath,{outputFormat:'xml'}
+        );
         console.log("Profile resolved");
       }
       // Add other pipeline steps as needed
@@ -268,19 +228,14 @@ async function processTestCase({ "test-case": testCase }: any) {
       if(currentTestCaseFileName.includes("FAIL")){
         args.push("--disable-schema-validation")
       }
-    sarifResponse = await validateWithSarif([
+    const {log:sarifResponse,isValid} = await validateDocument(
       processedContentPath,
-      ...args,
-      ...metaschemaDocuments.flatMap((x) => ["-c", x]),
-    ]);
+      {extensions:metaschemaDocuments,flags:['disable-schema']},
+    );
     validationCache.set(cacheKey,sarifResponse);
   }
   if (typeof sarifResponse.runs[0].tool.driver.rules === "undefined") {
-      const [result, error] = await executeOscalCliCommand("validate", [
-        processedContentPath,
-        ...metaschemaDocuments.flatMap((x) => ["-c", x]),
-      ]);
-      return { status: "fail", errorMessage: error };
+      return { status: "fail", errorMessage: "Rules are not defined" };
     }
     if (processedContentPath != contentPath) {
       unlinkSync(processedContentPath);
