@@ -11,6 +11,8 @@ init-validations:
 	@echo "Installing node modules..."
 	npm install
 	$(OSCAL_CLI) use latest
+	$(OSCAL_CLI) server update
+	@oscal-server&
 
 # Validation
 .PHONY: build-validations

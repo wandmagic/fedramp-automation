@@ -9,8 +9,8 @@ import {
   existsSync,
 } from "fs";
 import { load } from "js-yaml";
-import { executeOscalCliCommand, validateFile, validateWithSarif } from "oscal";
-import { dirname, join,parse } from "path";
+import { executeOscalCliCommand, resolveProfileDocument, validateDocument,  } from "oscal";
+import { dirname, join,parse, resolve } from "path";
 import { Exception, Log, Result } from "sarif";
 import { fileURLToPath } from "url";
 import { parseString } from "xml2js";
@@ -144,7 +144,7 @@ Given("I have Metaschema extensions documents", function (dataTable) {
   metaschemaDocuments = files
     .filter((file) => file.endsWith(".xml")).sort()
     .filter((x) => !x.startsWith("oscal")) //temporary
-    .map((file) => join(constraintDir, file));
+    .map((file) => resolve(constraintDir, file));
 });
 
 When("I process the constraint unit test {string}", async function (testFile) {
@@ -202,12 +202,9 @@ async function processTestCase({ "test-case": testCase }: any) {
   if (testCase.pipeline) {
     for (const step of testCase.pipeline) {
       if (step.action === "resolve-profile") {
-        await executeOscalCliCommand("resolve-profile", [
+        await resolveProfileDocument( 
           contentPath,
-          processedContentPath,
-          "--to=XML",
-          "--overwrite",
-        ]);
+          processedContentPath,{outputFormat:'json'});
         console.log("Profile resolved");
       }
       // Add other pipeline steps as needed
@@ -225,15 +222,15 @@ async function processTestCase({ "test-case": testCase }: any) {
       console.log("Using cached validation result from "+cacheKey);
       sarifResponse = validationCache.get(cacheKey)!;
     }else{
-      let args = [];
+      let flags = [];
       if(currentTestCaseFileName.includes("FAIL")){
-        args.push("--disable-schema-validation")
+        flags.push("disable-schema")
       }
-    sarifResponse = await validateWithSarif([
-      processedContentPath,
-      ...args,
-      ...metaschemaDocuments.flatMap((x) => ["-c", x]),
-    ]);
+    const {isValid,log} = await validateDocument(
+      processedContentPath,{extensions:metaschemaDocuments,flags}
+      ,'oscal-server'
+    );
+    sarifResponse=log;
     validationCache.set(cacheKey,sarifResponse);
   }
   if (typeof sarifResponse.runs[0].tool.driver.rules === "undefined") {
