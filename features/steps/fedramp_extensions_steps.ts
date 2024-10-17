@@ -314,8 +314,11 @@ async function checkConstraints(
       }
 
       const kinds = constraintResults.map((c) => {
-        if(c.level==='warning'){
+        if(c.level==='warning'||c.level=='none'&&c.kind=='pass'){
           return 'fail'
+        }else if(c.kind==='informational'){
+            return 'pass'
+          
         }else{
           return c.kind
       }});
