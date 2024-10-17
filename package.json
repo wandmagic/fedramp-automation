@@ -13,6 +13,7 @@
     "test:constraints": "cross-env NODE_OPTIONS=\"--loader ts-node/esm --no-warnings --experimental-specifier-resolution=node\" cucumber-js --tags @constraints",
     "test:coverage": "cross-env NODE_OPTIONS=\"--loader ts-node/esm --no-warnings --experimental-specifier-resolution=node\" cucumber-js --tags @full-coverage",
     "mq": "node ./src/scripts/dev-metaschema-eval.js",
+    "summary": "oscal-cli validate src/validations/constraints/content/ssp-all-VALID.xml -c src/validations/constraints/fedramp-informational-constraints.xml",
     "constraint": "node ./src/scripts/dev-constraint.js"
   },
   "type": "module",

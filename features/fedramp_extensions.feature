@@ -7,6 +7,7 @@ Scenario Outline: Validating OSCAL documents with metaschema constraints
 #BEGIN_DYNAMIC_CONSTRAINT_FILES
   | fedramp-external-allowed-values.xml |
   | fedramp-external-constraints.xml |
+  | fedramp-informational-constraints.xml |
   | oscal-external-constraints.xml |
 #END_DYNAMIC_CONSTRAINT_FILES
   When I process the constraint unit test "<test_file>"
@@ -141,6 +142,8 @@ Examples:
   | scan-type-PASS.yaml |
   | security-level-FAIL.yaml |
   | security-level-PASS.yaml |
+  | total-imported-controls-FAIL.yaml |
+  | total-imported-controls-PASS.yaml |
   | user-type-FAIL.yaml |
   | user-type-PASS.yaml |
 #END_DYNAMIC_TEST_CASES
@@ -221,5 +224,6 @@ Examples:
   | role-defined-system-owner |
   | scan-type |
   | security-level |
+  | total-imported-controls |
   | user-type |
 #END_DYNAMIC_CONSTRAINT_IDS
