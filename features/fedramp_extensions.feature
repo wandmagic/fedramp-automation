@@ -105,6 +105,8 @@ Examples:
   | has-rules-of-behavior-PASS.yaml |
   | has-separation-of-duties-matrix-FAIL.yaml |
   | has-separation-of-duties-matrix-PASS.yaml |
+  | has-system-id-FAIL.yaml |
+  | has-system-id-PASS.yaml |
   | has-user-guide-FAIL.yaml |
   | has-user-guide-PASS.yaml |
   | incomplete-required-controls-implemented-FAIL.yaml |
@@ -203,6 +205,7 @@ Examples:
   | has-network-architecture-diagram-link-rel-allowed-value |
   | has-rules-of-behavior |
   | has-separation-of-duties-matrix |
+  | has-system-id |
   | has-user-guide |
   | incomplete-implemented-requirements |
   | information-type-system |
