@@ -45,6 +45,8 @@ Examples:
   | deployment-model-PASS.yaml |
   | extraneous-implemented-requirements-FAIL.yaml |
   | extraneous-implemented-requirements-PASS.yaml |
+  | fedramp-version-FAIL.yaml |
+  | fedramp-version-PASS.yaml |
   | has-authenticator-assurance-level-FAIL.yaml |
   | has-authenticator-assurance-level-PASS.yaml |
   | has-authorization-boundary-diagram-FAIL.yaml |
@@ -111,6 +113,8 @@ Examples:
   | has-user-guide-PASS.yaml |
   | incomplete-required-controls-implemented-FAIL.yaml |
   | incomplete-required-controls-implemented-PASS.yaml |
+  | information-type-id-FAIL.yaml |
+  | information-type-id-PASS.yaml |
   | information-type-system-FAIL.yaml |
   | information-type-system-PASS.yaml |
   | interconnection-direction-FAIL.yaml |
@@ -143,6 +147,8 @@ Examples:
   | scan-type-PASS.yaml |
   | security-level-FAIL.yaml |
   | security-level-PASS.yaml |
+  | security-sensitivity-level-matches-security-impact-level-FAIL.yaml |
+  | security-sensitivity-level-matches-security-impact-level-PASS.yaml |
   | user-type-FAIL.yaml |
   | user-type-PASS.yaml |
 #END_DYNAMIC_TEST_CASES
@@ -175,6 +181,7 @@ Examples:
   | data-center-primary |
   | deployment-model |
   | extraneous-implemented-requirements |
+  | fedramp-version |
   | has-authenticator-assurance-level |
   | has-authorization-boundary-diagram |
   | has-authorization-boundary-diagram-caption |
@@ -208,6 +215,9 @@ Examples:
   | has-system-id |
   | has-user-guide |
   | incomplete-implemented-requirements |
+  | index-implemented-requirements |
+  | index-imported-controls |
+  | information-type-800-60-v2r1 |
   | information-type-system |
   | interconnection-direction |
   | interconnection-security |
@@ -224,5 +234,6 @@ Examples:
   | role-defined-system-owner |
   | scan-type |
   | security-level |
+  | security-sensitivity-level-matches-security-impact-level |
   | user-type |
 #END_DYNAMIC_CONSTRAINT_IDS
