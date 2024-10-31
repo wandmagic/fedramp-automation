@@ -186,7 +186,7 @@ xsi:schemaLocation="http://csrc.nist.gov/ns/oscal/metaschema/1.0 https://raw.git
     <context>
         <metapath target="/system-security-plan"/>
         <constraints>
-            <let var="all-imports" expression="recurse-depth('resolve-profile(doc(resolve-uri(import-profile/@href)))/catalog')"/>
+            <let var="all-imports" expression="recurse-depth('resolve-profile(doc(resolve-uri(import-profile/@href)))//catalog') => doc-available(import-profile/@href)"/>
             <index id="index-imports-metadata-roles" name="index-imports-metadata-role-id" target="map:merge($all-imports/metadata/role ! map:entry(@id,.))?*">
             	<formal-name>In-Scope Role Identifiers</formal-name>
             	<description>An index of role identifiers that are in-scope for the system-securtity-plan model. Roles are collected from imported profiles and catalogs. For a given role @id, a locally declared role takes precedence over a role that is imported, the role that was last imported.</description>
