@@ -41,6 +41,9 @@ const validationCache = new Map<string, Log>();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const sarifDir = join(__dirname, "..", "..", "sarif");
+if (!existsSync(sarifDir)) {
+  mkdirSync(sarifDir, { recursive: true });
+}
 const featureFile = join(__dirname, "..", "fedramp_extensions.feature");
 let featureContent = readFileSync(featureFile, "utf8");
 
@@ -262,9 +265,6 @@ async function processTestCase({ "test-case": testCase }: any) {
     }
     if (processedContentPath != contentPath) {
       unlinkSync(processedContentPath);
-    }
-    if (!existsSync(sarifDir)) {
-      mkdirSync(sarifDir, { recursive: true });
     }
     writeFileSync(
       join(
@@ -689,7 +689,7 @@ Then('I should verify that all constraints follow the style guide constraint', a
           __dirname,
           "../../sarif/",
           file_name.split(".xml").join("").toString()+".sarif"
-        ),JSON.stringify(log))  
+        ),JSON.stringify(log, null,"\t"))  
       const formattedErrors = (formatSarifOutput(log));
       
       console.log(`Validation result for ${file_name}:`, isValid?"valid":"invalid");
