@@ -1,25 +1,24 @@
-import { BeforeAll, BeforeStep, Given, Then, When, setDefaultTimeout, world } from "@cucumber/cucumber";
+import { BeforeAll, Given, Then, When, setDefaultTimeout } from "@cucumber/cucumber";
 import { expect } from "chai";
 import {
+  existsSync,
+  mkdirSync,
   readFileSync,
   readdirSync,
   unlinkSync,
   writeFileSync,
-  mkdirSync,
-  existsSync,
 } from "fs";
 import { load } from "js-yaml";
-import { executeOscalCliCommand, resolveProfile, resolveProfileDocument, validateDocument} from "oscal";
-import {checkServerStatus} from 'oscal/dist/server.js'
-import { dirname, join,parse, resolve } from "path";
-import { Exception, Log, Result } from "sarif";
+import { executeOscalCliCommand, formatSarifOutput, resolveProfileDocument, validateDocument } from "oscal";
+import { checkServerStatus } from 'oscal/dist/server.js';
+import { dirname, join, parse, resolve } from "path";
+import { Log } from "sarif";
 import { fileURLToPath } from "url";
-import { parseString } from "xml2js";
 import { promisify } from "util";
-import {formatSarifOutput} from 'oscal'
+import { parseString } from "xml2js";
 
 let executor: 'oscal-cli'|'oscal-server' = process.env.OSCAL_EXECUTOR as 'oscal-cli'|'oscal-server' || 'oscal-cli'
-
+let quiet = false;
 const parseXmlString = promisify(parseString);
 const DEFAULT_TIMEOUT = 60000;
 setDefaultTimeout(DEFAULT_TIMEOUT);
@@ -250,7 +249,7 @@ async function processTestCase({ "test-case": testCase }: any) {
       if(currentTestCaseFileName.includes("FAIL")){
         flags.push("disable-schema")
       }
-    const {isValid,log} = await validateDocument(resolve(processedContentPath),{quiet:true,
+    const {isValid,log} = await validateDocument(resolve(processedContentPath),{quiet,
       extensions:metaschemaDocuments.flatMap((x) => resolve(x)),
       flags},executor)
       sarifResponse=log;
@@ -671,9 +670,10 @@ Then("I should have both FAIL and PASS tests for constraint ID {string}", functi
 Then('I should verify that all constraints follow the style guide constraint', async function () {
   const baseDir = join(__dirname, '..', '..');
   const constraintDir = join(baseDir, 'src', 'validations', 'constraints');
-  const styleGuidePath = join(baseDir, 'src', 'validations', 'styleguides', 'fedramp-constraint-style.xml');
+  const styleGuidePath = resolve(baseDir, 'src', 'validations', 'styleguides', 'fedramp-constraint-style.xml');
 
-  const constraint_files = readdirSync(constraintDir).filter((file) => file.startsWith('fedramp') && file.endsWith('xml') );
+  var constraint_files = readdirSync(constraintDir).filter((file) => file.startsWith('fedramp') && file.endsWith('xml'));
+
   const errors = [];
 
   function filterOutBrackets(input) {
@@ -683,14 +683,15 @@ Then('I should verify that all constraints follow the style guide constraint', a
   for (const file_name of constraint_files) {
     const filePath = join(constraintDir, file_name.trim());
     try {
-      const {isValid,log} = await validateDocument(filePath,{flags:['disable-schema'],quiet:true,extensions:[styleGuidePath],module:"http://csrc.nist.gov/ns/oscal/metaschema/1.0"},executor)
+      const {isValid,log} = await validateDocument(filePath,{flags:['disable-schema'],quiet,extensions:[styleGuidePath],module:"http://csrc.nist.gov/ns/oscal/metaschema/1.0"},executor)
       writeFileSync(
         join(
           __dirname,
           "../../sarif/",
           file_name.split(".xml").join("").toString()+".sarif"
         ),JSON.stringify(log, null,"\t"))  
-      const formattedErrors = (formatSarifOutput(log));
+      
+        const formattedErrors = (formatSarifOutput(log));
       
       console.log(`Validation result for ${file_name}:`, isValid?"valid":"invalid");
       if (!isValid) {
