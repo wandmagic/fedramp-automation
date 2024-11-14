@@ -1,10 +1,11 @@
 import { execSync } from 'child_process';
-import fs from 'fs';
+import fs, { readFileSync } from 'fs';
 import inquirer from 'inquirer';
 import { JSDOM } from 'jsdom';
-import { evaluateMetapath } from 'oscal';
+import { evaluateMetapathDocument } from 'oscal';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import {resolve}from 'path';
 const prompt = inquirer.prompt;
 // Get the directory name of the current module
 const __filename = fileURLToPath(import.meta.url);
@@ -110,34 +111,9 @@ async function queryMetapath(metapath, contentFile = null) {
 
     console.log(`Querying metapath: ${metapath}`);
     console.log(`Against file: ${inputFile}`);
-    const command = "metaschema metapath eval";
-    const result = await evaluateMetapath({document:inputFile,expression:metapath,metaschema:"./vendor/oscal/src/metaschema/oscal_complete_metaschema.xml"});
+    const result = await evaluateMetapathDocument({document:"file://"+resolve(inputFile),expression:metapath,executor:'oscal-server'});
     if (result) {
         console.log(`metapath result: ${result}`);
-        let items = [result]
-        if(result.startsWith("(")){
-            items = result.substring(1,result.length-1).split(",");
-        }
-        items.forEach(async (item)=>{
-            const [file,path] = item.split("#")
-            if(typeof path==='undefined'){
-                return;
-            }
-            try{
-                const xmlPart = await extractXmlPart(file.replaceAll("file:",""), path);
-                if (xmlPart) {
-                    console.log(xmlPart);
-                } else {
-                    console.log('Unable to extract XML part for the given XPath.');
-                }    
-            }catch(e){
-                console.log(file)
-                console.log(path);
-                console.log("failed to execute");
-                console.log(e);
-            }
-    
-        })
     } else {
         console.log('Unable to get XPath result from oscal-cli command.');
     }
