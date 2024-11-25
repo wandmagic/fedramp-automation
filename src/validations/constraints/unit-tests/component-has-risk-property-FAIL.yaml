@@ -1,0 +1,9 @@
+test-case:
+  name: Negative Test for component-has-risk-property
+  description: >-
+    This test case validates the behavior of constraint
+    component-has-risk-property
+  content: ../content/ssp-component-has-risk-property-INVALID.xml
+  expectations:
+    - constraint-id: component-has-risk-property
+      result: fail
