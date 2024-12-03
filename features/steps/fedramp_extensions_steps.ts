@@ -678,7 +678,8 @@ Then('I should have valid results {string}', async function (fileToValidate) {
     "src",
     "validations","constraints","content",fileToValidate
   );
-  const {isValid,log}=await validateDocument(fullPath,{quiet,...fedrampValidationOptions},executor);
+  const {isValid,log}=await validateDocument(fullPath,{quiet,      extensions:metaschemaDocuments.flatMap((x) => resolve(x)),
+  },executor);
   expect(isValid,formatSarifOutput(log)).to.be.true;
 });
 

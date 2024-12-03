@@ -6,10 +6,11 @@ Scenario Outline: Validating OSCAL constraints with metaschema constraints
 
 @integration
 Scenario Outline: Documents that should be valid are pass
+  Given I have loaded all Metaschema extensions documents
   Then I should have valid results "<valid_file>"
 Examples:
 | valid_file     |
-# | ssp-all-VALID.xml |
+ | fedramp-ssp-example.xml |
 # | ../../../content/awesome-cloud/xml/AwesomeCloudSSP1.xml |
 # | ../../../content/awesome-cloud/xml/AwesomeCloudSSP2.xml |
 
