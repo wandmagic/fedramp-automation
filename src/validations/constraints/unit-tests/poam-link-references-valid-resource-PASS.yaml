@@ -1,0 +1,9 @@
+test-case:
+  name: Positive Test for poam-link-references-valid-resource
+  description: >-
+    This test case validates the behavior of constraint
+    poam-link-references-valid-resource
+  content: ../../../content/rev5/examples/ssp/xml/fedramp-ssp-example.oscal.xml
+  expectations:
+    - constraint-id: poam-link-references-valid-resource
+      result: pass

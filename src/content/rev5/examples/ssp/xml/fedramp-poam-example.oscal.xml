@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plan-of-action-and-milestones uuid="714210d2-f8df-448c-be3e-e2213816cf79" xmlns="http://csrc.nist.gov/ns/oscal/1.0">
+    <metadata>
+        <title>Plan of Action and Milestones for Service B</title>
+        <last-modified>2024-12-12T13:57:28.355446-04:00</last-modified>
+        <version>1.0</version>
+        <oscal-version>1.1.2</oscal-version>
+        <prop name="marking" value="cui"/>
+        <prop name="fedramp-version" ns="https://fedramp.gov/ns/oscal" value="fedramp-3.0.0rc1-oscal-1.1.2"/>
+    </metadata>
+    <import-ssp href="../ssp.xml"/>
+    <system-id identifier-type="http://ietf.org/rfc/rfc4122">8101e04d-8305-4e73-bb95-6b59f645b143</system-id>
+
+    <observation uuid="b807eb6e-0c05-43bc-8438-799739615e35">
+        <title>Non-Authorized Service Assessment - Service B</title>
+        <description>
+            <p>Assessment of non-authorized Service B provided by Awesome Cloud for security controls and risk evaluation.</p>
+        </description>
+        <method>EXAMINE</method>
+        <type>finding</type>
+        <subject subject-uuid="11111111-2222-4000-8000-009000500002" type="component"/>
+        <collected>2024-12-12T13:00:00-04:00</collected>
+        <remarks>
+            <p>Service B is being utilized without explicit FedRAMP authorization coverage. While the service implements TLS 1.3 for connection security and includes authentication controls, its use outside the authorized service boundary requires risk assessment and continuous monitoring.</p>
+        </remarks>
+    </observation>
+
+    <risk uuid="485cfb95-20c7-45b0-991c-3f86a8e0cbd4">
+        <title>Use of Non-Authorized Service B from Awesome Cloud</title>
+        <description>
+            <p>Service B is being utilized from the Awesome Cloud environment but is not included within the explicit FedRAMP authorization boundary. This requires risk assessment and ongoing monitoring to ensure security controls are adequate.</p>
+        </description>
+        <statement>
+            <p>The use of non-authorized services, even from an authorized cloud provider, introduces potential security risks if not properly assessed and monitored. While Service B implements security controls including TLS 1.3 and authentication mechanisms, its operation outside the FedRAMP authorized boundary requires additional scrutiny and continuous risk management.</p>
+        </statement>
+        <status>open</status>
+        <characterization>
+            <origin>
+                <actor type="tool" actor-uuid="e7730080-71ce-4b20-bec4-84f33136fd58"/>
+            </origin>
+            <facet name="likelihood" value="moderate" system="https://fedramp.gov/ns/oscal"/>
+            <facet name="impact" value="moderate" system="https://fedramp.gov/ns/oscal"/>
+        </characterization>
+        <deadline>2025-03-31T04:59:00-05:00</deadline>
+        <response uuid="b28873f7-0a45-476d-9cd3-1d2ec0b8bca2" lifecycle="planned">
+            <title>Service B Security Assessment and Documentation</title>
+            <description>
+                <p>A comprehensive security assessment of Service B will be conducted to include:</p>
+                <ul>
+                    <li>Detailed documentation of security controls and their effectiveness</li>
+                    <li>Validation of TLS 1.3 implementation</li>
+                    <li>Review of authentication mechanisms</li>
+                    <li>Assessment of data protection measures</li>
+                    <li>Development of continuous monitoring procedures</li>
+                </ul>
+            </description>
+            <prop name="type" value="mitigate"/>
+            <task uuid="f8b1d4cb-d1a9-4932-9859-2e93b325f288" type="milestone">
+                <title>Complete Security Assessment of Service B</title>
+                <description>
+                    <p>Conduct full security assessment and document findings, including recommendations for additional controls if needed.</p>
+                </description>
+                <timing>
+                    <within-date-range start="2025-01-01T09:00:00-04:00" end="2025-03-31T17:00:00-04:00"/>
+                </timing>
+            </task>
+        </response>
+        <related-observation observation-uuid="b807eb6e-0c05-43bc-8438-799739615e35"/>
+    </risk>
+</plan-of-action-and-milestones>

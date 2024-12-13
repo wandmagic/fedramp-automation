@@ -64,7 +64,7 @@
             <let var="profile-is-available" expression="doc-available($resolved-import-profile-href)"/>
             <let var="resolved-profile" expression="if ($profile-is-available) then resolve-profile(doc(resolve-uri($resolved-import-profile-href)))//catalog else //catalog"/>
             <let var="imported-controls-map" expression="map:merge($resolved-profile//control ! map:entry(@id,.))?*"/>
-            <let var="implemented-requirements-map" expression="map:merge(//implemented-requirement ! map:entry(@control-id,.))?*"/>          
+            <let var="implemented-requirements-map" expression="map:merge(//implemented-requirement ! map:entry(@control-id,.))?*"/>
             <expect id="component-has-authentication-method" target="//component[(@type='system' and prop[@name='leveraged-authorization-uuid']) or (@type='interconnection') or (@type=('service', 'software') and not(prop[@name='leveraged-authorization-uuid']) and prop[@name='implementation-point' and @value='external']) or (@type=('service', 'software') and prop[@name='implementation-point' and @value='internal'] and prop[@name='communicates-externally' and @value='yes' and @ns='https://fedramp.gov/ns/oscal'])]" test="count(prop[@ns='https://fedramp.gov/ns/oscal' and @name='authentication-method']) >= 1" level="ERROR">
                 <formal-name>Component Has Authentication Method</formal-name>
                 <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/4-ssp-template-to-oscal-mapping/#leveraged-fedramp-authorized-services"/>
@@ -145,6 +145,11 @@
     <context>
         <metapath target="/system-security-plan/back-matter"/>
         <constraints>
+            <expect id="has-poam-resource" target="." test="exists(resource[prop[@name='type' and @value='plan' and @class='poam']])" level="ERROR">
+                <formal-name>Has POAM Resource</formal-name>
+                <description>The back-matter must contain a POAM resource.</description>
+                <message>The SSP back-matter MUST contain a POAM resource.</message>
+            </expect>
             <expect id="has-configuration-management-plan" target="." test="exists(resource[prop[@name eq 'type' and @value eq 'plan' and @class eq 'configuration-management-plan']])" level="ERROR">
                 <formal-name>Has Configuration Management Plan</formal-name>
                 <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/5-attachments/"/>
@@ -630,6 +635,37 @@
                 <formal-name>Party Has a Name</formal-name>
                 <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/general-concepts/oscal-metadata/#working-with-party-assemblies"/>
                 <message>Every FedRAMP document MUST define a party with a name.</message>
+            </expect>
+        </constraints>
+    </context>
+    <context>
+        <metapath target="/system-security-plan"/>
+        <constraints>
+            <let var="poam-resource" expression="//resource[prop[@name='type' and @value='plan' and @class='poam']]"/>
+            <let var="poam-doc" expression="if (exists($poam-resource/rlink)) then doc(resolve-uri($poam-resource/rlink/@href)) else ()"/>
+
+            <expect id="component-has-poam-link" target="//component[(@type='service' and not(./prop[@name='leveraged-authorization-uuid']) and ./prop[@name='implementation-point' and @value='external']) or (@type='interconnection') or (@type='service' and ./prop[@name='implementation-point' and @value='internal'] and ./prop[@name='direction']) or (@type='software' and ./prop[@name='asset-type' and @value='cli'] and ./prop[@name='direction'])]" test="count(link[@rel='poam-item']) = 1" level="ERROR">
+                <formal-name>Component Has POAM Link</formal-name>
+                <description>Each interconnection, service, or software connecting to external systems must have exactly one POAM item link.</description>
+                <message>Each interconnection, service, or software connecting to external systems MUST have exactly one POAM item link.</message>
+            </expect>
+
+            <expect id="poam-link-has-resource-fragment" target="//component/link[@rel='poam-item']" test="exists(@resource-fragment) and string-length(@resource-fragment) > 0" level="ERROR">
+                <formal-name>POAM Link Has Resource Fragment</formal-name>
+                <description>Each POAM link must include a non-empty resource fragment.</description>
+                <message>Each POAM link MUST include a non-empty resource fragment identifier.</message>
+            </expect>
+
+            <expect id="poam-link-references-valid-resource" target="//component/link[@rel='poam-item']" test="substring-after(@href, '#') = $poam-resource/@uuid" level="ERROR">
+                <formal-name>POAM Link References Valid Resource</formal-name>
+                <description>Each POAM link must reference the system's POAM resource by UUID.</description>
+                <message>Each POAM link MUST reference the system's POAM resource using its UUID ({substring-after(@href, '#')}) should be ({ $poam-resource/@uuid}).</message>
+            </expect>
+
+            <expect id="poam-item-exists" target="//component/link[@rel='poam-item']" test="$poam-doc/@uuid = $poam-resource/@uuid and exists($poam-doc//poam-item[@uuid=./@resource-fragment])" level="ERROR">
+                <formal-name>POAM Item Exists</formal-name>
+                <description>The referenced POAM item must exist within the correct POAM document.</description>
+                <message>The POAM item referenced by resource-fragment ({@resource-fragment}) MUST exist within the POAM document identified by UUID ({$poam-resource/@uuid}).</message>
             </expect>
         </constraints>
     </context>
