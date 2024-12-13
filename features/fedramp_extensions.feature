@@ -38,6 +38,7 @@ Examples:
   | cloud-service-model |
   | component-has-authentication-method |
   | component-has-non-provider-responsible-role |
+  | component-has-poam-link |
   | component-has-provider-responsible-role |
   | component-has-used-by-link |
   | component-type |
@@ -92,6 +93,7 @@ Examples:
   | has-network-architecture-diagram-link-href-target |
   | has-network-architecture-diagram-link-rel |
   | has-network-architecture-diagram-link-rel-allowed-value |
+  | has-poam-resource |
   | has-published-date |
   | has-required-parameters |
   | has-required-response-points |
@@ -129,6 +131,9 @@ Examples:
   | network-component-has-implementation-point |
   | non-provider-responsible-role-references-user |
   | party-has-name |
+  | poam-item-exists |
+  | poam-link-has-resource-fragment |
+  | poam-link-references-valid-resource |
   | privilege-level |
   | prop-response-point-has-cardinality-one |
   | resource-has-base64-or-rlink |
@@ -200,6 +205,8 @@ Examples:
   | component-has-authentication-method-PASS.yaml |
   | component-has-non-provider-responsible-role-FAIL.yaml |
   | component-has-non-provider-responsible-role-PASS.yaml |
+  | component-has-poam-link-FAIL.yaml |
+  | component-has-poam-link-PASS.yaml |
   | component-has-used-by-link-FAIL.yaml |
   | component-has-used-by-link-PASS.yaml |
   | component-responsible-role-references-party-FAIL.yaml |
@@ -382,6 +389,10 @@ Examples:
   | non-provider-responsible-role-references-user-PASS.yaml |
   | party-has-name-FAIL.yaml |
   | party-has-name-PASS.yaml |
+  | poam-link-has-resource-fragment-FAIL.yaml |
+  | poam-link-has-resource-fragment-PASS.yaml |
+  | poam-link-references-valid-resource-FAIL.yaml |
+  | poam-link-references-valid-resource-PASS.yaml |
   | privilege-level-FAIL.yaml |
   | privilege-level-PASS.yaml |
   | resource-has-base64-or-rlink-FAIL.yaml |

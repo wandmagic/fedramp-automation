@@ -1,0 +1,7 @@
+test-case:
+  name: Negative Test for component-has-poam-link
+  description: This test case validates the behavior of constraint component-has-poam-link
+  content: ../content/ssp-component-has-poam-link-INVALID.xml
+  expectations:
+    - constraint-id: component-has-poam-link
+      result: fail
