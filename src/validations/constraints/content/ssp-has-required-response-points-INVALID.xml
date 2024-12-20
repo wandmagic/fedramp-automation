@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<system-security-plan xmlns="http://csrc.nist.gov/ns/oscal/1.0"
+                      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                      xsi:schemaLocation="http://csrc.nist.gov/ns/oscal/1.0 https://github.com/usnistgov/OSCAL/releases/download/v1.1.2/oscal_ssp_schema.xsd"
+                      uuid="12345678-1234-4321-8765-123456789012">  
+  <import-profile href="../../../../dist/content/rev5/baselines/xml/FedRAMP_rev5_HIGH-baseline-resolved-profile_catalog.xml"/>
+  
+  <system-implementation>
+
+    <leveraged-authorization uuid="233e0f09-fe5e-47e2-bca3-5f32df75e57a">
+      <title>GovCloud</title>
+      <prop ns="https://fedramp.gov/ns/oscal" name="leveraged-system-identifier" value="F1603047866"/>
+      <prop ns="https://fedramp.gov/ns/oscal" name="authorization-type" value="fedramp-agency"/>
+      <prop ns="https://fedramp.gov/ns/oscal" name="impact-level" value="fips-199-moderate"/>
+      <link href="//path/to/leveraged_system_ssp.xml"/>
+      <party-uuid>f0bc13a4-3303-47dd-80d3-380e159c8362</party-uuid>
+      <date-authorized>2015-01-01</date-authorized>
+      <remarks>
+        <p>Use one leveraged-authorization assembly for each underlying system. In the legacy world, these may be general support systems.</p>
+        <p>The link fields are optional, but preferred when known. Often, a leveraging system's SSP author will not have access to the leveraged system's SSP, but should have access to the leveraged system's CRM.</p>
+      </remarks>
+    </leveraged-authorization>
+
+    <user uuid="44444444-0000-4000-9000-000000000004">
+      <title>System Administrator</title>
+      <prop name="type" value="internal"/>
+      <prop ns="https://fedramp.gov/ns/oscal" name="privilege-level" value="read-write"/>
+      <prop ns="https://fedramp.gov/ns/oscal" name="sensitivity" value="high-risk"/>
+      <role-id>system-admin</role-id>
+      <authorized-privilege>
+        <title>Admin</title>
+        <description><p>admin user</p></description>
+        <function-performed>administration</function-performed>
+      </authorized-privilege>
+    </user>
+    
+    <component uuid="55555555-0000-4000-9000-000000000005" type="this-system">
+      <title>Primary Application Server</title>
+      <description>
+        <p>Main application server hosting the core system functionality.</p>
+      </description>
+      <purpose>main line</purpose>
+      <status state="operational"/>
+      <responsible-role role-id="system-admin">
+        <party-uuid>11111111-0000-4000-9000-000000000001</party-uuid>
+      </responsible-role>
+      <remarks>
+        <p>This is the primary application server for the system.</p>
+      </remarks>
+    </component>
+    <component uuid="66666666-0000-4000-9000-000000000007" type="service">
+      <title>Firebase CLI Connection</title>
+      <description>
+        <p>CLI for updating firebase Secure connection to an external API for data enrichment.</p>
+      </description>
+      <prop ns="https://fedramp.gov/ns/oscal" name="authentication-method" value="yes">
+        <remarks>
+          <p>Some description of the authentication method.</p>
+        </remarks>
+      </prop>
+      <prop name="interconnection-security" value="vpn" ns="https://fedramp.gov/ns/oscal"/>
+      <prop name="interconnection-direction" value="in/out" ns="https://fedramp.gov/ns/oscal"/>
+      <prop name="leveraged-authorization-uuid" value="233e0f09-fe5e-47e2-bca3-5f32df75e57a"/>
+      <prop name="asset-type" value="cli"/>
+      <prop name="implementation-point" value="external"/>
+      <status state="operational"/>
+      <responsible-role role-id="system-admin">
+        <party-uuid>11111111-0000-4000-9000-000000000001</party-uuid>
+      </responsible-role>
+      <remarks>
+        <p>This connection is used for secure data exchange with external systems.</p>
+      </remarks>
+    </component>
+    <component uuid="6ac88fd2-7c7b-4357-af2e-f22ccd3ead26" type="system">
+      <title>An External Leveraged System</title>
+      <description>
+        <p>An external leveraged system.</p>
+      </description>
+      <prop name="leveraged-authorization-uuid" value="233e0f09-fe5e-47e2-bca3-5f32df75e57a"/>
+      <prop name="implementation-point" value="external"/>
+      <prop name="nature-of-agreement" ns="https://fedramp.gov/ns/oscal" value="sla"/>
+      <prop ns="https://fedramp.gov/ns/oscal" name="authentication-method" value="yes">
+        <remarks>
+          <p>Some description of the external authentication method.</p>
+        </remarks>
+      </prop>
+      <status state="operational"/>
+      <responsible-role role-id="provider">
+        <party-uuid>11111111-0000-4000-9000-000000000001</party-uuid>
+      </responsible-role>
+      <responsible-role role-id="system-admin">
+        <party-uuid>11111111-0000-4000-9000-000000000001</party-uuid>
+      </responsible-role>
+      <responsible-role role-id="administrator">
+        <prop name="privilege-uuid" value="44444444-0000-4000-9000-000000000004" ns="https://fedramp.gov/ns/oscal" />
+      </responsible-role>
+    </component>
+
+    <component uuid="66666666-0000-4000-9000-000000000006" type="interconnection">
+      <title>External API Connection</title>
+      <description>
+        <p>Secure connection to an external API for data enrichment.</p>
+      </description>
+      <prop name="leveraged-authorization-uuid" value="233e0f09-fe5e-47e2-bca3-5f32df75e57a"/>
+      <prop name="connection-security" value="vpn" ns="https://fedramp.gov/ns/oscal"/>
+      <prop name="interconnection-security" value="vpn" ns="https://fedramp.gov/ns/oscal"/>
+      <prop name="interconnection-direction" value="in/out" ns="https://fedramp.gov/ns/oscal"/>
+      <prop name="direction" value="incoming" ns="https://fedramp.gov/ns/oscal"/>
+      <prop name="direction" value="outgoing" ns="https://fedramp.gov/ns/oscal"/>
+      <prop ns="https://fedramp.gov/ns/oscal" name="authentication-method" value="yes">
+        <remarks>
+          <p>Some description of the authentication method.</p>
+        </remarks>
+      </prop>
+      <status state="operational"/>
+      <responsible-role role-id="provider">
+        <party-uuid>11111111-0000-4000-9000-000000000001</party-uuid>
+      </responsible-role>
+      <responsible-role role-id="system-admin">
+        <party-uuid>11111111-0000-4000-9000-000000000001</party-uuid>
+      </responsible-role>
+      <remarks>
+        <p>This connection is used for secure data exchange with external systems.</p>
+      </remarks>
+    </component>
+
+    <component uuid="77777777-0000-4000-9000-000000000007" type="software">
+      <title>Name of External System</title>
+      <description>
+          <p>Briefly describe the external system.</p>
+      </description>
+      <prop name="connection-security" value="vpn" ns="https://fedramp.gov/ns/oscal"/>
+      <prop name="direction" value="in/out" ns="https://fedramp.gov/ns/oscal"/>      
+      <prop name="asset-type" value="cli"/>
+      <prop name="implementation-point" value="external"/>
+      <prop name="nature-of-agreement" ns="https://fedramp.gov/ns/oscal" value="isa"/>
+      <prop ns="https://fedramp.gov/ns/oscal" name="authentication-method" value="yes">
+        <remarks>
+          <p>Some description of the authentication method.</p>
+        </remarks>
+      </prop>
+      <status state="operational"/>
+      <responsible-role role-id="provider">
+        <party-uuid>11111111-0000-4000-9000-000000000001</party-uuid>
+      </responsible-role>
+      <responsible-role role-id="system-admin">
+        <party-uuid>11111111-0000-4000-9000-000000000001</party-uuid>
+      </responsible-role>
+    </component>
+    
+    <inventory-item uuid="77777777-0000-4000-9000-000000000007">
+      <description>
+        <p>Primary database server</p>
+      </description>
+      <prop name="asset-id" value="DB-001" ns="http://csrc.nist.gov/ns/oscal"/>
+      <prop name="asset-type" value="database"/>
+      <prop name="allows-authenticated-scan" value="yes"/>
+      <prop name="public" value="no"/>
+      <prop name="virtual" value="yes"/>
+      <prop name="scan-type" value="database" ns="https://fedramp.gov/ns/oscal"/>
+      <responsible-party role-id="asset-owner">
+        <party-uuid>11111111-0000-4000-9000-000000000001</party-uuid>
+      </responsible-party>
+      <implemented-component component-uuid="55555555-0000-4000-9000-000000000005">
+        <prop name="asset-id" value="DB-001" ns="http://csrc.nist.gov/ns/oscal"/>
+      </implemented-component>
+    </inventory-item>
+
+    <inventory-item uuid="77777777-0000-4000-9001-000000000007">
+      <description>
+        <p>Secondary database server</p>
+      </description>
+      <prop name="asset-id" value="DB-002" ns="http://csrc.nist.gov/ns/oscal"/>
+      <prop name="asset-type" value="database"/>
+      <prop name="allows-authenticated-scan" value="yes"/>
+      <prop name="public" value="no"/>
+      <prop name="virtual" value="yes"/>
+      <prop name="scan-type" value="database" ns="https://fedramp.gov/ns/oscal"/>
+      <responsible-party role-id="asset-owner">
+        <party-uuid>11111111-0000-4000-9000-000000000001</party-uuid>
+      </responsible-party>
+      <implemented-component component-uuid="55555555-0000-4000-9001-000000000005">
+        <prop name="asset-id" value="DB-002" ns="http://csrc.nist.gov/ns/oscal"/>
+      </implemented-component>
+    </inventory-item>
+
+  </system-implementation>
+  
+  <control-implementation>
+    <description>
+      <p>Implementation of controls for the Enhanced Example System</p>
+    </description>
+    <implemented-requirement uuid="88888888-0000-4000-9000-000000000008" control-id="ac-1">
+      <prop name="control-origination" value="sp-system" ns="https://fedramp.gov/ns/oscal"/>
+      <prop name="implementation-status" value="partial" ns="https://fedramp.gov/ns/oscal"/>
+      <statement statement-id="ac-1_stmt.a" uuid="99999999-0000-4000-9000-000000000009">
+        <by-component component-uuid="55555555-0000-4000-9000-000000000005" uuid="aaaaaaaa-0000-4000-9000-00000000000a">
+          <description>
+            <p>Access Control Policy and Procedures (AC-1) is fully implemented in our system.</p>
+          </description>
+          <prop ns="https://fedramp.gov/ns/oscal" name="implementation-status" value="implemented"/>
+          <responsible-role role-id="system-admin">
+            <party-uuid>11111111-0000-4000-9000-000000000001</party-uuid>
+          </responsible-role>
+        </by-component>      
+      </statement>
+    </implemented-requirement>
+    
+    <implemented-requirement uuid="bbbbbbbb-0000-4000-9000-00000000000b" control-id="cm-8">
+      <prop name="control-origination" value="sp-system" ns="https://fedramp.gov/ns/oscal"/>
+      <statement statement-id="cm-8_stmt.a" uuid="cccccccc-0000-4000-9000-00000000000c">
+        <by-component component-uuid="55555555-0000-4000-9000-000000000005" uuid="dddddddd-0000-4000-9000-00000000000d">
+          <description>
+            <p>Information System Component Inventory (CM-8) is partially implemented.</p>
+          </description>
+          <prop ns="https://fedramp.gov/ns/oscal" name="implementation-status" value="partial"/>
+          <responsible-role role-id="system-admin">
+            <party-uuid>11111111-0000-4000-9000-000000000001</party-uuid>
+          </responsible-role>
+        </by-component>      
+      </statement>
+    </implemented-requirement>
+  </control-implementation>
+</system-security-plan>
