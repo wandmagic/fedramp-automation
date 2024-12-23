@@ -11,7 +11,7 @@
         <prop name="fedramp-version" ns="https://fedramp.gov/ns/oscal" value="fedramp-3.0.0rc1-oscal-1.1.2"/>
     </metadata>
 
-    <import-ssp href="../ssp.xml"/>
+    <import-ssp href="fedramp-ssp-example.oscal.xml"/>
 
     <system-id identifier-type="http://ietf.org/rfc/rfc4122">8101e04d-8305-4e73-bb95-6b59f645b143</system-id>
 
