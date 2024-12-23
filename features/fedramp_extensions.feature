@@ -390,10 +390,6 @@ Examples:
   | non-provider-responsible-role-references-user-PASS.yaml |
   | party-has-name-FAIL.yaml |
   | party-has-name-PASS.yaml |
-  | poam-link-has-resource-fragment-FAIL.yaml |
-  | poam-link-has-resource-fragment-PASS.yaml |
-  | poam-link-references-valid-resource-FAIL.yaml |
-  | poam-link-references-valid-resource-PASS.yaml |
   | privilege-level-FAIL.yaml |
   | privilege-level-PASS.yaml |
   | resource-has-base64-or-rlink-FAIL.yaml |

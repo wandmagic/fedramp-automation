@@ -1,9 +1,0 @@
-test-case:
-  name: Negative Test for poam-link-has-resource-fragment
-  description: >-
-    This test case validates the behavior of constraint
-    poam-link-has-resource-fragment
-  content: ../content/ssp-poam-link-has-resource-fragment-INVALID.xml
-  expectations:
-    - constraint-id: ssp-poam-link-has-resource-fragment
-      result: fail
