@@ -5,5 +5,5 @@ test-case:
     poam-link-has-resource-fragment
   content: ../content/ssp-poam-link-has-resource-fragment-INVALID.xml
   expectations:
-    - constraint-id: poam-link-has-resource-fragment
+    - constraint-id: ssp-poam-link-has-resource-fragment
       result: fail

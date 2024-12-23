@@ -5,5 +5,5 @@ test-case:
     poam-link-references-valid-resource
   content: ../content/ssp-poam-link-references-valid-resource-INVALID.xml
   expectations:
-    - constraint-id: poam-link-references-valid-resource
+    - constraint-id: ssp-poam-link-references-valid-resource
       result: fail

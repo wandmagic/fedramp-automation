@@ -1,0 +1,7 @@
+test-case:
+  name: Negative Test for poam-item-exists
+  description: This test case validates the behavior of constraint poam-item-exists
+  content: ../content/ssp-poam-item-exists-INVALID.xml
+  expectations:
+    - constraint-id: ssp-poam-item-exists
+      result: fail

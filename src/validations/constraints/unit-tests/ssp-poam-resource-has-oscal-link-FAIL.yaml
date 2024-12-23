@@ -1,0 +1,9 @@
+test-case:
+  name: Negative Test for poam-resource-has-oscal-link
+  description: >-
+    This test case validates the behavior of constraint
+    poam-resource-has-oscal-link
+  content: ../content/ssp-poam-resource-has-oscal-link-INVALID.xml
+  expectations:
+    - constraint-id: ssp-poam-resource-has-oscal-link
+      result: fail

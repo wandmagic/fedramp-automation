@@ -1,0 +1,7 @@
+test-case:
+  name: Negative Test for has-poam-resource
+  description: This test case validates the behavior of constraint has-poam-resource
+  content: ../content/ssp-has-poam-resource-INVALID.xml
+  expectations:
+    - constraint-id: has-poam-resource
+      result: fail

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<plan-of-action-and-milestones uuid="714210d2-f8df-448c-be3e-e2213816cf79" xmlns="http://csrc.nist.gov/ns/oscal/1.0">
+<plan-of-action-and-milestones uuid="714210d2-f8df-448c-be3e-e2213816cf79"
+    xmlns="http://csrc.nist.gov/ns/oscal/1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://csrc.nist.gov/ns/oscal/1.0 https://github.com/usnistgov/OSCAL/releases/download/v1.1.2/oscal_poam_schema.xsd">
     <metadata>
         <title>Plan of Action and Milestones for Service B</title>
         <last-modified>2024-12-12T13:57:28.355446-04:00</last-modified>
@@ -8,7 +10,9 @@
         <prop name="marking" value="cui"/>
         <prop name="fedramp-version" ns="https://fedramp.gov/ns/oscal" value="fedramp-3.0.0rc1-oscal-1.1.2"/>
     </metadata>
+
     <import-ssp href="../ssp.xml"/>
+
     <system-id identifier-type="http://ietf.org/rfc/rfc4122">8101e04d-8305-4e73-bb95-6b59f645b143</system-id>
 
     <observation uuid="b807eb6e-0c05-43bc-8438-799739615e35">
@@ -67,4 +71,26 @@
         </response>
         <related-observation observation-uuid="b807eb6e-0c05-43bc-8438-799739615e35"/>
     </risk>
+    <finding uuid="b807eb6e-0c05-43bc-8438-799739615e31">
+        <title>example finding</title>
+        <description>
+            <p>finding description</p>
+        </description>
+        <origin>
+            <actor type="autonmous" actor-uuid="1237eb6e-0c05-43bc-8438-799739615e31"></actor>
+        </origin>
+        <target type="self" target-id="c807eb6e-0c05-43bc-8438-799739615e31">
+            <description>
+                <p>example target description</p>
+            </description>
+            <status state="new"/>
+        </target>
+    </finding>
+    <poam-item uuid="b953b9fc-7e7e-410d-989b-c065d0a458d3">
+        <title>example poam item</title>
+        <description>
+            <p>poam item description</p>
+        </description>
+        <associated-risk risk-uuid="485cfb95-20c7-45b0-991c-3f86a8e0cbd4" />
+    </poam-item>
 </plan-of-action-and-milestones>

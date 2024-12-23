@@ -118,6 +118,8 @@
             in control implementation responses and interconnections.</p>
       </description>
       <status state="operational"/>
+          <link href='#11111111-2222-4000-8000-001000000048' rel='poam-item' resource-fragment="d953b9fc-7e7e-410d-989b-c065d0a458d3"/>
+
       <remarks>
         <p>A FedRAMP SSP must always have exactly one "this-system" component
                that represents the whole system.</p>
@@ -148,7 +150,6 @@
       </prop>
       <prop ns="https://fedramp.gov/ns/oscal" name="information-type" value="C.3.5.1"/>
       <prop ns="https://fedramp.gov/ns/oscal" name="information-type" value="C.3.5.8"/>
-      <link href='#11111111-2222-4000-8000-001000000048' rel='poam-item' />
       <status state="operational"/>
       <responsible-role role-id="provider">
         <party-uuid>11111111-2222-4000-8000-c0040000000a</party-uuid>

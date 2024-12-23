@@ -335,10 +335,7 @@ async function checkConstraints(
       if (constraintResults.length === 0) {
         errors.push(
           `Constraint rule not found: ${constraint_id}. The constraint may not be applicable to this content, or there was a runtime error.`
-        );
-        const sarifErrors=formatSarifOutput(sarifOutput)
-        !errors.includes(sarifErrors) && errors.push(sarifErrors)
-        
+        );        
         continue;
       }
 

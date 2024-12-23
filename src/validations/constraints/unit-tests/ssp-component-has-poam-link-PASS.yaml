@@ -3,5 +3,5 @@ test-case:
   description: This test case validates the behavior of constraint component-has-poam-link
   content: ../../../content/rev5/examples/ssp/xml/fedramp-ssp-example.oscal.xml
   expectations:
-    - constraint-id: component-has-poam-link
+    - constraint-id: ssp-component-has-poam-link
       result: pass
