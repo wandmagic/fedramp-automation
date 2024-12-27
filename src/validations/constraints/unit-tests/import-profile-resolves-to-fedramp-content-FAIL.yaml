@@ -3,7 +3,7 @@ test-case:
   description: >-
     This test case validates the behavior of constraint
     import-profile-resolves-to-fedramp-content
-  content: ../content/ssp-import-profile-resolves-to-fedramp-content-INVALID.xml
+  content: ../content/ssp-import-profile-resolves-to-fedramp-content-INVALID-1.xml
   expectations:
     - constraint-id: import-profile-resolves-to-fedramp-content
       result: fail
