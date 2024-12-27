@@ -165,6 +165,11 @@
                 <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/4-ssp-template-to-oscal-mapping/#leveraged-fedramp-authorized-services"/>
                 <message>A FedRAMP SSP MUST define the appropriate FIPS-199 impact level (low, moderate, or high) for each leveraged authorization.</message>
             </expect>
+            <expect id="network-component-has-implementation-point" target="component[@type='service' or (@type='software' and ./prop[@name='asset-type' and @value='cli'])]" test="count(./prop[@name='implementation-point']) = 1" level="ERROR">
+                <formal-name>Component Has Implementation Point</formal-name>
+                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/4-ssp-template-to-oscal-mapping/#leveraged-fedramp-authorized-services"/>
+                <message>A FedRAMP SSP with service components and CLI software components performing cross-boundary network communication MUST indicate exactly one time if the point of implementation is internal or external to the system.</message>
+            </expect>
             <expect id="non-provider-responsible-role-references-user" target="." test="$non-provider-user-has-function-performed" level="ERROR">
                 <formal-name>Non-Provider Responsible Role References User</formal-name>
                 <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/4-ssp-template-to-oscal-mapping/#external-systems-and-services-not-having-fedramp-authorization"/>
@@ -256,11 +261,6 @@
                 <formal-name>Has User Guide</formal-name>
                 <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/5-attachments/"/>
                 <message>A FedRAMP SSP MUST have a User Guide attached.</message>
-            </expect>
-            <expect id="network-component-has-implementation-point" target="component[@type='service' or (@type='software' and ./prop[@name='asset-type' and @value='cli'])]" test="count(./prop[@name='implementation-point']) = 1" level="ERROR">
-                <formal-name>Component Has Implementation Point</formal-name>
-                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/4-ssp-template-to-oscal-mapping/#leveraged-fedramp-authorized-services"/>
-                <message>A FedRAMP SSP with service components and CLI software components performing cross-boundary network communication MUST indicate exactly one time if the point of implementation is internal or external to the system.</message>
             </expect>
             <expect id="resource-has-base64-or-rlink" target="resource" test="count(./rlink) >= 1 or count(./base64) >= 1" level="WARNING">
                 <formal-name>Resource Has Base64 Or Rlink</formal-name>
