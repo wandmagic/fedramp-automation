@@ -62,22 +62,29 @@
             <let var="resolved-profile" expression="if ($profile-is-available) then resolve-profile(doc(resolve-uri($resolved-import-profile-href)))//catalog else //catalog"/>
             <let var="imported-controls-map" expression="map:merge($resolved-profile//control ! map:entry(@id,.))?*"/>
             <let var="implemented-requirements-map" expression="map:merge(//implemented-requirement ! map:entry(@control-id,.))?*"/>
-            <let var="required-parameters-map" expression="map:merge($resolved-profile//param[not(prop[@name='aggregates'])] ! map:entry(@id,.))?*"/>          
+            <let var="required-parameters-map" expression="map:merge($resolved-profile//param[not(prop[@name='aggregates'])] ! map:entry(@id,.))?*"/>
             <let var="aggregate-parameters" expression="$resolved-profile//param[prop[@name='aggregates']]/@id"/>
-            <let var="implemented-parameters-map" expression="map:merge(//set-parameter ! map:entry(@param-id,.))?*"/>          
-            <let var="implemented-statements-map" expression="map:merge(//statement ! map:entry(@statement-id,.))?*"/>          
-            <let var="required-response-points-map" expression="map:merge($resolved-profile//part[(prop[@name='response-point'])] ! map:entry(@id,.))?*"/>          
+            <let var="implemented-parameters-map" expression="map:merge(//set-parameter ! map:entry(@param-id,.))?*"/>
+            <let var="implemented-statements-map" expression="map:merge(//statement ! map:entry(@statement-id,.))?*"/>
+            <let var="required-response-points-map" expression="map:merge($resolved-profile//part[(prop[@name='response-point'])] ! map:entry(@id,.))?*"/>
+            <let var="poam-resource" expression="//resource[prop[@name='type' and @value='plan' and @class='poam']]"/>
+            <let var="poam-uri" expression="$poam-resource/rlink[@media-type='application/oscal+xml']/@href"/>
+            <let var="poam-is-available" expression="doc-available(resolve-uri($poam-uri))"/>
+            <let var="poam-doc" expression="if ($poam-is-available) then doc(resolve-uri($poam-uri)) else ()"/>
+            <let var="network-components" expression="//component[(@type='service' and not(./prop[@name='leveraged-authorization-uuid']) and ./prop[@name='implementation-point' and @value='external']) or (@type='interconnection') or (@type='service' and ./prop[@name='implementation-point' and @value='internal'] and ./prop[@name='direction']) or (@type='software' and ./prop[@name='asset-type' and @value='cli'] and ./prop[@name='direction'])]"/>
+            <let var="poam-items-map" expression="map:merge($poam-doc//poam-item ! map:entry(@uuid, .))?*"/>
+
+            <index name="index-poam-items" target="$poam-items-map">
+                <formal-name>Index of POAM Items</formal-name>
+                <description>Index of all POAM items in the referenced POAM document</description>
+                <key-field target="@uuid"/>
+            </index>
             <index name="index-implemented-statements" target="$implemented-statements-map">
                 <formal-name>Statements implimented in SSP</formal-name>
                 <description>This index includes all statements defined in a FedRAMP SSP</description>
                 <key-field target="@statement-id"/>
             </index>
-            <index-has-key id="has-required-response-points" target="$required-response-points-map" name="index-implemented-statements" level="ERROR">
-                <formal-name>Response Points Must Be Set</formal-name>
-                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/6-security-controls/#responsible-roles-and-parameter-assignments"/>
-                <key-field target="@id"/>
-                <message>All Response points defined in the baseline MUST have corresponding statements values in the SSP. Missing statement: ({@id}).</message>
-            </index-has-key>
+
             <index name="index-implemented-parameters" target="$implemented-parameters-map">
                 <formal-name>Parameters Implemented in SSP</formal-name>
                 <description>This index includes all parameters in a FedRAMP SSP.</description>
@@ -88,12 +95,7 @@
                 <description>This index includes all parameters defined in the resolved profile catalog, imported by a FedRAMP SSP.</description>
                 <key-field target="@id"/>
             </index>
-            <index-has-key id="has-required-parameters" target="$required-parameters-map" name="index-implemented-parameters" level="ERROR">
-                <formal-name>Required Parameters Must Be Set</formal-name>
-                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/6-security-controls/#responsible-roles-and-parameter-assignments"/>
-                <key-field target="@id"/>
-                <message>A FedRAMP SSP must define all parameters for all controls from the imported baseline. The following parameters are defined in the baseline, but not properly set in the SSP: ({@id}).</message>
-            </index-has-key>
+
             <expect id="aggregate-parameters-warning" target="//set-parameter" test="every $param in $aggregate-parameters satisfies @param-id != $param" level="WARNING">
                 <formal-name>No Aggregate Parameters in SSP</formal-name>
                 <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/6-security-controls/#responsible-roles-and-parameter-assignments"/>
@@ -114,11 +116,34 @@
                 <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/4-ssp-template-to-oscal-mapping/#external-systems-and-services-not-having-fedramp-authorization"/>
                 <message>A FedRAMP SSP MUST have each component describing leveraged systems, interconnections, or authorized services identify a "provider" role that references one responsible party.</message>
             </expect>
+            <index-has-key id='extraneous-implemented-requirements' target="//implemented-requirement" name="index-imported-controls" level="ERROR">
+                <formal-name>Additional Controls Implemented Not in Baseline</formal-name>
+                <description>A FedRAMP SSP MUST NOT include extraneous controls outside of the FedRAMP baseline.</description>
+                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/6-security-controls/#implementation-status"/>
+                <key-field target="@control-id"/>
+                <message>A FedRAMP SSP MUST NOT include extraneous controls outside of the FedRAMP baseline. Extraneous control: ({@control-id}).</message>
+            </index-has-key>
+            <index-has-key id="has-required-parameters" target="$required-parameters-map" name="index-implemented-parameters" level="ERROR">
+                <formal-name>Required Parameters Must Be Set</formal-name>
+                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/6-security-controls/#responsible-roles-and-parameter-assignments"/>
+                <key-field target="@id"/>
+                <message>A FedRAMP SSP must define all parameters for all controls from the imported baseline. The following parameters are defined in the baseline, but not properly set in the SSP: ({@id}).</message>
+            </index-has-key>
+
+
+            <index-has-key id="has-required-response-points" target="$required-response-points-map" name="index-implemented-statements" level="ERROR">
+                <formal-name>Response Points Must Be Set</formal-name>
+                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/6-security-controls/#responsible-roles-and-parameter-assignments"/>
+                <key-field target="@id"/>
+                <message>All Response points defined in the baseline MUST have corresponding statements values in the SSP. Missing statement: ({@id}).</message>
+            </index-has-key>
+
             <expect id="import-profile-has-available-document" target="import-profile" test="doc-available(resolve-uri($resolved-import-profile-href))" level="CRITICAL">
                 <formal-name>Import Profile has available document</formal-name>
                 <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/3-working-with-oscal-files/#importing-the-fedramp-baseline"/>
                 <message>A FedRAMP SSP MUST import a profile or catalog with a valid file or HTTP(S) address.</message>
             </expect>
+
             <expect id="import-profile-resolves-to-fedramp-content" target="." test="count($resolved-profile//control//prop[@ns='http://fedramp.gov/ns/oscal' and @name='response-point']) >= 2" level="CRITICAL">
                 <formal-name>Import Profile resolves to Fedramp content</formal-name>
                 <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/3-working-with-oscal-files/#importing-the-fedramp-baseline"/>
@@ -127,6 +152,14 @@
                     <p>A FedRAMP SSP MUST use a valid FedRAMP catalog to reference security controls. It MUST NOT reference controls from a non-FedRAMP catalog.</p>
                 </remarks>
             </expect>
+            <index-has-key id='incomplete-implemented-requirements' target="$imported-controls-map" name="index-implemented-requirements" level="ERROR">
+                <formal-name>Incomplete Implemented Requirements</formal-name>
+                <description>A FedRAMP SSP MUST contain an implemented requirement for each imported control.</description>
+                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/6-security-controls/#implementation-status"/>
+                <key-field target="@id"/>
+                <message>A FedRAMP SSP MUST contain an implemented requirement for each imported control. Missing: ({@id}).</message>
+            </index-has-key>
+
             <expect id="leveraged-authorization-has-valid-impact-level" target="//leveraged-authorization/prop[@name='impact-level'][@ns='http://fedramp.gov/ns/oscal']/@value" test=". = $sensitivity-level-floor" level="ERROR">
                 <formal-name>Leveraged Authorization Has Valid Impact Level</formal-name>
                 <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/4-ssp-template-to-oscal-mapping/#leveraged-fedramp-authorized-services"/>
@@ -137,26 +170,45 @@
                 <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/4-ssp-template-to-oscal-mapping/#external-systems-and-services-not-having-fedramp-authorization"/>
                 <message>A FedRAMP SSP MUST have each component describing leveraged systems, interconnections, or authorized services reference at least one user with an authorized privilege and function performed via the "privilege-uuid" property.</message>
             </expect>
+
+            <expect id="ssp-component-has-poam-link" target="$network-components" test="exists($poam-uri) and count(link[@rel='poam-item']) = 1" level="ERROR">
+                <formal-name>Component Has POAM Link</formal-name>
+                <description>Each interconnection, service, or software connecting to external systems must have exactly one POAM item link.</description>
+                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/poam/4-poam-template-to-oscal-mapping/"/>
+                <message>Each interconnection, service, or software connecting to external systems MUST have exactly one POAM item link.</message>
+            </expect>
+            <index-has-key id="ssp-poam-item-exists" target="//component/link[@rel='poam-item']" name="index-poam-items" level="ERROR">
+                <formal-name>POAM Item Exists</formal-name>
+                <description>The referenced POAM item must exist within the correct POAM document.</description>
+                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/poam/4-poam-template-to-oscal-mapping/"/>
+                <key-field target="@resource-fragment"/>
+                <message>The POAM item referenced by resource-fragment ({@resource-fragment}) MUST exist within the POAM document.</message>
+            </index-has-key>
+            <expect id="ssp-poam-link-has-resource-fragment" target="//component/link[@rel='poam-item']" test="exists(@resource-fragment) and string-length(@resource-fragment) > 0" level="ERROR">
+                <formal-name>POAM Link Has Resource Fragment</formal-name>
+                <description>Each POAM link must include a non-empty resource fragment.</description>
+                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/poam/4-poam-template-to-oscal-mapping/"/>
+                <message>Each POAM link MUST include a non-empty resource fragment identifier.</message>
+            </expect>
+            <expect id="ssp-poam-link-references-valid-resource" target="//component/link[@rel='poam-item']" test="substring-after(@href, '#') = $poam-resource/@uuid" level="ERROR">
+                <formal-name>POAM Link References Valid Resource</formal-name>
+                <description>Each POAM link must reference the system's POAM resource by UUID.</description>
+                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/poam/4-poam-template-to-oscal-mapping/"/>
+                <message>Each POAM link MUST reference the system's POAM resource using its UUID ({substring-after(@href, '#')}) should be ({ $poam-resource/@uuid}).</message>
+            </expect>
+            <expect id="ssp-poam-resource-has-oscal-link" target="." test="exists($poam-uri)" level="ERROR">
+                <formal-name>SSP Has POAM Link</formal-name>
+                <description>Each SSP MUST have a link to a valid OSCAL POAM</description>
+                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/poam/4-poam-template-to-oscal-mapping/"/>
+                <message>Each FEDRAMP SSP MUST have a link to a valid OSCAL POAM.</message>
+            </expect>
+
             <index name="index-imported-controls" target="$imported-controls-map">
                 <key-field target="@id"/>
             </index>
             <index name="index-implemented-requirements" target="$implemented-requirements-map">
                 <key-field target="@control-id"/>
             </index>
-            <index-has-key id='incomplete-implemented-requirements' target="$imported-controls-map" name="index-implemented-requirements" level="ERROR">
-                <formal-name>Incomplete Implemented Requirements</formal-name>
-                <description>A FedRAMP SSP MUST contain an implemented requirement for each imported control.</description>
-                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/6-security-controls/#implementation-status"/>
-                <key-field target="@id"/>
-                <message>A FedRAMP SSP MUST contain an implemented requirement for each imported control. Missing: ({@id}).</message>
-            </index-has-key>
-            <index-has-key id='extraneous-implemented-requirements' target="//implemented-requirement" name="index-imported-controls" level="ERROR">
-                <formal-name>Additional Controls Implemented Not in Baseline</formal-name>
-                <description>A FedRAMP SSP MUST NOT include extraneous controls outside of the FedRAMP baseline.</description>
-                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/6-security-controls/#implementation-status"/>
-                <key-field target="@control-id"/>
-                <message>A FedRAMP SSP MUST NOT include extraneous controls outside of the FedRAMP baseline. Extraneous control: ({@control-id}).</message>
-            </index-has-key>
         </constraints>
 
     </context>
@@ -168,12 +220,6 @@
                 <formal-name>FedRAMP Citations Has Correct Link</formal-name>
                 <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/general-concepts/oscal-citations-and-attachments/"/>
                 <message>The FedRAMP Laws, Regulations, Standards and Guidance MUST be https://www.fedramp.gov/assets/resources/templates/FedRAMP-Laws-Regulations-Standards-and-Guidance-Reference.xlsx</message>
-            </expect>
-            <expect id="has-poam-resource" target="." test="exists(resource[prop[@name='type' and @value='plan' and @class='poam']])" level="ERROR">
-                <formal-name>Has POAM Resource</formal-name>
-                <description>The back-matter must contain a POAM resource.</description>
-                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/5-attachments/"/>
-                <message>The SSP back-matter MUST contain a POAM resource.</message>
             </expect>
             <expect id="has-configuration-management-plan" target="." test="exists(resource[prop[@name eq 'type' and @value eq 'plan' and @class eq 'configuration-management-plan']])" level="ERROR">
                 <formal-name>Has Configuration Management Plan</formal-name>
@@ -195,6 +241,12 @@
                 <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/5-attachments/"/>
                 <message>A FedRAMP SSP MUST have a Contingency Plan attached.</message>
             </expect>
+            <expect id="has-poam-resource" target="." test="exists(resource[prop[@name='type' and @value='plan' and @class='poam']])" level="ERROR">
+                <formal-name>Has POAM Resource</formal-name>
+                <description>The back-matter must contain a POAM resource.</description>
+                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/5-attachments/"/>
+                <message>The SSP back-matter MUST contain a POAM resource.</message>
+            </expect>
             <expect id="has-rules-of-behavior" target="." test="exists(resource[prop[@name eq 'type' and @value eq 'rules-of-behavior']])" level="ERROR">
                 <formal-name>Has Rules Of Behavior</formal-name>
                 <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/5-attachments/"/>
@@ -204,6 +256,11 @@
                 <formal-name>Has User Guide</formal-name>
                 <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/5-attachments/"/>
                 <message>A FedRAMP SSP MUST have a User Guide attached.</message>
+            </expect>
+            <expect id="network-component-has-implementation-point" target="component[@type='service' or (@type='software' and ./prop[@name='asset-type' and @value='cli'])]" test="count(./prop[@name='implementation-point']) = 1" level="ERROR">
+                <formal-name>Component Has Implementation Point</formal-name>
+                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/4-ssp-template-to-oscal-mapping/#leveraged-fedramp-authorized-services"/>
+                <message>A FedRAMP SSP with service components and CLI software components performing cross-boundary network communication MUST indicate exactly one time if the point of implementation is internal or external to the system.</message>
             </expect>
             <expect id="resource-has-base64-or-rlink" target="resource" test="count(./rlink) >= 1 or count(./base64) >= 1" level="WARNING">
                 <formal-name>Resource Has Base64 Or Rlink</formal-name>
@@ -230,7 +287,7 @@
                     <p>Despite the flexibility of NIST's upstream OSCAL models, FedRAMP only accepts OSCAL-based SSPs with the reference in one of those locations, see <code>missing-response-components</code> for more details about this requirement.</p>
                     <p>A constraint violation with this warning indicates a given SSP uses one of the valid locations for all NIST use cases, but not the only FedRAMP required location.</p>
                 </remarks>
-            </expect>        
+            </expect>
             <expect id="missing-response-components" target="implemented-requirement/statement" test="count(by-component) ge 1" level="ERROR">
                 <formal-name>By-Component Reference for Implemented Requirements Missing</formal-name>
                 <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/6-security-controls/#response-overview"/>
@@ -585,6 +642,11 @@
                 <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/4-ssp-template-to-oscal-mapping/#leveraged-fedramp-authorized-services"/>
                 <message>Each authentication method in a FedRAMP SSP MUST have a remarks field.</message>
             </expect>
+            <expect id="component-has-used-by-link" target="component[protocol]" test="count(link[@rel='used-by']) >= 1" level="ERROR">
+                <formal-name>Component Has Used-By Link</formal-name>
+                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/4-ssp-template-to-oscal-mapping/#ports-protocols-and-services"/>
+                <message>A FedRAMP SSP's component MUST identify which other components use it via network communication. Component "{ @uuid }" exposes ports for other components to connect, but does not identify which components use it.</message>
+            </expect>
             <expect id="has-inventory-items" target="." test="count(inventory-item) >= 2" level="ERROR">
                 <formal-name>System Implementation Has Inventory Items</formal-name>
                 <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/5-attachments/#system-inventory-approach"/>
@@ -614,16 +676,6 @@
                 <formal-name>Network Component Has Connection Security Property</formal-name>
                 <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/4-ssp-template-to-oscal-mapping/#ports-protocols-and-services"/>
                 <message>All network components in a FedRAMP SSP system implementation MUST define at least one interconnection security property.</message>
-            </expect>
-            <expect id="network-component-has-implementation-point" target="component[@type='service' or (@type='software' and ./prop[@name='asset-type' and @value='cli'])]" test="count(./prop[@name='implementation-point']) = 1" level="ERROR">
-                <formal-name>Component Has Implementation Point</formal-name>
-                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/4-ssp-template-to-oscal-mapping/#leveraged-fedramp-authorized-services"/>
-                <message>A FedRAMP SSP with service components and CLI software components performing cross-boundary network communication MUST indicate exactly one time if the point of implementation is internal or external to the system.</message>
-            </expect>
-            <expect id="component-has-used-by-link" target="component[protocol]" test="count(link[@rel='used-by']) >= 1" level="ERROR">
-                <formal-name>Component Has Used-By Link</formal-name>
-                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/4-ssp-template-to-oscal-mapping/#ports-protocols-and-services"/>
-                <message>A FedRAMP SSP's component MUST identify which other components use it via network communication. Component "{ @uuid }" exposes ports for other components to connect, but does not identify which components use it.</message>
             </expect>
             <is-unique id="unique-inventory-item-asset-id" target="inventory-item/prop[@name='asset-id']">
                 <formal-name>Unique Asset Identifier</formal-name>
@@ -743,57 +795,6 @@
                 <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/4-ssp-template-to-oscal-mapping/#network-architecture"/>
                 <message>A FedRAMP SSP MUST include a network architecture diagram.</message>
             </expect>
-        </constraints>
-    </context>
-
-    <context>
-        <metapath target="/system-security-plan"/>
-        <constraints>
-            <let var="poam-resource" expression="//resource[prop[@name='type' and @value='plan' and @class='poam']]"/>
-            <let var="poam-uri" expression="$poam-resource/rlink[@media-type='application/oscal+xml']/@href"/>
-            <let var="poam-is-available" expression="doc-available(resolve-uri($poam-uri))"/>
-            <let var="poam-doc" expression="if ($poam-is-available) then doc(resolve-uri($poam-uri)) else ()"/>
-            <let var="network-components" expression="//component[(@type='service' and not(./prop[@name='leveraged-authorization-uuid']) and ./prop[@name='implementation-point' and @value='external']) or (@type='interconnection') or (@type='service' and ./prop[@name='implementation-point' and @value='internal'] and ./prop[@name='direction']) or (@type='software' and ./prop[@name='asset-type' and @value='cli'] and ./prop[@name='direction'])]"/>
-            <let var="poam-items-map" expression="map:merge($poam-doc//poam-item ! map:entry(@uuid, .))?*"/>
-          
-             <index name="index-poam-items" target="$poam-items-map">
-                <formal-name>Index of POAM Items</formal-name>
-                <description>Index of all POAM items in the referenced POAM document</description>
-                <key-field target="@uuid"/>
-            </index>
-            <expect id="ssp-poam-resource-has-oscal-link" target="." test="exists($poam-uri)" level="ERROR">
-                <formal-name>SSP Has POAM Link</formal-name>
-                <description>Each SSP MUST have a link to a valid OSCAL POAM</description>
-                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/poam/4-poam-template-to-oscal-mapping/"/>
-                <message>Each FEDRAMP SSP MUST have a link to a valid OSCAL POAM.</message>
-            </expect>
-            <expect id="ssp-component-has-poam-link" target="$network-components" test="exists($poam-uri) and count(link[@rel='poam-item']) = 1" level="ERROR">
-                <formal-name>Component Has POAM Link</formal-name>
-                <description>Each interconnection, service, or software connecting to external systems must have exactly one POAM item link.</description>
-                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/poam/4-poam-template-to-oscal-mapping/"/>
-                  <message>Each interconnection, service, or software connecting to external systems MUST have exactly one POAM item link.</message>
-            </expect>
-
-            <expect id="ssp-poam-link-has-resource-fragment" target="//component/link[@rel='poam-item']" test="exists(@resource-fragment) and string-length(@resource-fragment) > 0" level="ERROR">
-                <formal-name>POAM Link Has Resource Fragment</formal-name>
-                <description>Each POAM link must include a non-empty resource fragment.</description>
-                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/poam/4-poam-template-to-oscal-mapping/"/>
-                <message>Each POAM link MUST include a non-empty resource fragment identifier.</message>
-            </expect>
-
-            <expect id="ssp-poam-link-references-valid-resource" target="//component/link[@rel='poam-item']" test="substring-after(@href, '#') = $poam-resource/@uuid" level="ERROR">
-                <formal-name>POAM Link References Valid Resource</formal-name>
-                <description>Each POAM link must reference the system's POAM resource by UUID.</description>
-                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/poam/4-poam-template-to-oscal-mapping/"/>
-                <message>Each POAM link MUST reference the system's POAM resource using its UUID ({substring-after(@href, '#')}) should be ({ $poam-resource/@uuid}).</message>
-            </expect>
-            <index-has-key id="ssp-poam-item-exists" target="//component/link[@rel='poam-item']" name="index-poam-items" level="ERROR">
-                <formal-name>POAM Item Exists</formal-name>
-                <description>The referenced POAM item must exist within the correct POAM document.</description>
-                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/poam/4-poam-template-to-oscal-mapping/"/>
-                <key-field target="@resource-fragment"/>
-                <message>The POAM item referenced by resource-fragment ({@resource-fragment}) MUST exist within the POAM document.</message>
-            </index-has-key>
         </constraints>
     </context>
 </metaschema-meta-constraints>
