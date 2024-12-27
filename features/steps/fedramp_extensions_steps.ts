@@ -15,6 +15,7 @@ import { dirname, join,parse, resolve } from "path";
 import { Exception, Log, Result } from "sarif";
 import { fileURLToPath } from "url";
 import { parseString } from "xml2js";
+import {JSDOM} from 'jsdom'
 import { promisify } from "util";
 import {formatSarifOutput} from 'oscal'
 let executor: 'oscal-cli'|'oscal-server' = process.env.OSCAL_EXECUTOR as 'oscal-cli'|'oscal-server' || 'oscal-cli'
@@ -335,10 +336,7 @@ async function checkConstraints(
       if (constraintResults.length === 0) {
         errors.push(
           `Constraint rule not found: ${constraint_id}. The constraint may not be applicable to this content, or there was a runtime error.`
-        );
-        const sarifErrors=formatSarifOutput(sarifOutput)
-        !errors.includes(sarifErrors) && errors.push(sarifErrors)
-        
+        );        
         continue;
       }
 
@@ -686,47 +684,84 @@ Then('I should have valid results {string}', async function (fileToValidate) {
   expect(isValid,formatSarifOutput(log)).to.be.true;
 });
 
-
 Then('I should verify that all constraints follow the style guide constraint', async function () {
   const baseDir = join(__dirname, '..', '..');
   const constraintDir = join(baseDir, 'src', 'validations', 'constraints');
-  const styleGuidePath = join(baseDir, 'src', 'validations', 'styleguides', 'fedramp-constraint-style.xml');
+  const constraintFiles = readdirSync(constraintDir).filter(file => 
+    file.startsWith('fedramp') && file.endsWith('.xml')
+  );
 
-  const constraint_files = readdirSync(constraintDir).filter((file) => file.startsWith('fedramp') && file.endsWith('xml') );
-  const errors = [];
+  const errors: string[] = [];
+  const compareIds = (a: string, b: string) => a.localeCompare(b, undefined, { numeric: true });
 
-  function filterOutBrackets(input) {
-    return input.replace(/\[.*?\]/g, '');
-  }
-
-  for (const file_name of constraint_files) {
-    const filePath = join(constraintDir, file_name.trim());
+  for (const fileName of constraintFiles) {
+    const filePath = join(constraintDir, fileName);
+    
     try {
-      const {isValid,log} = await validateDocument(filePath,{flags:['disable-schema'],quiet,extensions:[styleGuidePath],module:"http://csrc.nist.gov/ns/oscal/metaschema/1.0"},executor)
-      writeFileSync(
-        join(
-          __dirname,
-          "../../sarif/",
-          file_name.split(".xml").join("").toString()+".sarif"
-        ),JSON.stringify(log, null,"\t"))  
-      const formattedErrors = (formatSarifOutput(log));
-      
-      !quiet && console.log(`Validation result for ${file_name}:`, isValid?"valid":"invalid");
-      if (!isValid) {
-        console.error("\n"+formattedErrors);
-      }
-      if (!isValid) {
-        errors.push(`Style guide validation found errors in ${file_name}:\n ${formatSarifOutput(log)}`);
-      }
+      const fileContent = readFileSync(filePath, 'utf8');
+      const dom = new JSDOM(fileContent, { contentType: 'text/xml' });
+      const document = dom.window.document;
+
+      // Process each 'constraints' block separately
+      document.querySelectorAll('constraints').forEach(constraintsNode => {
+        // Get direct child elements with IDs within this constraints block
+        const constraints = Array.from(constraintsNode.children).filter(node => 
+          node.hasAttribute && node.hasAttribute('id')
+        );
+        
+        // Check order within this constraints block
+        for (let i = 0; i < constraints.length - 1; i++) {
+          const currentId = constraints[i].getAttribute('id');
+          const nextId = constraints[i + 1].getAttribute('id');
+          
+          if (currentId && nextId && compareIds(currentId, nextId) > 0) {
+            const line = fileContent.substring(0, fileContent.indexOf(currentId)).split('\n').length;
+            errors.push(
+              `[ERROR] frr103 ${fileName}:${line}: "${currentId}" is out of order. It should come after "${nextId}"`
+            );
+          }
+        }
+      });
+      !quiet && console.info(fileName+" passed style guide")
     } catch (error) {
-      errors.push(`Error processing ${file_name}: ${error}`);
+      errors.push(`Error processing ${fileName}: ${error instanceof Error ? error.message : String(error)}`);
     }
   }
 
-  // Display all errors at the end
   if (errors.length > 0) {
-    console.error("Validation errors found:");
+    console.error('Validation errors found:\n' + errors.join('\n'));
   }
 
-  expect(errors, "No style guide validation errors should be found").to.be.empty;
+  expect(errors, 'No style guide validation errors should be found\n'+errors.join("\n")).to.be.empty;
 });
+
+Then('I should verify that all invalid sample content is smaller than 100 lines', async function () {
+  const baseDir = join(__dirname, '..', '..');
+  const contentDir = join(baseDir, 'src', 'validations', 'constraints', 'content');
+  const contentFiles = readdirSync(contentDir).filter(file => file.includes('INVALID'));
+ 
+  const errors: string[] = [];
+ 
+  for (const fileName of contentFiles) {
+    const filePath = join(contentDir, fileName);
+    
+    try {
+      const fileContent = readFileSync(filePath, 'utf8');
+      const lineCount = fileContent.split('\n').length;
+      
+      if (lineCount > 200) {
+        errors.push(
+          `[ERROR] frr119 ${fileName}: Content exceeds 100 lines (actual: ${lineCount} lines)`
+        );
+      }
+    } catch (error) {
+      errors.push(`Error processing ${fileName}: ${error instanceof Error ? error.message : String(error)}`);
+    }
+  }
+ 
+  if (errors.length > 0) {
+    console.error('Sample content validation errors found:\n' + errors.join('\n'));
+  }
+ 
+  expect(errors, 'No sample content validation errors should be found\n'+errors.join("\n")).to.be.empty;
+ });

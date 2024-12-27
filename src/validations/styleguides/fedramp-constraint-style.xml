@@ -9,22 +9,30 @@
     <context>
         <metapath target="/metaschema-meta-constraints"/>
         <constraints>
-            <!-- TODO: Implement frr103 when axes supported after new oscal-cli release uses metaschema-java release with metaschema-framework/metaschema-java#229 included. -->
-            <!-- <expect id="frr103" target="//expect | //allowed-values | //index-has-key" test="" level="ERROR">
-                <formal-name>Constraints in the Context Sorted Alphabetically by ID</formal-name>
-                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://github.com/GSA/fedramp-automation/blob/develop/src/validations/styleguides/STYLE.md#frr103"/>
-                <message>A FedRAMP constraint MUST be sorted Alphabetically within it's specific context block.</message>
-            </expect> -->
-            <expect id="frr104" target="//expect | //index-has-key" test="count(prop[@namespace = 'https://docs.oasis-open.org/sarif/sarif/v2.1.0' and @name = 'help-url']) eq 1 and doc-available(prop[@namespace = 'https://docs.oasis-open.org/sarif/sarif/v2.1.0' and @name = 'help-url']/@value)" level="ERROR">
+            <let var="all-constraints" expression="//expect | //allowed-values | //index-has-key"/>
+            <let var="id-map" expression="map:merge($all-constraints ! map:entry(@id, ''))"/>
+            <let var="duplicate-ids" expression="map:keys($id-map)[for $key in . return count($all-constraints[@id = $key]) > 1]"/>
+            
+            <let var="single-metapath-contexts" expression="//context[count(metapath) = 1]"/>
+            <let var="target-map" expression="map:merge($single-metapath-contexts/metapath ! map:entry(@target, ''))"/>
+            <let var="duplicate-targets" expression="map:keys($target-map)[for $key in . return count($single-metapath-contexts/metapath[@target = $key]) > 1]"/>
+            <expect id="frr102" target="$single-metapath-contexts/metapath[@target = $duplicate-targets]" 
+                    test="false()" level="ERROR">
+                <formal-name>Single Metapath Target Must Be Unique</formal-name>
+                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://github.com/GSA/fedramp-automation/blob/develop/src/validations/styleguides/README.md#frr102"/>
+                <message>A context element with a single metapath MUST NOT have the same target as another context with a single metapath.</message>
+            </expect>
+           <expect id="frr104" target="//expect | //index-has-key" test="count(prop[@namespace = 'https://docs.oasis-open.org/sarif/sarif/v2.1.0' and @name = 'help-url']) eq 1 and doc-available(prop[@namespace = 'https://docs.oasis-open.org/sarif/sarif/v2.1.0' and @name = 'help-url']/@value)" level="ERROR">
                 <formal-name>Constraints Have a Help URL Property</formal-name>
                 <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://github.com/GSA/fedramp-automation/blob/develop/src/validations/styleguides/STYLE.md#frr104"/>
                 <message>A FedRAMP constraint MUST define a valid help URL.</message>
             </expect>
-            <!-- TODO: Uniqueness check needs to be added to frr105 once support is added for a function like distinct-values() or some other method of ensuring that an id is unique-->
-            <expect id="frr105" target="//expect | //allowed-values | //index-has-key" test="@id" level="ERROR">
+            <!-- TODO: Uniqueness check needs to be improved when support is added for a function like distinct-values() -->
+            <expect id="frr105" target="$all-constraints" 
+                    test="@id and not(@id = $duplicate-ids)" level="ERROR">
                 <formal-name>Constraints Have a Unique ID</formal-name>
                 <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://github.com/GSA/fedramp-automation/blob/develop/src/validations/styleguides/STYLE.md#frr105"/>
-                <message>A FedRAMP constraint MUST have an id.</message>
+                <message>A FedRAMP constraint MUST have a unique id. ID "{@id}" is used multiple times.</message>
             </expect>
             <expect id="frr106" target="//expect | //allowed-values | //index-has-key" test="matches(@id, '^[a-z0-9-]+$')" level="ERROR">
                 <formal-name>Constraints Have IDs with Lower Case Letters, Numbers, and Dashes</formal-name>
@@ -51,7 +59,7 @@
                 <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://github.com/GSA/fedramp-automation/blob/develop/src/validations/styleguides/README.md#frr116"/>
                 <message>A FedRAMP constraint MUST include a formal name.</message>
             </expect>
-        </constraints>
-    </context>
 
+        </constraints>
+</context>
 </metaschema-meta-constraints>

@@ -439,3 +439,7 @@ Examples:
   | user-type-FAIL.yaml |
   | user-type-PASS.yaml |
 #END_DYNAMIC_TEST_CASES
+
+@style-guide
+Scenario: Validating content line length constraints
+  Then I should verify that all invalid sample content is smaller than 100 lines

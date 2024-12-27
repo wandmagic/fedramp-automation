@@ -26,6 +26,7 @@ This document is to instruct FedRAMP developers and community members on mandato
 | [FRR116](#frr116) | Constraints Formal Names Required | Required | Structure; Metadata |
 | [FRR117](#frr117) | Limit Informational Constraint Usage | Recommended| Structure; Metadata |
 | [FRR118](#frr118) | Keep Let Bindings Adjacent to Their Constraints | Recommended| Structure; Sorting |
+| [FRR118](#frr119) | Keep Invalid Sample Content under 100 lines | Recommended| Structure; Sorting |
 
 ### FRR101
 
