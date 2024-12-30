@@ -184,7 +184,7 @@
                 <formal-name>POAM Link Has Resource Fragment</formal-name>
                 <description>Each POAM link must include a non-empty resource fragment.</description>
                 <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/poam/4-poam-template-to-oscal-mapping/"/>
-                <message>Each POAM link MUST include a non-empty resource fragment identifier.</message>
+                <message>In a FedRAMP SSP, each link to an item in the Plan of Actions Milestones MUST include a resource fragment identifier for that specific item in the document. It MUST NOT be empty.</message>
             </expect>
             <expect id="ssp-poam-link-references-valid-resource" target="//component/link[@rel='poam-item']" test="substring-after(@href, '#') = $poam-resource/@uuid" level="ERROR">
                 <formal-name>POAM Link References Valid Resource</formal-name>
