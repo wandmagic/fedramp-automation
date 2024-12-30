@@ -1216,16 +1216,47 @@ Below are non-conformant examples.
 </metaschema-meta-constraints>
 ```
 
-[back to top](#summary)
+### FRR119
 
-#### FRR119 Non-conformant Example
 ID: `frr119`
 
-Below is a non-conformant INVALID sample content containing over 100 lines.
+Formal Name: Keep Invalid Sample Content under 100 lines
+
+State: Recommended
+
+Categories: Structure; Sorting
+
+Guidance: Developers SHOULD keep invalid sample content in non-conformant examples under 100 lines to maintain readability and clarity. When demonstrating validation failures, use the minimum amount of content necessary to illustrate the issue.
+
+[back to top](#summary)
+
+#### FRR119 Conformant Example
+
+Below is a conformant example.
 
 ```xml
 <system-security-plan xmlns="http://csrc.nist.gov/ns/oscal/1.0" uuid="11111111-2222-4000-8000-000000000000">
- (100 lines of content)
+    <!-- Brief example demonstrating the issue -->
+    <metadata>
+        <title>Invalid SSP Example</title>
+        <invalid-element>This demonstrates the validation failure</invalid-element>
+    </metadata>
 </system-security-plan>
 ```
 
+#### FRR119 Non-conformant Example
+
+Below is a non-conformant example.
+
+```xml
+<system-security-plan xmlns="http://csrc.nist.gov/ns/oscal/1.0" uuid="11111111-2222-4000-8000-000000000000">
+    <!-- This example has over 100 lines of content, making it harder to identify the key validation issue -->
+    <metadata>
+        <title>Overly Long Invalid SSP Example</title>
+        <last-modified>2023-04-02T16:53:42Z</last-modified>
+        <!-- ... Many more lines of unnecessary content ... -->
+    </metadata>
+</system-security-plan>
+```
+
+[back to top](#summary)
