@@ -6,7 +6,6 @@
         <last-modified>2024-08-12T16:20:40.393302Z</last-modified>
         <version>2.0</version>
         <oscal-version>1.2.0</oscal-version>
-        <prop name="resolution-tool" value="libOSCAL-Java"/>
     </metadata>
 <group id="ac">
     <title>AC</title>
@@ -75,10 +74,6 @@
         <param id="ac-01_odp.08">
             <prop name="alt-identifier" ns="http://csrc.nist.gov/ns/oscal" value="ac-1_prm_7"/>
             <prop name="label" ns="http://csrc.nist.gov/ns/oscal" value="AC-01_ODP[08]" class="sp800-53a"/>
-            <label>events</label>
-            <guideline>
-                <p>events that would require procedures to be reviewed and updated are defined;</p>
-            </guideline>
         </param>
         <prop name="label" ns="http://csrc.nist.gov/ns/oscal" value="AC-01" class="zero-padded"/>
         <prop name="label" ns="http://csrc.nist.gov/ns/oscal" value="AC-1"/>
@@ -86,12 +81,6 @@
         <prop name="sort-id" ns="http://csrc.nist.gov/ns/oscal" value="ac-01"/>
         <prop name="implementation-level" ns="http://csrc.nist.gov/ns/rmf" value="organization"/>
         <prop name="contributes-to-assurance" ns="http://csrc.nist.gov/ns/rmf" value="true"/>
-        <link href="#27847491-5ce1-4f6a-a1e4-9e483782f0ef" rel="reference"/>
-        <link href="#c7ac44e8-10db-4b64-b2b9-9e32ec1efed0" rel="reference"/>
-        <link href="#08b07465-dbdc-48d6-8a0b-37279602ac16" rel="reference"/>
-        <link href="#cec037f3-8aba-4c97-84b4-4082f9e515d2" rel="reference"/>
-        <link href="#4c0ec2ee-a0d6-428a-9043-4504bc3ade6f" rel="reference"/>
-        <link href="#7f473f21-fdbf-4a6c-81a1-0ab95919609d" rel="reference"/>
         <part name="statement" ns="http://csrc.nist.gov/ns/oscal">
             <prop name="response-point" ns="http://fedramp.gov/ns/oscal" value="123"/>
             <prop name="response-point" ns="http://fedramp.gov/ns/oscal" value="1234"/>
@@ -99,48 +88,4 @@
 
 </control>
 </group>
-<back-matter>
-<resource uuid="7f473f21-fdbf-4a6c-81a1-0ab95919609d">
-    <title>IR 7874</title>
-    <citation>
-        <text>Hu VC, Scarfone KA (2012) Guidelines for Access Control System Evaluation Metrics. (National Institute of Standards and Technology, Gaithersburg, MD), NIST Interagency or Internal Report (IR) 7874.</text>
-    </citation>
-    <rlink href="https://doi.org/10.6028/NIST.IR.7874"/>
-</resource>
-<resource uuid="27847491-5ce1-4f6a-a1e4-9e483782f0ef">
-    <title>OMB A-130</title>
-    <citation>
-        <text>Office of Management and Budget Memorandum Circular A-130, <em>Managing Information as a Strategic Resource</em> , July 2016.</text>
-    </citation>
-    <rlink href="https://www.whitehouse.gov/sites/whitehouse.gov/files/omb/circulars/A130/a130revised.pdf"/>
-</resource>
-<resource uuid="4c0ec2ee-a0d6-428a-9043-4504bc3ade6f">
-    <title>SP 800-100</title>
-    <citation>
-        <text>Bowen P, Hash J, Wilson M (2006) Information Security Handbook: A Guide for Managers. (National Institute of Standards and Technology, Gaithersburg, MD), NIST Special Publication (SP) 800-100, Includes updates as of March 7, 2007.</text>
-    </citation>
-    <rlink href="https://doi.org/10.6028/NIST.SP.800-100"/>
-</resource>
-<resource uuid="c7ac44e8-10db-4b64-b2b9-9e32ec1efed0">
-    <title>SP 800-12</title>
-    <citation>
-        <text>Nieles M, Pillitteri VY, Dempsey KL (2017) An Introduction to Information Security. (National Institute of Standards and Technology, Gaithersburg, MD), NIST Special Publication (SP) 800-12, Rev. 1.</text>
-    </citation>
-    <rlink href="https://doi.org/10.6028/NIST.SP.800-12r1"/>
-</resource>
-<resource uuid="08b07465-dbdc-48d6-8a0b-37279602ac16">
-    <title>SP 800-30</title>
-    <citation>
-        <text>Joint Task Force Transformation Initiative (2012) Guide for Conducting Risk Assessments. (National Institute of Standards and Technology, Gaithersburg, MD), NIST Special Publication (SP) 800-30, Rev. 1.</text>
-    </citation>
-    <rlink href="https://doi.org/10.6028/NIST.SP.800-30r1"/>
-</resource>
-<resource uuid="cec037f3-8aba-4c97-84b4-4082f9e515d2">
-    <title>SP 800-39</title>
-    <citation>
-        <text>Joint Task Force Transformation Initiative (2011) Managing Information Security Risk: Organization, Mission, and Information System View. (National Institute of Standards and Technology, Gaithersburg, MD), NIST Special Publication (SP) 800-39.</text>
-    </citation>
-    <rlink href="https://doi.org/10.6028/NIST.SP.800-39"/>
-</resource>
-</back-matter>
 </catalog>
