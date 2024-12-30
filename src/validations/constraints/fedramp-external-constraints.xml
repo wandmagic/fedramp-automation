@@ -67,7 +67,7 @@
             <let var="implemented-parameters-map" expression="map:merge(//set-parameter ! map:entry(@param-id,.))?*"/>
             <let var="implemented-statements-map" expression="map:merge(//statement ! map:entry(@statement-id,.))?*"/>
             <let var="required-response-points-map" expression="map:merge($resolved-profile//part[(prop[@name='response-point'])] ! map:entry(@id,.))?*"/>
-            <let var="poam-resource" expression="//resource[prop[@name='type' and @value='plan' and @class='poam']]"/>
+            <let var="poam-resource" expression="back-matter/resource[prop[@name='type' and @value='plan' and @class='poam']]"/>
             <let var="poam-uri" expression="$poam-resource/rlink[@media-type='application/oscal+xml']/@href"/>
             <let var="poam-is-available" expression="doc-available(resolve-uri($poam-uri))"/>
             <let var="poam-doc" expression="if ($poam-is-available) then doc(resolve-uri($poam-uri)) else ()"/>
