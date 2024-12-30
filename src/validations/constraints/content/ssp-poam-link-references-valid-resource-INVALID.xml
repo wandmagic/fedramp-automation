@@ -1,0 +1,57 @@
+<system-security-plan xmlns="http://csrc.nist.gov/ns/oscal/1.0" uuid="11111111-2222-4000-8000-000000000000">
+  <system-implementation>
+    <!-- Section 6 - Leveraged Authorizations. -->
+    <!--   Add one for each leveraged system -->
+    <!--   There must be a corresponding  component of type "system" for each leveraged authorization. -->
+    <leveraged-authorization uuid="11111111-2222-4000-8000-019000000001">
+      <title>AwesomeCloud Commercial(IaaS)</title>
+      <prop ns="https://fedramp.gov/ns/oscal" name="leveraged-system-identifier" value="F9999999999"/>
+      <prop ns="https://fedramp.gov/ns/oscal" name="authorization-type" value="fedramp-agency">
+      
+      </prop>
+      <prop ns="https://fedramp.gov/ns/oscal" name="impact-level" value="fips-199-moderate">
+      
+      </prop>
+      <party-uuid>11111111-2222-4000-8000-c0040000000a</party-uuid>
+      <date-authorized>2015-01-01</date-authorized>
+    
+    </leveraged-authorization>    <!-- ========= MINIMUM REQUIRED COMPONENT: THIS SYSTEM ======= -->
+    <!-- ========= MINIMUM REQUIRED COMPONENT: THIS SYSTEM ======= -->
+    <!-- ========= MINIMUM REQUIRED COMPONENT: THIS SYSTEM ======= -->
+    <!--         There must be a "this-system" component           -->
+    <component uuid="11111111-2222-4000-8000-009000000000" type="this-system">
+      <title>This System</title>
+      <status state="operational"/>
+    </component>
+    <!-- Authorized Service from a Leveraged FedRAMP-Authorized System -->
+    <component uuid="11111111-2222-4000-8000-009000500001" type="service">
+      <title>Service A</title>
+      <prop name="leveraged-authorization-uuid" value="11111111-2222-4000-8000-019000000001"/>
+      <prop name="implementation-point" value="external"/>
+      <prop ns="https://fedramp.gov/ns/oscal" name="information-type" value="C.3.5.1"/>
+      <prop ns="https://fedramp.gov/ns/oscal" name="information-type" value="C.3.5.8"/>
+      <link href='#11111111-2222-4000-8000-001000000048' rel='poam-item' resource-fragment="b953b9fc-7e7e-410d-989b-c065d0a458d3"/>
+      <status state="operational"/>
+    </component>
+    <!-- ==== Table 7.1 Leveraged Authorizations ====- -->
+    <!-- ==== Table 7.1 Leveraged Authorizations ====- -->
+    <!-- Scenario 1: A non-authorized service from a FedRAMP leveraged authorization -->
+    <component uuid="11111111-2222-4000-8000-009000500002" type="service">
+      <title>Service B</title>
+      <prop name="implementation-point" value="external"/>
+      <prop name="connection-security" value="tls-1.3" ns="https://fedramp.gov/ns/oscal"/>
+      <prop ns="https://fedramp.gov/ns/oscal" name="direction" value="outgoing"/>
+      <prop ns="https://fedramp.gov/ns/oscal" name="provider" value="self"/>
+      <prop ns="https://fedramp.gov/ns/oscal" name="still-supported" value="yes"/>
+      <prop ns="https://fedramp.gov/ns/oscal" name="authentication-method" value="yes">
+      </prop>
+      <prop ns="https://fedramp.gov/ns/oscal" name="information-type" value="C.3.5.1"/>
+      <prop ns="https://fedramp.gov/ns/oscal" name="information-type" value="C.3.5.8"/>
+      <link href='#11111111-2222-4000-8000-001000000048' rel='poam-item' resource-fragment="b953b9fc-7e7e-410d-989b-c065d0a458d3"/>
+    </component>
+    <!-- Scenario 2: An interconnection between this system and an external system -->
+  
+  </system-implementation>
+  <back-matter>
+  </back-matter>
+</system-security-plan>

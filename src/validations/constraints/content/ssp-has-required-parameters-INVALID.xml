@@ -3,9 +3,47 @@
 <system-security-plan xmlns="http://csrc.nist.gov/ns/oscal/1.0" uuid="11111111-2222-4000-8000-000000000000">
    <metadata/>
    <import-profile href="https://raw.githubusercontent.com/GSA/fedramp-automation/refs/heads/master/dist/content/rev5/baselines/xml/FedRAMP_rev5_MODERATE-baseline_profile.xml">
+        <remarks>
+            <p>This example points to the FedRAMP Rev 5 Moderate baseline that is part of the official
+            FedRAMP 3.0.0 release.</p>
+            <p>Must adjust accordingly for applicable baseline and revision.</p>
+        </remarks>
     </import-profile>
     <control-implementation>
-        <implemented-requirement uuid="11111111-2222-4000-8000-012000000001" control-id="ac-1">           
+        <implemented-requirement uuid="11111111-2222-4000-8000-012000000001" control-id="ac-1">
+            <statement statement-id="ac-1_smt.a.1" uuid="11111111-2222-4000-8000-013000000001">
+                <by-component component-uuid="11111111-2222-4000-8000-009000000000" uuid="11111111-2222-4000-8000-014000000001">
+                    <link href="#11111111-2222-4000-8000-001000000005" rel="policy"/>
+                    <link href="#11111111-2222-4000-8000-001000000023" rel="procedure"/>
+                    <implementation-status state="operational"/>
+                </by-component>
+                <by-component component-uuid="11111111-2222-4000-8000-009000000012" uuid="11111111-2222-4000-8000-014000000002">
+                    <implementation-status state="operational"/>
+                </by-component>
+            </statement>
+            <statement statement-id="ac-1_smt.a.2" uuid="11111111-2222-4000-8000-013000000002">
+                <by-component component-uuid="11111111-2222-4000-8000-009000000000" uuid="11111111-2222-4000-8000-014000000003">
+                    <implementation-status state="partial"/>
+                </by-component>
+                <by-component component-uuid="11111111-2222-4000-8000-009000000013" uuid="11111111-2222-4000-8000-014000000004">
+                    <prop name="planned-completion-date" ns="http://fedramp.gov/ns/oscal" value="2024-01-31Z">                    </prop>
+                    <implementation-status state="partial">
+                    </implementation-status>
+                </by-component>
+            </statement>
+            <statement statement-id="ac-1_smt.b.1" uuid="11111111-2222-4000-8000-013000000003">
+                <by-component component-uuid="11111111-2222-4000-8000-009000000000" uuid="11111111-2222-4000-8000-014000000005">
+                    <implementation-status state="operational"/>
+                </by-component>
+            </statement>
+            <statement statement-id="ac-1_smt.b.2" uuid="11111111-2222-4000-8000-013000000004">
+                <by-component component-uuid="11111111-2222-4000-8000-009000000000" uuid="11111111-2222-4000-8000-014000000006">
+                    <description>
+                        <p>Describe how Part b-2 is satisfied.</p>
+                    </description>
+                    <implementation-status state="operational"/>
+                </by-component>
+            </statement>
         </implemented-requirement>
     </control-implementation>
     <!-- SSP Attachments -->

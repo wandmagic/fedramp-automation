@@ -1,0 +1,29 @@
+<system-security-plan xmlns="http://csrc.nist.gov/ns/oscal/1.0" uuid="11111111-2222-4000-8000-000000000000">
+  <system-implementation>
+    <!-- Section 6 - Leveraged Authorizations. -->
+    <component uuid="11111111-2222-4000-8000-009000000000" type="this-system">
+      <title>This System</title>
+      <status state="operational"/>
+    </component>
+    <component uuid="11111111-2222-4000-8000-009000100001" type="system">
+      <title>Awesome Cloud IaaS (Leveraged Authorized System)</title>
+      <prop name="leveraged-authorization-uuid" value="11111111-2222-4000-8000-019000000001"/>
+      <prop name="implementation-point" value="external"/>
+      <prop name="inherited-uuid" value="22222222-0000-4000-9001-009000000001"/>
+      <prop ns="https://fedramp.gov/ns/oscal" name="nature-of-agreement" value="sla"/>
+      <prop ns="https://fedramp.gov/ns/oscal" name="authentication-method" value="yes">
+      </prop>
+      <prop ns="https://fedramp.gov/ns/oscal" name="information-type" value="C.3.5.1"/>
+      <prop ns="https://fedramp.gov/ns/oscal" name="information-type" value="C.3.5.8"/>
+      <link href='#11111111-2222-4000-8000-001000000049' rel='poam-item' />
+      <status state="operational"/>
+      <responsible-role role-id="provider">
+        <party-uuid>11111111-2222-4000-8000-c0040000000a</party-uuid>
+      </responsible-role>
+      <responsible-role role-id="administrator">
+        <prop name="privilege-uuid" value="11111111-2222-4000-8000-008000000004" ns="https://fedramp.gov/ns/oscal"/>
+        <prop name="privilege-uuid" value="11111111-2222-4000-8000-008000000005" ns="https://fedramp.gov/ns/oscal"/>
+      </responsible-role>
+    </component>
+  </system-implementation>
+</system-security-plan>

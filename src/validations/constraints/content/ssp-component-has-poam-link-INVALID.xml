@@ -1,0 +1,12 @@
+<system-security-plan xmlns="http://csrc.nist.gov/ns/oscal/1.0" uuid="11111111-2222-4000-8000-000000000000">
+  <system-implementation>
+    <component uuid="11111111-2222-4000-8000-009000100001" type="interconnection">
+      <title>Interconnection</title>
+      <description>
+        <p>...</p>
+      </description>
+      <prop ns="https://fedramp.gov/ns/oscal" name="information-type" value="C.3.5.8"/>
+      <status state="operational"/>
+    </component>
+  </system-implementation>
+</system-security-plan>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="https://github.com/usnistgov/OSCAL/releases/download/v1.1.3/oscal_ssp_schema.xsd" schematypens="http://www.w3.org/2001/XMLSchema" title="OSCAL complete schema"?>
+<system-security-plan xmlns="http://csrc.nist.gov/ns/oscal/1.0" uuid="11111111-2222-4000-8000-000000000000">
+  
+  <back-matter>
+    <!-- Cloud Service Provider (CSP) Signatures -->
+    <resource uuid="11111111-2222-4000-8000-001000000002">
+      <title>Signed System Security Plan</title>
+      <description>
+        <p>SSP Signature</p>
+      </description>
+      <prop name="type" class="signed-ssp" value="artifact"/>
+      <!-- Use rlink and/or base64 -->
+      <rlink href="./attachments/signed-ssp.pdf" media-type="application/pdf"/>
+      <base64 filename="ssp.pdf" media-type="application/pdf">00000000</base64>
+      <remarks>
+        <p>The FedRAMP PMO is formulating guidelines for handling digital/electronic signatures in
+OSCAL, and welcome feedback on solutions.</p>
+        <p>For now, the PMO recommends one of the following:</p>
+        <ul>
+          <li>Render the OSCAL SSP content as a PDF that is digitally signed and attached.</li>
+          <li>Render the OSCAL SSP content as a printed page that is physically signed,
+scanned, and attached.</li>
+        </ul>
+        <p>If your organization prefers another approach, please seek prior approval from the
+FedRAMP PMO.</p>
+      </remarks>
+    </resource>
+  </back-matter>
+</system-security-plan>

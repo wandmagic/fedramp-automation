@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-model href="https://raw.githubusercontent.com/usnistgov/OSCAL/v1.0.4/xml/schema/oscal_complete_schema.xsd" schematypens="http://www.w3.org/2001/XMLSchema" title="OSCAL complete schema"?>
 <catalog xmlns="http://csrc.nist.gov/ns/oscal/1.0" uuid="7b985ad3-3e72-42c9-ae35-d250a908c83e">
-    <metadata>
-        <title>FedRAMP Test Profile</title>
-        <last-modified>2024-08-12T16:20:40.393302Z</last-modified>
-        <version>2.0</version>
-        <oscal-version>1.2.0</oscal-version>
-    </metadata>
 <group id="ac">
     <title>AC</title>
     <control id="ac-1" class="SP800-53">
@@ -74,6 +68,10 @@
         <param id="ac-01_odp.08">
             <prop name="alt-identifier" ns="http://csrc.nist.gov/ns/oscal" value="ac-1_prm_7"/>
             <prop name="label" ns="http://csrc.nist.gov/ns/oscal" value="AC-01_ODP[08]" class="sp800-53a"/>
+            <label>events</label>
+            <guideline>
+                <p>events that would require procedures to be reviewed and updated are defined;</p>
+            </guideline>
         </param>
         <prop name="label" ns="http://csrc.nist.gov/ns/oscal" value="AC-01" class="zero-padded"/>
         <prop name="label" ns="http://csrc.nist.gov/ns/oscal" value="AC-1"/>
@@ -81,6 +79,12 @@
         <prop name="sort-id" ns="http://csrc.nist.gov/ns/oscal" value="ac-01"/>
         <prop name="implementation-level" ns="http://csrc.nist.gov/ns/rmf" value="organization"/>
         <prop name="contributes-to-assurance" ns="http://csrc.nist.gov/ns/rmf" value="true"/>
+        <link href="#27847491-5ce1-4f6a-a1e4-9e483782f0ef" rel="reference"/>
+        <link href="#c7ac44e8-10db-4b64-b2b9-9e32ec1efed0" rel="reference"/>
+        <link href="#08b07465-dbdc-48d6-8a0b-37279602ac16" rel="reference"/>
+        <link href="#cec037f3-8aba-4c97-84b4-4082f9e515d2" rel="reference"/>
+        <link href="#4c0ec2ee-a0d6-428a-9043-4504bc3ade6f" rel="reference"/>
+        <link href="#7f473f21-fdbf-4a6c-81a1-0ab95919609d" rel="reference"/>
         <part name="statement" ns="http://csrc.nist.gov/ns/oscal">
             <prop name="response-point" ns="http://fedramp.gov/ns/oscal" value="123"/>
             <prop name="response-point" ns="http://fedramp.gov/ns/oscal" value="1234"/>
