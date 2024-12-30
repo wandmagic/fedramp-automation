@@ -241,7 +241,7 @@
                 <formal-name>Has POAM Resource</formal-name>
                 <description>The back-matter must contain a POAM resource.</description>
                 <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/5-attachments/"/>
-                <message>The SSP back-matter MUST contain a POAM resource.</message>
+                <message>In a FedRAMP SSP, the back-matter MUST contain a POAM resource.</message>
             </expect>
             <expect id="has-rules-of-behavior" target="." test="exists(resource[prop[@name eq 'type' and @value eq 'rules-of-behavior']])" level="ERROR">
                 <formal-name>Has Rules Of Behavior</formal-name>
