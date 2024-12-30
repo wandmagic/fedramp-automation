@@ -785,6 +785,7 @@
             'sc-1_smt.a' : 'at least one procedure that addresses System and Communications Protection MUST be associated with SC-1 part a.',
             'si-1_smt.a' : 'at least one procedure that addresses System and Information Integrity MUST be associated with SI-1 part a.',
             'sr-1_smt.a' : 'at least one procedure that addresses Supply Chain Risk Management MUST be associated with SR-1 part a.'}"/>
+            <let var="component-uuid" expression="by-component/@component-uuid"/>
             <expect id="has-policy" target=".[@statement-id=$control-statement-ids]" test="some $uuid in $component-uuid satisfies count(../../../system-implementation/component[@uuid=$component-uuid and @type='policy']) >= 1" level="ERROR">
                 <formal-name>Has Policy</formal-name>
                 <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/6-security-controls/#organization-policy-and-procedure-statements"/>
@@ -794,6 +795,11 @@
                 <formal-name>Has Procedure</formal-name>
                 <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/6-security-controls/#organization-policy-and-procedure-statements"/>
                 <message>In a FedRAMP SSP, {$procedure-messages(./@statement-id)}</message>
+            </expect>
+            <expect id="statement-has-this-system-component" target="." test="count(../../../system-implementation/component[@type='this-system' and @uuid=$component-uuid]) = 1" level="ERROR">
+                <formal-name>Statement Has This System Component</formal-name>
+                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/6-security-controls/#response-this-system-component"/>
+                <message>In a FedRAMP SSP, each control implementation statement MUST have one "this-system" by-component.</message>
             </expect>
         </constraints>
     </context>
@@ -810,18 +816,6 @@
                 <formal-name>Implementation Status Has Remarks</formal-name>
                 <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/6-security-controls/#implementation-status"/>
                 <message>In a FedRAMP SSP, each by-component that is not implemented MUST have remarks to provide context.</message>
-            </expect>
-        </constraints>
-    </context>
-
-    <context>
-        <metapath target="/system-security-plan/control-implementation/implemented-requirement/statement"/>
-        <constraints>
-            <let var="component-uuid" expression="by-component/@component-uuid"/>
-            <expect id="statement-has-this-system-component" target="." test="count(../../../system-implementation/component[@type='this-system' and @uuid=$component-uuid]) = 1" level="ERROR">
-                <formal-name>Statement Has This System Component</formal-name>
-                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/6-security-controls/#response-this-system-component"/>
-                <message>In a FedRAMP SSP, each control implementation statement MUST have one "this-system" by-component.</message>
             </expect>
         </constraints>
     </context>

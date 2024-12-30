@@ -92,6 +92,7 @@ Examples:
   | has-network-architecture-diagram-link-href-target |
   | has-network-architecture-diagram-link-rel |
   | has-network-architecture-diagram-link-rel-allowed-value |
+  | has-poam-resource |
   | has-policy |
   | has-procedure |
   | has-published-date |
@@ -152,6 +153,11 @@ Examples:
   | scan-type |
   | security-level |
   | security-sensitivity-level-matches-security-impact-level |
+  | ssp-component-has-poam-link |
+  | ssp-poam-item-exists |
+  | ssp-poam-link-has-resource-fragment |
+  | ssp-poam-link-references-valid-resource |
+  | ssp-poam-resource-has-oscal-link |
   | statement-has-this-system-component |
   | unique-inventory-item-asset-id |
   | used-by-link-references-component |
@@ -313,6 +319,8 @@ Examples:
   | has-network-architecture-diagram-link-rel-PASS.yaml |
   | has-network-architecture-diagram-link-rel-allowed-value-FAIL.yaml |
   | has-network-architecture-diagram-link-rel-allowed-value-PASS.yaml |
+  | has-poam-resource-FAIL.yaml |
+  | has-poam-resource-PASS.yaml |
   | has-policy-FAIL.yaml |
   | has-policy-PASS.yaml |
   | has-procedure-FAIL.yaml |
@@ -433,6 +441,16 @@ Examples:
   | security-level-PASS.yaml |
   | security-sensitivity-level-matches-security-impact-level-FAIL.yaml |
   | security-sensitivity-level-matches-security-impact-level-PASS.yaml |
+  | ssp-component-has-poam-link-FAIL.yaml |
+  | ssp-component-has-poam-link-PASS.yaml |
+  | ssp-poam-item-exists-FAIL.yaml |
+  | ssp-poam-item-exists-PASS.yaml |
+  | ssp-poam-link-has-resource-fragment-FAIL.yaml |
+  | ssp-poam-link-has-resource-fragment-PASS.yaml |
+  | ssp-poam-link-references-valid-resource-FAIL.yaml |
+  | ssp-poam-link-references-valid-resource-PASS.yaml |
+  | ssp-poam-resource-has-oscal-link-FAIL.yaml |
+  | ssp-poam-resource-has-oscal-link-PASS.yaml |
   | statement-has-this-system-component-FAIL.yaml |
   | statement-has-this-system-component-PASS.yaml |
   | unique-inventory-item-asset-id-FAIL.yaml |
