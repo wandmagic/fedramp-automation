@@ -178,7 +178,7 @@
                 <description>The referenced POAM item must exist within the correct POAM document.</description>
                 <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/poam/4-poam-template-to-oscal-mapping/"/>
                 <key-field target="@resource-fragment"/>
-                <message>The POAM item referenced by resource-fragment ({@resource-fragment}) MUST exist within the POAM document.</message>
+                <message>In a FedRAMP SSP, the item referenced by resource-fragment ({@resource-fragment}) MUST exist within the Plan of Actions and Milestones document.</message>
             </index-has-key>
             <expect id="ssp-poam-link-has-resource-fragment" target="//component/link[@rel='poam-item']" test="exists(@resource-fragment) and string-length(@resource-fragment) > 0" level="ERROR">
                 <formal-name>POAM Link Has Resource Fragment</formal-name>
