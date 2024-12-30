@@ -171,7 +171,7 @@
                 <formal-name>Component Has POAM Link</formal-name>
                 <description>Each interconnection, service, or software connecting to external systems must have exactly one POAM item link.</description>
                 <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/poam/4-poam-template-to-oscal-mapping/"/>
-                <message>Each interconnection, service, or software connecting to external systems MUST have exactly one POAM item link.</message>
+                <message>In a FedRAMP SSP, each interconnection, service, or software connecting to external systems MUST have exactly one link to an item the corresponding Plan of Actions and Milestones.</message>
             </expect>
             <index-has-key id="ssp-poam-item-exists" target="//component/link[@rel='poam-item']" name="index-poam-items" level="ERROR">
                 <formal-name>POAM Item Exists</formal-name>
