@@ -749,7 +749,7 @@ Then('I should verify that all invalid sample content is smaller than 100 lines'
       const fileContent = readFileSync(filePath, 'utf8');
       const lineCount = fileContent.split('\n').length;
       
-      if (lineCount > 200) {
+      if (lineCount > 100) {
         errors.push(
           `[ERROR] frr119 ${fileName}: Content exceeds 100 lines (actual: ${lineCount} lines)`
         );
