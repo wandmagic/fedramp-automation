@@ -1219,125 +1219,13 @@ Below are non-conformant examples.
 [back to top](#summary)
 
 #### FRR119 Non-conformant Example
+ID: `frr119`
 
 Below is a non-conformant INVALID sample content containing over 100 lines.
 
 ```xml
 <system-security-plan xmlns="http://csrc.nist.gov/ns/oscal/1.0" uuid="11111111-2222-4000-8000-000000000000">
-  <metadata>
-    <title>FedRAMP [Baseline Name] System Security Plan (SSP)</title>
-    <published>2024-12-31T23:59:59Z</published>
-    <last-modified>2024-11-05T02:24:00Z</last-modified>
-    <version>fedramp3.0.0-oscal1.1.4</version>
-    <oscal-version>1.1.2</oscal-version>
-    <revisions>
-      <revision>
-        <published>2023-06-30T00:00:00Z</published>
-        <version>1.0</version>
-        <oscal-version>1.0.4</oscal-version>
-        <prop ns="http://fedramp.gov/ns/oscal" name="party-uuid" value="11111111-2222-4000-8000-004000000001"/>
-        <remarks>
-          <p>Initial publication.</p>
-        </remarks>
-      </revision>
-      <revision>
-        <published>2023-07-06T00:00:00Z</published>
-        <version>1.1</version>
-        <oscal-version>1.0.4</oscal-version>
-        <prop ns="http://fedramp.gov/ns/oscal" name="party-uuid" value="11111111-2222-4000-8000-004000000001"/>
-        <remarks>
-          <p>Minor <code>prop</code> updates.</p>
-        </remarks>
-      </revision>
-    </revisions>
-    <prop name="marking" value="cui" class="fedramp.gov"/>
-    <prop name="fedramp-version" ns="http://fedramp.gov/ns/oscal" value="fedramp-3.0.0rc1-oscal-1.1.2"/>
-    <!-- The following role definitions are required by FedRAMP -->
-    <!-- Do not change the ID's or titles. -->
-    <role id="fedramp-pmo">
-      <title>FedRAMP Program Management Office</title>
-      <description>
-        <p>The FedRAMP PMO resides within GSA and supports agencies and cloud service providers
-through the FedRAMP authorization process and maintains a secure repository of
-FedRAMP authorizations to enable reuse of security packages.</p>
-      </description>
-    </role>
-    <role id="prepared-by">
-      <title>Prepared By</title>
-      <description>
-        <p>The organization that prepared this SSP. If developed in-house, this is the CSP
-itself.</p>
-      </description>
-    </role>
-    <role id="prepared-for">
-      <title>Prepared For</title>
-      <description>
-        <p>The organization for which this SSP was prepared. Typically the CSP.</p>
-      </description>
-    </role>
-    <role id="content-approver">
-      <title>System Security Plan Approval</title>
-      <description>
-        <p>The individual or individuals accountable for the accuracy of this SSP.</p>
-      </description>
-    </role>
-    <role id="cloud-service-provider">
-      <title>Cloud Service Provider</title>
-      <short-name>CSP</short-name>
-    </role>
-    <role id="system-owner">
-      <!-- Referenced in Section 4 - System Owner -->
-      <title>Information System Owner</title>
-      <description>
-        <p>The individual within the CSP who is ultimately accountable for everything related to
-this system.</p>
-      </description>
-    </role>
-    <role id="authorizing-official">
-      <title>Authorizing Official</title>
-      <description>
-        <p>The individual or individuals who must grant this system an authorization to
-operate.</p>
-      </description>
-    </role>
-    <role id="authorizing-official-poc">
-      <title>Authorizing Official's Point of Contact</title>
-      <description>
-        <p>The individual representing the authorizing official.</p>
-      </description>
-    </role>
-      <role id="system-admin">
-        <title>System Administrator</title>
-      </role>
-    <role id="system-poc-management">
-      <title>Information System Management Point of Contact (POC)</title>
-      <description>
-        <p>The highest level manager who responsible for system operation on behalf of the
-System Owner.</p>
-      </description>
-    </role>
-    <role id="system-poc-technical">
-      <title>Information System Technical Point of Contact</title>
-      <description>
-        <p>The individual or individuals leading the technical operation of the system.</p>
-      </description>
-    </role>
-    <role id="system-poc-other">
-      <title>General Point of Contact (POC)</title>
-      <description>
-        <p>A general point of contact for the system, designated by the system owner.</p>
-      </description>
-    </role>
-    <role id="information-system-security-officer">
-      <!-- Referenced in Section 5 - Assignment of Security Responsibility -->
-      <title>System Information System Security Officer (or Equivalent)</title>
-      <description>
-        <p>The individual accountable for the security posture of the system on behalf of the
-system owner.</p>
-      </description>
-    </metadata>
+ (100 lines of content)
 </system-security-plan>
 ```
 
-
-[back to top](#summary)
