@@ -190,7 +190,7 @@
                 <formal-name>POAM Link References Valid Resource</formal-name>
                 <description>Each POAM link must reference the system's POAM resource by UUID.</description>
                 <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/poam/4-poam-template-to-oscal-mapping/"/>
-                <message>Each POAM link MUST reference the system's POAM resource using its UUID ({substring-after(@href, '#')}) should be ({ $poam-resource/@uuid}).</message>
+                <message>In a FedRAMP SSP, each link MUST reference the Plan of Actions and Milestones for the system by its unique identifier. Instead of ({substring-after(@href, '#')}), the value MUST be ({ $poam-resource/@uuid}).</message>
             </expect>
             <expect id="ssp-poam-resource-has-oscal-link" target="." test="exists($poam-uri)" level="ERROR">
                 <formal-name>SSP Has POAM Link</formal-name>
