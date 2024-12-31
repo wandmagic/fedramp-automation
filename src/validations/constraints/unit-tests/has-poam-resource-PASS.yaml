@@ -1,7 +1,9 @@
 test-case:
   name: Positive Test for has-poam-resource
   description: This test case validates the behavior of constraint has-poam-resource
-  content: ../../../content/rev5/examples/ssp/xml/fedramp-ssp-example.oscal.xml
+  content: 
+    - ../../../content/rev5/examples/ssp/xml/fedramp-ssp-example.oscal.xml
+    - ../content/ssp-legacy-poam-link-VALID.xml
   expectations:
     - constraint-id: has-poam-resource
       result: pass

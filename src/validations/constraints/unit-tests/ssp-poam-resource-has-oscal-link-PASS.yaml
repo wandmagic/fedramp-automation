@@ -3,7 +3,8 @@ test-case:
   description: >-
     This test case validates the behavior of constraint
     poam-resource-has-oscal-link
-  content: ../../../content/rev5/examples/ssp/xml/fedramp-ssp-example.oscal.xml
+  content: 
+    - ../../../content/rev5/examples/ssp/xml/fedramp-ssp-example.oscal.xml
   expectations:
     - constraint-id: ssp-poam-resource-has-oscal-link
       result: pass

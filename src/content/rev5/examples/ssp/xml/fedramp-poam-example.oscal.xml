@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<plan-of-action-and-milestones uuid="714210d2-f8df-448c-be3e-e2213816cf79"
+<plan-of-action-and-milestones uuid="11111111-2222-4000-8000-001000000048"
     xmlns="http://csrc.nist.gov/ns/oscal/1.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://csrc.nist.gov/ns/oscal/1.0 https://github.com/usnistgov/OSCAL/releases/download/v1.1.2/oscal_poam_schema.xsd">
     <metadata>
@@ -77,9 +77,9 @@
             <p>finding description</p>
         </description>
         <origin>
-            <actor type="autonmous" actor-uuid="1237eb6e-0c05-43bc-8438-799739615e31"></actor>
+            <actor type="actor" actor-uuid="1237eb6e-0c05-43bc-8438-799739615e31"></actor>
         </origin>
-        <target type="self" target-id="c807eb6e-0c05-43bc-8438-799739615e31">
+        <target type="" target-id="c807eb6e-0c05-43bc-8438-799739615e31">
             <description>
                 <p>example target description</p>
             </description>

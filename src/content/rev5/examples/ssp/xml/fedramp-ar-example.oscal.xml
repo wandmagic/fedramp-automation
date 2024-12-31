@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assessment-results uuid="11111111-2222-4000-8000-001000000048"
+    xmlns="http://csrc.nist.gov/ns/oscal/1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://csrc.nist.gov/ns/oscal/1.0 https://github.com/usnistgov/OSCAL/releases/download/v1.1.2/oscal_assessment-results_schema.xsd">
+        <metadata>
+        <title>Service B Security Assessment Results</title>
+        <last-modified>2024-12-12T13:57:28.355446-04:00</last-modified>
+        <version>1.0</version>
+        <oscal-version>1.1.2</oscal-version>
+        <role id="assessor">
+            <title>Security Control Assessor</title>
+        </role>
+        <party uuid="e7730080-71ce-4b20-bec4-84f33136fd58" type="person">
+            <name>Security Control Assessor</name>
+            <member-of-organization>d7730080-71ce-4b20-bec4-84f33136fd58</member-of-organization>
+        </party>
+        <party uuid="d7730080-71ce-4b20-bec4-84f33136fd58" type="person">
+            <name>Assessment-team</name>
+        </party>
+        <responsible-party role-id="assessor">
+            <party-uuid>e7730080-71ce-4b20-bec4-84f33136fd58</party-uuid>
+        </responsible-party>
+    </metadata>
+    <import-ap href="assessment-plan.oscal.xml" />
+    <result uuid="485cfb95-20c7-45b0-991c-3f86a8e0cbd4">
+        <title>Service B Security Assessment Results</title>
+        <description>
+            <p>Results of security assessment for Service B implementation and controls.</p>
+        </description>
+        <start>2024-12-12T13:00:00-04:00</start>
+        <end>2024-12-12T17:00:00-04:00</end>
+        <reviewed-controls>
+            <control-selection>
+                <include-all/>
+            </control-selection>
+        </reviewed-controls>
+        <observation uuid="b807eb6e-0c05-43bc-8438-799739615e35">
+            <title>TLS Implementation Assessment</title>
+            <description>
+                <p>Assessment of TLS 1.3 implementation and configuration.</p>
+            </description>
+            <method>EXAMINE</method>
+            <type>finding</type>
+            <subject subject-uuid="11111111-2222-4000-8000-009000500002" type="component"/>
+            <collected>2024-12-12T13:00:00-04:00</collected>
+            <remarks>
+                <p>TLS 1.3 is properly implemented for connection security. Authentication controls are in place but require additional documentation and continuous monitoring procedures.</p>
+            </remarks>
+        </observation>
+        <observation uuid="b28873f7-0a45-476d-9cd3-1d2ec0b8bca2">
+            <title>Authentication Controls Review</title>
+            <description>
+                <p>Evaluation of authentication mechanisms and access controls.</p>
+            </description>
+            <method>EXAMINE</method>
+            <type>finding</type>
+            <subject subject-uuid="11111111-2222-4000-8000-009000500002" type="component"/>
+            <collected>2024-12-12T14:00:00-04:00</collected>
+            <remarks>
+                <p>Authentication mechanisms are implemented but require enhanced monitoring and documentation of procedures.</p>
+            </remarks>
+        </observation>
+        <risk uuid="485cfb95-20c7-45b0-991c-3f86a8e0cbd4">
+            <title>Use of Non-Authorized Service Outside FedRAMP Boundary</title>
+            <description>
+                <p>Service B operates outside the explicit FedRAMP authorization boundary.</p>
+            </description>
+            <statement>
+                <p>The use of non-authorized services introduces potential security risks requiring ongoing monitoring and risk management.</p>
+            </statement>
+            <status>investigating</status>
+            <characterization>
+                <origin>
+                    <actor type="tool" actor-uuid="e7730080-71ce-4b20-bec4-84f33136fd58"/>
+                </origin>
+                <facet name="likelihood" value="moderate" system="https://fedramp.gov/ns/oscal"/>
+                <facet name="impact" value="moderate" system="https://fedramp.gov/ns/oscal"/>
+            </characterization>
+        </risk>
+        <finding uuid="b807eb6e-0c05-43bc-8438-799739615e31">
+            <title>Documentation and Monitoring Requirements</title>
+            <description>
+                <p>Additional documentation and monitoring procedures needed for service operation outside FedRAMP boundary.</p>
+            </description>
+            <target type="objective-id" target-id="security-documentation">
+                <description>
+                    <p>Enhanced documentation and monitoring required.</p>
+                </description>
+                <status state="not-satisfied"/>
+            </target>
+            <implementation-statement-uuid>b953b9fc-7e7e-410d-989b-c065d0a458d3</implementation-statement-uuid>
+            <related-observation observation-uuid="b807eb6e-0c05-43bc-8438-799739615e35"/>
+        </finding>
+    </result>
+</assessment-results>

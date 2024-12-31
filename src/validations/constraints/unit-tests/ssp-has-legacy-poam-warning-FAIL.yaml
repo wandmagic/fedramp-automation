@@ -1,0 +1,9 @@
+test-case:
+  name: Negative Test for ssp-has-legacy-poam-warning
+  description: >-
+    This test case validates the behavior of constraint
+    ssp-has-legacy-poam-warning
+  content: ../content/ssp-ssp-has-legacy-poam-warning-INVALID.xml
+  expectations:
+    - constraint-id: ssp-has-legacy-poam-warning
+      result: fail

@@ -1,0 +1,24 @@
+<system-security-plan xmlns="http://csrc.nist.gov/ns/oscal/1.0" uuid="11111111-2222-4000-8000-000000000000">
+<back-matter>
+ <resource uuid="11111111-2222-4000-8000-001000000048">
+      <title>Plan of Actions and Milestones (POAM)</title>
+      <prop name="published" value="2023-05-31T00:00:00Z"/>
+      <!-- document date -->
+      <prop name="version" value="Document Version"/>
+      <prop name="type" value="plan" class="poam"/>
+      <rlink media-type="application/xml" href="fedramp-poam-example.oscal.xml"/>
+      <base64 filename="SAMPLE_POAM_20230531.xml" media-type="application/xml">00000000</base64>
+      <!-- Todo: Fix Schematron. Make base64 optional -->
+    </resource>
+     <resource uuid="11111111-2222-4000-8000-001000000042">
+      <title>Plan of Actions and Milestones (POAM)</title>
+      <prop name="published" value="2023-05-31T00:00:00Z"/>
+      <!-- document date -->
+      <prop name="version" value="Document Version"/>
+      <prop name="type" value="plan" class="legacy-poam"/>
+      <rlink media-type="application/oscal+xml" href="fedramp-poam-example.oscal.xml"/>
+      <base64 filename="SAMPLE_POAM_20230531.xml" media-type="application/xml">00000000</base64>
+      <!-- Todo: Fix Schematron. Make base64 optional -->
+    </resource>
+  </back-matter>
+</system-security-plan>

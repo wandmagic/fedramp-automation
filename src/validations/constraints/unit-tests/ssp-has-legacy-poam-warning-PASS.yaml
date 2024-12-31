@@ -1,0 +1,9 @@
+test-case:
+  name: Positive Test for ssp-has-legacy-poam-warning
+  description: >-
+    This test case validates the behavior of constraint
+    ssp-has-legacy-poam-warning
+  content: ../../../content/rev5/examples/ssp/xml/fedramp-ssp-example.oscal.xml
+  expectations:
+    - constraint-id: ssp-has-legacy-poam-warning
+      result: pass

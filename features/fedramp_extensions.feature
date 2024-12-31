@@ -11,6 +11,9 @@ Scenario Outline: Documents that should be valid are pass
 Examples:
 | valid_file     |
 | ../../../content/rev5/examples/ssp/xml/fedramp-ssp-example.oscal.xml |
+# | ../../../content/rev5/examples/ssp/xml/fedramp-poam-example.oscal.xml |
+# | ../../../content/rev5/examples/ssp/xml/fedramp-ap-example.oscal.xml |
+# | ../../../content/rev5/examples/ssp/xml/fedramp-ar-example.oscal.xml |
 
 @full-coverage
 Scenario: Preparing constraint coverage analysis
@@ -154,6 +157,7 @@ Examples:
   | security-level |
   | security-sensitivity-level-matches-security-impact-level |
   | ssp-component-has-poam-link |
+  | ssp-has-legacy-poam-warning |
   | ssp-poam-item-exists |
   | ssp-poam-link-has-resource-fragment |
   | ssp-poam-link-references-valid-resource |
@@ -443,6 +447,8 @@ Examples:
   | security-sensitivity-level-matches-security-impact-level-PASS.yaml |
   | ssp-component-has-poam-link-FAIL.yaml |
   | ssp-component-has-poam-link-PASS.yaml |
+  | ssp-has-legacy-poam-warning-FAIL.yaml |
+  | ssp-has-legacy-poam-warning-PASS.yaml |
   | ssp-poam-item-exists-FAIL.yaml |
   | ssp-poam-item-exists-PASS.yaml |
   | ssp-poam-link-has-resource-fragment-FAIL.yaml |

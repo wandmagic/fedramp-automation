@@ -75,8 +75,6 @@ SSP authors must add implmentations for all required controls.
       <!-- document date -->
       <prop name="version" value="Document Version"/>
       <prop name="type" value="plan" class="poam"/>
-      <rlink href="./attachments/POAMs/SAMPLE_POAM_20230531.xml" media-type="=application/xml"/>
-      <rlink href="./attachments/POAMs/SAMPLE_POAM_20230531.xlsx" media-type="application/vnd.ms-excel"/>
       <rlink media-type="application/oscal+xml" href="fedramp-poam-example.oscal.xml"/>
       <base64 filename="SAMPLE_POAM_20230531.xml" media-type="application/xml">00000000</base64>
       <!-- Todo: Fix Schematron. Make base64 optional -->
