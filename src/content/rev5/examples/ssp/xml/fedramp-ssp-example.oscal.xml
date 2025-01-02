@@ -9068,9 +9068,8 @@ FedRAMP PMO.</p>
       <prop name="version" value="Document Version"/>
       <prop ns="http://fedramp.gov/ns/oscal" name="type" value="fedramp-poam"/>
       <rlink media-type="application/xml;oscal-model=poam" href="fedramp-poam-example.oscal.xml"/>
-      <rlink media-type="application/xlsx" href="fedramp-poam-example.oscal.xlsx"/>
       <base64 filename="SAMPLE_POAM_20230531.xml" media-type="application/xml">00000000</base64>
-      <!-- Todo: Fix Schematron. Make base64 optional -->
+      <!-- Todo: forbid base64-->
     </resource>
     <!-- Appendix P - Supply Chain Risk Management Plan (SCRMP) -->
     <resource uuid="11111111-2222-4000-8000-001000000049">
