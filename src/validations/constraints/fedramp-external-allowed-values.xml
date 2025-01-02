@@ -60,6 +60,7 @@
                 <enum value="privacy-impact-assessment">Privacy Impact Assessment</enum>
                 <enum value="information-system-contingency-plan">Information System Contingency Plan</enum>
                 <enum value="configuration-management-plan">configuration-management-plan</enum>
+                <enum value="fedramp-poam">Fedramp Poam</enum>
                 <remarks>
                     <p>Not all values apply to all FedRAMP artifacts.</p>
                 </remarks>

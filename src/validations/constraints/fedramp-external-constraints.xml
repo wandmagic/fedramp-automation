@@ -67,12 +67,11 @@
             <let var="implemented-parameters-map" expression="map:merge(//set-parameter ! map:entry(@param-id,.))?*"/>
             <let var="implemented-statements-map" expression="map:merge(//statement ! map:entry(@statement-id,.))?*"/>
             <let var="required-response-points-map" expression="map:merge($resolved-profile//part[(prop[@name='response-point'])] ! map:entry(@id,.))?*"/>
-            <let var="oscal-poam-resource" expression="back-matter/resource[prop[@name='type' and @value='plan' and @class='poam']]"/>
-            <let var="legacy-poam-resource" expression="back-matter/resource[prop[@name='type' and @value='plan' and @class='legacy-poam']]"/>
-            <let var="oscal-poam-uri" expression="if($oscal-poam-resource) then $oscal-poam-resource/rlink/@href else false()"/>
-            <let var="legacy-poam-uri" expression="if($legacy-poam-resource)then $legacy-poam-resource/rlink/@href else false()"/>
-            <let var="has-oscal-poam" expression="exists(back-matter/resource[prop[@name='type' and @value='plan' and @class='poam']])"/>
-            <let var="has-legacy-poam" expression="exists(back-matter/resource[prop[@name='type' and @value='plan' and @class='legacy-poam']])"/>
+            <let var="fedramp-poam-resource" expression="back-matter/resource[prop[@name='type' and @value='fedramp-poam']]"/>
+            <let var="oscal-poam-uri" expression="if($fedramp-poam-resource) then $fedramp-poam-resource/rlink[contains(@media-type,'oscal')]/@href else false()"/>
+            <let var="legacy-poam-uri" expression="if($fedramp-poam-resource) then $fedramp-poam-resource/rlink[not(contains(@media-type,'oscal'))]/@href else false()"/>
+            <let var="has-oscal-poam" expression="exists($oscal-poam-uri)"/>
+            <let var="has-legacy-poam" expression="exists($legacy-poam-uri)"/>
             <let var="legacy-poam-is-available" expression="if ($legacy-poam-uri) then doc-available(resolve-uri($legacy-poam-uri)) else false()"/>
             <let var="oscal-poam-is-available" expression="if ($oscal-poam-uri) then doc-available(resolve-uri($oscal-poam-uri)) else false()"/>
             <let var="oscal-poam-doc" expression="if ($oscal-poam-is-available) then doc(resolve-uri($oscal-poam-uri)) else ()"/>
@@ -199,7 +198,7 @@
                 <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/poam/4-poam-template-to-oscal-mapping/"/>
                 <message>In a FedRAMP SSP, each link to an item in the Plan of Actions Milestones MUST include a resource fragment identifier for that specific item in the document. It MUST NOT be empty.</message>
             </expect>
-             <expect id="ssp-poam-link-references-valid-resource" target="system-implementation/component/link[@rel='poam-item']" test="if ($has-oscal-poam) then substring-after(@href, '#') = $oscal-poam-resource/@uuid else if ($has-legacy-poam) then substring-after(@href, '#') = $legacy-poam-resource/@uuid else false()" level="ERROR">
+             <expect id="ssp-poam-link-references-valid-resource" target="system-implementation/component/link[@rel='poam-item']" test="if ($has-oscal-poam) then substring-after(@href, '#') = $fedramp-poam-resource/@uuid else if ($has-legacy-poam) then substring-after(@href, '#') = $fedramp-poam-resource/@uuid else false()" level="ERROR">
                 <formal-name>POAM Link References Valid Resource</formal-name>
                 <description>Each POAM link must reference the system's POAM resource by UUID.</description>
                 <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/poam/4-poam-template-to-oscal-mapping/"/>
@@ -249,7 +248,7 @@
                 <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/5-attachments/"/>
                 <message>A FedRAMP SSP MUST have a Contingency Plan attached.</message>
             </expect>
-            <expect id="has-poam-resource" target="." test="exists(resource[prop[@name='type' and @value='plan' and @class='poam']]) or exists(resource[prop[@name='type' and @value='plan' and @class='legacy-poam']])" level="ERROR">
+            <expect id="has-poam-resource" target="." test="exists($fedramp-poam-resource)" level="ERROR">
                 <formal-name>Has POAM Resource</formal-name>
                 <description>The back-matter must contain either an OSCAL or legacy POAM resource.</description>
                 <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/5-attachments/"/>
