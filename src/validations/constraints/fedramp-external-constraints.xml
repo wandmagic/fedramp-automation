@@ -683,7 +683,7 @@
                 <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/5-attachments/#system-inventory-approach"/>
                 <message>FedRAMP requires CSPs to provide justification for any high or moderate impact system inventory item that does not support authenticated scans.</message>
             </expect>
-             <expect id="high-impact-inventory-item-has-asset-owner" target="." test="if ($high-sensitivity) then count(./responsible-party[@role-id=('asset-owner', 'asset-administrator')] | //component[@uuid=./implemented-component/@component-uuid]/responsible-role[@role-id=('asset-owner', 'asset-administrator')][count(party[@uuid=./party-uuid]) >= 1]) >= 1 else true()" level="ERROR">
+             <expect id="high-impact-inventory-item-has-asset-owner" target="." test="if ($high-sensitivity) then count(./responsible-party[@role-id=('asset-owner', 'asset-administrator')] | $implemented-component/responsible-role[@role-id=('asset-owner', 'asset-administrator')][count(party[@uuid=./party-uuid]) >= 1]) >= 1 else true()" level="ERROR">
                 <formal-name>High Impact Inventory Item Has Asset Owner</formal-name>
                 <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/5-attachments/#system-inventory-approach"/>
                 <message>For HIGH-impact systems, every inventory-item MUST identify an asset-owner or administrator property either within the inventory-item itself, or within the component linked by the inventory-item.</message>
