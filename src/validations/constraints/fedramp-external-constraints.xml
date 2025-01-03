@@ -671,49 +671,29 @@
     </context>
 
     <context>
-        <metapath target="//inventory-item"/>
+        <metapath target="/system-security-plan/system-implementation/inventory-item"/>
         <constraints>
-            <let var="high-sensitivity" expression="/system-characteristics/security-sensitivity-level='fips-199-high'"/>
-            <expect id="high-impact-inventory-item-has-asset-owner" target="." test="if ($high-sensitivity) then count(./responsible-party[@role-id=('asset-owner', 'asset-administrator')] | //component[@uuid=./implemented-component/@component-uuid]/responsible-role[@role-id=('asset-owner', 'asset-administrator')][count(party[@uuid=./party-uuid]) >= 1]) >= 1 else true()" level="ERROR">
-                <formal-name>High Impact Inventory Item Has Asset Owner</formal-name>
-                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/5-attachments/#system-inventory-approach"/>
-                <message>For HIGH-impact systems, every inventory-item MUST identify an asset-owner or administrator property either within the inventory-item itself, or within the component linked by the inventory-item.</message>
-            </expect>
-            <expect id="high-impact-inventory-item-has-asset-owner" target="." test="if ($high-sensitivity) then count(./responsible-party[@role-id=('asset-owner', 'asset-administrator')] | //component[@uuid=./implemented-component/@component-uuid]/responsible-role[@role-id=('asset-owner', 'asset-administrator')][count(party[@uuid=./party-uuid]) >= 1]) >= 1 else true()" level="ERROR">
-                <formal-name>High Impact Inventory Item Has Asset Owner</formal-name>
-                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="fedramp_inventory_asset_owner"/>
-                <message>For HIGH-impact systems, every inventory-item MUST identify an asset-owner or administrator property either within the inventory-item itself, or within the component linked by the inventory-item.</message>
-            </expect>
+            <let var="high-sensitivity" expression="../../system-characteristics/security-sensitivity-level='fips-199-high'"/>
+            <let var="moderate-sensitivity" expression="../../system-characteristics/security-sensitivity-level='fips-199-moderate'"/>
 
-        </constraints>
-
-    </context>
-
-
-    <context>
-        <metapath target="//(inventory-item | component)"/>
-        <constraints>
-        <let var="high-sensitivity" expression="/system-characteristics/security-sensitivity-level='fips-199-high'"/>
-        <let var="moderate-sensitivity" expression="/system-characteristics/security-sensitivity-level='fips-199-moderate'"/>
-
+            <let var ="component-uuid" expression="implemented-component/@component-uuid"/>
+            <let var ="implemented-component" expression="../component[@uuid=$component-uuid]"/>
             <expect id="authenticated-scan-no-has-remarks" target="prop[@name='allows-authenticated-scan' and @value='no']" test="if ($high-sensitivity or $moderate-sensitivity) then exists(remarks) else true()" level="ERROR">
                 <formal-name>Authenticated Scan No Has Remarks</formal-name>
                 <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/5-attachments/#system-inventory-approach"/>
                 <message>FedRAMP requires CSPs to provide justification for any high or moderate impact system inventory item that does not support authenticated scans.</message>
             </expect>
-        </constraints>
-    </context>
-
-    <context>
-        <metapath target="/system-security-plan/system-implementation/inventory-item"/>
-        <constraints>
-            <let var ="component-uuid" expression="implemented-component/@component-uuid"/>
-            <expect id="inventory-item-has-function" target="." test="exists(prop[@name='function']/remarks) or exists(../component[@uuid=$component-uuid]/prop[@name='function']/remarks)" level="ERROR">
+             <expect id="high-impact-inventory-item-has-asset-owner" target="." test="if ($high-sensitivity) then count(./responsible-party[@role-id=('asset-owner', 'asset-administrator')] | //component[@uuid=./implemented-component/@component-uuid]/responsible-role[@role-id=('asset-owner', 'asset-administrator')][count(party[@uuid=./party-uuid]) >= 1]) >= 1 else true()" level="ERROR">
+                <formal-name>High Impact Inventory Item Has Asset Owner</formal-name>
+                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/5-attachments/#system-inventory-approach"/>
+                <message>For HIGH-impact systems, every inventory-item MUST identify an asset-owner or administrator property either within the inventory-item itself, or within the component linked by the inventory-item.</message>
+            </expect>
+            <expect id="inventory-item-has-function" target="." test="exists(prop[@name='function']/remarks) or exists($implemented-component/prop[@name='function']/remarks)" level="ERROR">
                 <formal-name>Inventory Item Has Function</formal-name>
                 <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/5-attachments/#system-inventory-approach"/>
                 <message>Every inventory-item MUST describe the function provided by the item, either within the inventory-item itself, or within the component linked by the inventory-item.</message>
             </expect>
-            <expect id="inventory-item-has-scan-type" target="." test="count(prop[@name='scan-type' and @ns='http://fedramp.gov/ns/oscal']) >= 1 or count(../component[@uuid=./implemented-component/@component-uuid]/prop[@name='scan-type' and @ns='http://fedramp.gov/ns/oscal']) >= 1" level="ERROR">
+            <expect id="inventory-item-has-scan-type" target="." test="count(prop[@name='scan-type' and @ns='http://fedramp.gov/ns/oscal']) >= 1 or count($implemented-component/prop[@name='scan-type' and @ns='http://fedramp.gov/ns/oscal']) >= 1" level="ERROR">
                 <formal-name>Inventory Item Has Scan Type</formal-name>
                 <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/5-attachments/#system-inventory-approach"/>
                 <message>Every inventory-item MUST indicate one or more scan type(s), either within the inventory-item itself, or within the component linked by the inventory-item.</message>

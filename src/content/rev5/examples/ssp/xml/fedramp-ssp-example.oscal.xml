@@ -929,6 +929,7 @@ that represents the whole system.</p>
       <prop name="implementation-point" value="external"/>
       <prop name="inherited-uuid" value="22222222-0000-4000-9001-009000000001"/>
       <prop ns="http://fedramp.gov/ns/oscal" name="nature-of-agreement" value="sla"/>
+      <prop ns="http://fedramp.gov/ns/oscal" name="end-of-life-date" value="2025-12-31"/>
       <prop ns="http://fedramp.gov/ns/oscal" name="authentication-method" value="yes">
         <remarks>
           <p>If 'yes', describe the authentication method.</p>
@@ -1651,7 +1652,9 @@ property.</p>
       </description>
       <prop name="implementation-point" value="internal"/>
       <prop name="public" value="yes"/>
+      <prop ns="http://fedramp.gov/ns/oscal" name="scan-type" value="infrastructure"/>
       <status state="operational"/>
+      
     </component>
     
     <!-- Virtual Appliance Component -->
@@ -1662,7 +1665,9 @@ property.</p>
         <p>Describe the virtual appliance and what it is used for.</p>
       </description>
       <prop name="implementation-point" value="internal"/>
+      <prop name='function' value='virtual'><remarks><p>virtual function</p></remarks></prop>
       <status state="operational"/>
+      
     </component>
     
     <!-- Hardware Component -->
@@ -1781,7 +1786,7 @@ compliance (e.g., Module in Process).</p>
       <prop name="model" value="stable-slim"/>
       <prop name="version" value="11"/>
       <prop name="patch-level" value="Patch Level"/>
-      <prop name="asset-id" value="unique-asset-ID-3"/>
+      <prop name="asset-id" value="unique-asset-ID-03"/>
       <link rel="validation" href="#11111111-2222-4000-8000-009000000002"/>
       <link href="https://hub.docker.com/layers/library/debian/stable/images/sha256-e83913597ca9deb9d699316a9a9d806c2a87ed61195ac66ae0a8ac55089a84b9"/>
       <status state="operational"/>
@@ -2368,11 +2373,10 @@ approved.</p>
           <p>If no, explain why. If yes, omit remark.</p>
         </remarks>
       </prop>
-      <prop name='function' value="none">
-        <remarks>
-          <p>it has no function</p>
-        </remarks>
+      <prop ns="http://fedramp.gov/ns/oscal" name="function" value="none">
+        <remarks><p>no function</p></remarks>
       </prop>
+
       <prop ns="http://fedramp.gov/ns/oscal" name="scan-type" value="infrastructure"/>
       <responsible-party role-id="asset-owner">
         <party-uuid>11111111-2222-4000-8000-004000000010</party-uuid>
@@ -2401,9 +2405,10 @@ approved.</p>
       <prop name="is-scanned" value="yes"/>
       <prop ns="http://fedramp.gov/ns/oscal" name="vendor-name" value="Vendor"/>
       <prop ns="http://fedramp.gov/ns/oscal" name="scan-type" value="infrastructure"/>
-            <prop name='function' value="none">
+
+      <prop name="function" value="Required brief, text-based description.">
         <remarks>
-          <p>it has no function</p>
+          <p>Required, longer, formatted description.</p>
         </remarks>
       </prop>
       <implemented-component component-uuid="11111111-2222-4000-8000-009000000008"/>
@@ -2420,13 +2425,9 @@ approved.</p>
       <prop name="ipv6-address" value="0000:0000:0000:0000:0000:ffff:0a04:0404"/>
       <prop name="is-scanned" value="yes"/>
       <prop ns="http://fedramp.gov/ns/oscal" name="vendor-name" value="Vendor"/>
-      <prop ns="http://fedramp.gov/ns/oscal" name="scan-type" value="infrastructure"/>
-      <prop name='function' value="none">
-        <remarks>
-          <p>it has no function</p>
-        </remarks>
+      <prop ns="http://fedramp.gov/ns/oscal" name="scan-type" value="other">
+        <remarks><p>a different kind of scan</p></remarks>
       </prop>
-
       <implemented-component component-uuid="11111111-2222-4000-8000-009000500006"/>
     </inventory-item>
     <inventory-item uuid="11111111-2222-4000-8000-011000000005">
@@ -2442,12 +2443,13 @@ approved.</p>
       <prop name="is-scanned" value="yes"/>
       <prop ns="http://fedramp.gov/ns/oscal" name="vendor-name" value="Vendor"/>
       <prop ns="http://fedramp.gov/ns/oscal" name="scan-type" value="infrastructure"/>
-            <prop name='function' value="none">
+ 
+      <prop name="function" value="Required brief, text-based description.">
         <remarks>
-          <p>it has no function</p>
+          <p>Required, longer, formatted description.</p>
         </remarks>
       </prop>
-      <implemented-component component-uuid="11111111-2222-4000-8000-009000000011"/>
+     <implemented-component component-uuid="11111111-2222-4000-8000-009000000011"/>
     </inventory-item>
     <inventory-item uuid="11111111-2222-4000-8000-011000000006">
       <description>
@@ -2460,18 +2462,18 @@ approved.</p>
       <prop name="virtual" value="no"/>
       <prop name="public" value="no"/>
       <prop ns="http://fedramp.gov/ns/oscal" name="vendor-name" value="Vendor"/>
-      <prop ns="http://fedramp.gov/ns/oscal" name="scan-type" value="infrastructure"/>
       <prop name="is-scanned" value="no">
         <remarks>
           <p>Asset wasn't running at time of scan.</p>
         </remarks>
       </prop>
-            <prop name='function' value="none">
+      <prop name="function" value="Required brief, text-based description.">
         <remarks>
-          <p>it has no function</p>
+          <p>Required, longer, formatted description.</p>
         </remarks>
       </prop>
 
+      <prop ns="http://fedramp.gov/ns/oscal" name="scan-type" value="infrastructure"/>
       <implemented-component component-uuid="11111111-2222-4000-8000-009000500007"/>
     </inventory-item>
     <inventory-item uuid="11111111-2222-4000-8000-011000000007">
@@ -2487,9 +2489,9 @@ approved.</p>
       <prop name="is-scanned" value="yes"/>
       <prop ns="http://fedramp.gov/ns/oscal" name="vendor-name" value="Vendor"/>
       <prop ns="http://fedramp.gov/ns/oscal" name="scan-type" value="infrastructure"/>
-      <prop name='function' value="none">
+      <prop name="function" value="Required brief, text-based description.">
         <remarks>
-          <p>it has no function</p>
+          <p>Optional, longer, formatted description.</p>
         </remarks>
       </prop>
       <implemented-component component-uuid="11111111-2222-4000-8000-009000000008"/>
@@ -2510,14 +2512,12 @@ approved.</p>
           <p>Asset wasn't running at time of scan.</p>
         </remarks>
       </prop>
-      <prop ns="http://fedramp.gov/ns/oscal" name="scan-type" value="other">
-        <remarks>it is a brand new scan type</remarks>
-      </prop>
-      <prop name='function' value="none">
+      <prop name="function" value="Required brief, text-based description.">
         <remarks>
-          <p>it has no function</p>
+          <p>Optional, longer, formatted description.</p>
         </remarks>
       </prop>
+      <prop ns="http://fedramp.gov/ns/oscal" name="scan-type" value="infrastructure"/>
       <implemented-component component-uuid="11111111-2222-4000-8000-009000500005"/>
     </inventory-item>
     <inventory-item uuid="11111111-2222-4000-8000-011000000009">
@@ -2533,11 +2533,7 @@ approved.</p>
       <prop name="is-scanned" value="yes"/>
       <prop ns="http://fedramp.gov/ns/oscal" name="vendor-name" value="Vendor"/>
       <prop ns="http://fedramp.gov/ns/oscal" name="scan-type" value="infrastructure"/>
-      <prop name='function' value="email">
-        <remarks>
-          <p>it sends emails</p>
-        </remarks>
-      </prop>
+      <prop name='function' value='virtual'><remarks><p>virtual function</p></remarks></prop>
       <implemented-component component-uuid="11111111-2222-4000-8000-009000000018"/>
     </inventory-item>
   </system-implementation>
