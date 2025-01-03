@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <system-security-plan xmlns="http://csrc.nist.gov/ns/oscal/1.0">
-    <component uuid="11111111-0000-4000-9000-000000000001" type="software">
+    <metadata/>
+    <system-implementation>
+   <component uuid="11111111-0000-4000-9000-000000000001" type="software">
         <title>Example Component 1</title>
         <prop ns="http://fedramp.gov/ns/oscal" name="scan-type" value="other"/>
     </component>
@@ -12,5 +14,7 @@
         <implemented-component component-uuid="11111111-0000-4000-9000-000000000001">
             <prop name="asset-id" value="unique-asset-ID-3"/>
         </implemented-component>
+        <prop ns="http://fedramp.gov/ns/oscal" name="scan-type" value="not-applicable"/>
     </inventory-item>
+    </system-implementation> 
 </system-security-plan>

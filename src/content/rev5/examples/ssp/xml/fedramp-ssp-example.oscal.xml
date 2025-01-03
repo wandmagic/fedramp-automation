@@ -2510,7 +2510,9 @@ approved.</p>
           <p>Asset wasn't running at time of scan.</p>
         </remarks>
       </prop>
-      <prop ns="http://fedramp.gov/ns/oscal" name="scan-type" value="infrastructure"/>
+      <prop ns="http://fedramp.gov/ns/oscal" name="scan-type" value="other">
+        <remarks>it is a brand new scan type</remarks>
+      </prop>
       <prop name='function' value="none">
         <remarks>
           <p>it has no function</p>
