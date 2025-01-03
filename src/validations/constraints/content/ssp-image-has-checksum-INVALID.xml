@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="https://github.com/usnistgov/OSCAL/releases/download/v1.1.3/oscal_ssp_schema.xsd" schematypens="http://www.w3.org/2001/XMLSchema" title="OSCAL complete schema"?>
+<system-security-plan xmlns="http://csrc.nist.gov/ns/oscal/1.0" uuid="11111111-2222-4000-8000-000000000000">
+  <system-implementation>
+    <component uuid="11111111-2222-4000-8000-009000500001" type="software">
+      <title>Operating System Image</title>
+      <description>
+        <p>An operating system image that runs a Linux instance</p>
+      </description>
+      <prop name="leveraged-authorization-uuid" value="11111111-2222-4000-8000-019000000001"/>
+      <prop name="asset-type" value="image"/>
+      <!--No property of value checksum defined-->
+      <!--<prop name="checksum" ns="http://fedramp.gov/ns/oscal" value="6c657e4a8583451384eef47e86cdd535b3589e2b857f8d956a3b8074fafc0b85"/>-->
+      <prop name="implementation-point" value="internal"/>
+      <prop ns="http://fedramp.gov/ns/oscal" name="information-type" class="incoming" value="C.3.5.1"/>
+      <prop ns="http://fedramp.gov/ns/oscal" name="information-type" class="outgoing" value="C.3.5.8"/>
+      <link rel="provided-by" href="#11111111-2222-4000-8000-009000100001"/>
+      <status state="operational"/>
+      <responsible-role role-id="administrator">
+        <prop name="privilege-uuid" value="11111111-2222-4000-8000-008000000004" ns="http://fedramp.gov/ns/oscal"/>
+        <prop name="privilege-uuid" value="11111111-2222-4000-8000-008000000005" ns="http://fedramp.gov/ns/oscal"/>
+      </responsible-role>
+      <remarks>
+        <p>Insert detailed description of container image here</p>
+      </remarks>
+    </component>
+
+  </system-implementation>
+</system-security-plan>
