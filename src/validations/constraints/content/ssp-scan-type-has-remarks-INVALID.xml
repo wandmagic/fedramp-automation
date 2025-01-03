@@ -8,9 +8,9 @@
         <title>Example Component 2</title>
         <prop ns="http://fedramp.gov/ns/oscal" name="scan-type" value="not-applicable"/>
     </component>
-<inventory-item>
-      <implemented-component component-uuid="11111111-0000-4000-9000-000000000001">
-        <prop name="asset-id" value="unique-asset-ID-3"/>
-      </implemented-component>
-</inventory-item>
+    <inventory-item>
+        <implemented-component component-uuid="11111111-0000-4000-9000-000000000001">
+            <prop name="asset-id" value="unique-asset-ID-3"/>
+        </implemented-component>
+    </inventory-item>
 </system-security-plan>
