@@ -1781,6 +1781,7 @@ compliance (e.g., Module in Process).</p>
       <prop name="model" value="stable-slim"/>
       <prop name="version" value="11"/>
       <prop name="patch-level" value="Patch Level"/>
+      <prop name="asset-id" value="unique-asset-ID-03"/>
       <link rel="validation" href="#11111111-2222-4000-8000-009000000002"/>
       <link href="https://hub.docker.com/layers/library/debian/stable/images/sha256-e83913597ca9deb9d699316a9a9d806c2a87ed61195ac66ae0a8ac55089a84b9"/>
       <status state="operational"/>
