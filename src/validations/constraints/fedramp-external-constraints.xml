@@ -576,7 +576,7 @@
         <constraints>
             <matches id="end-of-life-date-type" target="prop[@ns='http://fedramp.gov/ns/oscal' and @name='end-of-life-date']/@value" datatype="date" level="ERROR">
                 <formal-name>End of Life Date Type</formal-name>
-                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/4-ssp-template-to-oscal-mapping/"/>
+                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/5-attachments/#system-inventory-approach"/>
                 <message>When the end-of-life-date property is present, it MUST be in date format.</message>
             </matches>
         </constraints>
