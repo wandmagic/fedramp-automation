@@ -705,7 +705,7 @@
             </expect>
             <expect id="inventory-item-has-vendor-name" target="." test="count(prop[@name='vendor-name' and @ns='http://fedramp.gov/ns/oscal']) >= 1 or count(../component[@uuid=$component-uuid]/prop[@name='vendor-name' and @ns='http://fedramp.gov/ns/oscal']) >= 1" level="ERROR">
                 <formal-name>Inventory Item Has Vendor Name</formal-name>
-                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="fedramp_inventory_vendor_name"/>
+                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/5-attachments/#system-inventory-approach"/>
                 <message>In a FedRAMP SSP, each inventory item MUST include the vendor name in the inventory item itself or within the linked component.</message>
             </expect>
 <expect id="scan-type-has-remarks" target="..//prop[@name='scan-type' and @ns='http://fedramp.gov/ns/oscal' and @value=('other','not-applicable')]" test="exists(remarks)" level="ERROR">
