@@ -117,6 +117,7 @@ Examples:
   | information-type-has-integrity-impact |
   | information-type-system |
   | inter-boundary-component-has-information-type |
+  | interconnection-component-has-remote-protocol |
   | interconnection-direction |
   | interconnection-security |
   | inventory-item-allows-authenticated-scan |
@@ -368,6 +369,8 @@ Examples:
   | information-type-system-PASS.yaml |
   | inter-boundary-component-has-information-type-FAIL.yaml |
   | inter-boundary-component-has-information-type-PASS.yaml |
+  | interconnection-component-has-remote-protocol-FAIL.yaml |
+  | interconnection-component-has-remote-protocol-PASS.yaml |
   | interconnection-direction-FAIL.yaml |
   | interconnection-direction-PASS.yaml |
   | interconnection-security-FAIL.yaml |

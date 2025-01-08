@@ -603,8 +603,17 @@
             <expect id="inter-boundary-component-has-information-type" target="$inter-boundary-component" test="count(prop[@name='information-type' and @ns='http://fedramp.gov/ns/oscal']) &gt;= 1" level="ERROR">
                 <formal-name>Inter-Boundary Component Has Information Type</formal-name>
                 <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/4-ssp-template-to-oscal-mapping/#system-information-and-information-types"/>
-                <message>An inter-boundary communication component {@uuid} ({path(.)}) MUST have at least one information-type property.</message>
+                <message>In a FedRAMP SSP, an inter-boundary communication component MUST have at least one information-type property.</message>
             </expect>
+
+
+<expect id="interconnection-component-has-remote-protocol" target="component[@type='interconnection']" test="count(prop[@class='remote' and @name=('ipv4-address','ipv6-address','fqdn','uri')] or link[@rel='uri']) &gt;= 1" level="ERROR">
+    <formal-name>Interconnection Component Has Remote Protocols</formal-name>
+    <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/5-attachments/"/>
+    <message>In a FedRAMP SSP, an interconnection component MUST have at least one remote IPv4 Address, IPv6 Address, URI, or FQDN.</message>
+</expect>
+
+
             <expect id="inventory-item-and-component-has-public" target="(inventory-item | component[@type='service' and prop[@name='implementation-point' and @value='internal']])" test="count(prop[@name='public']) = 1" level="ERROR">
                 <formal-name>Inventory Item and Component Has Public</formal-name>
                 <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/5-attachments/#system-inventory-approach"/>
