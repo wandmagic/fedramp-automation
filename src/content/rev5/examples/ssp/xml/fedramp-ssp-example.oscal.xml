@@ -2535,8 +2535,9 @@ SSP authors must add implmentations for all required controls.
         <value>at least every 3 years</value>
       </set-parameter><set-parameter param-id="ac-01_odp.07">
         <value>at least annually</value>
-      </set-parameter><statement statement-id="ac-1_smt.a.1" uuid="11111111-2222-4000-8000-013000000001">
-        <by-component component-uuid="11111111-2222-4000-8000-009000000000" uuid="11111111-2222-4000-8000-014000000001">
+      </set-parameter>
+      <statement statement-id="ac-1_smt" uuid="11111117-2222-4000-8000-013000000001">
+<by-component component-uuid="11111111-2222-4000-8000-009000000000" uuid="11111111-2222-4000-8000-014000000001">
           <description>
             <p>Describe how Part a is satisfied within the system.</p>
             <p>Legacy approach. If no policy component is defined, describe here how the policy satisfies part a.</p>
@@ -2555,6 +2556,37 @@ SSP authors must add implmentations for all required controls.
           </remarks>
         </by-component>
         <by-component component-uuid="11111111-2222-4000-8000-009000000012" uuid="11111111-2222-4000-8000-014000000002">
+          <description>
+            <p>Describe how this policy component satisfies part a.</p>
+            <p>Component approach. This links to a component representing the Identity Management and Access Control Policy.</p>
+            <p>That component contains a link to the policy, so it does not have to be linked here too.</p>
+          </description>
+          <implementation-status state="operational"/>
+                    <responsible-role role-id="system-admin">
+                        <party-uuid>11111111-0000-4000-9000-000000000001</party-uuid>
+                    </responsible-role>
+        </by-component>
+      </statement>
+      <statement statement-id="ac-1_smt.a.1" uuid="11111111-2222-4000-8000-013000000001">
+        <by-component component-uuid="11111111-2222-4000-8000-009000000000" uuid="11111111-2222-4000-8880-014000000001">
+          <description>
+            <p>Describe how Part a is satisfied within the system.</p>
+            <p>Legacy approach. If no policy component is defined, describe here how the policy satisfies part a.</p>
+            <p>In this case, a link must be provided to the policy.</p>
+            <p>FedRAMP prefers all policies and procedures be attached as a resource in the back-matter. The link points to a resource.</p>
+          </description>
+          <link href="#11111111-2222-4000-8000-001000000005" rel="policy"/>
+          <link href="#11111111-2222-4000-8000-001000000023" rel="procedure"/>
+          <implementation-status state="operational"/>
+                    <responsible-role role-id="system-admin">
+                        <party-uuid>11111111-0000-4000-9000-000000000001</party-uuid>
+                    </responsible-role>
+          <remarks>
+            <p>The specified component is the system itself.</p>
+            <p>Any control implementation response that can not be associated with another component is associated with the component representing the system.</p>
+          </remarks>
+        </by-component>
+        <by-component component-uuid="11111111-2222-4000-8000-009000000012" uuid="11111111-2222-4000-8000-014000000012">
           <description>
             <p>Describe how this policy component satisfies part a.</p>
             <p>Component approach. This links to a component representing the Identity Management and Access Control Policy.</p>
@@ -2799,7 +2831,7 @@ SSP authors must add implmentations for all required controls.
                     </responsible-role>
         </by-component>
       </statement><statement statement-id="at-1_smt.a" uuid="11111111-2222-4000-8000-013000000008">
-        <by-component component-uuid="11111111-2222-4000-8000-009000000000" uuid="11111111-2222-4000-8000-014000000012">
+        <by-component component-uuid="11111111-2222-4000-8000-009000000000" uuid="11111111-2222-4000-8000-014000000017">
           <description>
             <p>Describe how Part a is satisfied.</p>
           </description>
@@ -2869,7 +2901,7 @@ SSP authors must add implmentations for all required controls.
       </set-parameter><responsible-role role-id="information-system-security-officer">
         <party-uuid>11111111-2222-4000-8000-004000000011</party-uuid>
       </responsible-role><statement statement-id="au-1_smt" uuid="11111111-2222-4000-8000-013000000011">
-        <by-component component-uuid="11111111-2222-4000-8000-009000000000" uuid="11111111-2222-4000-8000-014000000017">
+        <by-component component-uuid="11111111-2222-4000-8000-009000000000" uuid="11111111-2222-4000-8800-004000000017">
           <description>
             <p>Describe how the control is satisfied within the system.</p>
           </description>
@@ -3769,7 +3801,7 @@ SSP authors must add implmentations for all required controls.
         <value>All employees, contractors, and third-party vendors who handle sensitive information or have access to organizational media.</value>
       </set-parameter><responsible-role role-id="information-system-security-officer">
         <party-uuid>11111111-2222-4000-8000-004000000011</party-uuid>
-      </responsible-role><statement statement-id="_smt" uuid="11111111-2222-4000-8000-013000000039">
+      </responsible-role><statement statement-id="mp-1_smt" uuid="11111111-2222-4000-8000-013000000039">
         <by-component component-uuid="11111111-2222-4000-8000-009000000000" uuid="11111111-2222-4000-8000-014000000059">
           <description>
             <p>Describe how the control is satisfied within the system.</p>
@@ -3784,7 +3816,9 @@ SSP authors must add implmentations for all required controls.
                         <party-uuid>11111111-0000-4000-9000-000000000001</party-uuid>
                     </responsible-role>
         </by-component>
-      </statement><statement statement-id="mp-1_smt.a" uuid="11111111-2222-4000-8000-013000000040">
+      </statement>
+      
+      <statement statement-id="mp-1_smt.a" uuid="11111111-2222-4000-8000-013000000040">
         <by-component component-uuid="11111111-2222-4000-8000-009000000000" uuid="11111111-2222-4000-8000-014000000060">
           <description>
             <p>For the portion of the control satisfied by the service provider, describe <strong>how</strong> the control is met.</p>
@@ -3854,7 +3888,7 @@ SSP authors must add implmentations for all required controls.
         <value>All personnel with access to company facilities or systems, including employees, contractors, and third-party vendors.</value>
       </set-parameter><responsible-role role-id="information-system-security-officer">
         <party-uuid>11111111-2222-4000-8000-004000000011</party-uuid>
-      </responsible-role><statement statement-id="_smt" uuid="11111111-2222-4000-8000-013000000043">
+      </responsible-role><statement statement-id="pe-1_smt" uuid="11111111-2222-4000-8000-013000000043">
         <by-component component-uuid="11111111-2222-4000-8000-009000000000" uuid="11111111-2222-4000-8000-014000000065">
           <description>
             <p>Describe how the control is satisfied within the system.</p>
