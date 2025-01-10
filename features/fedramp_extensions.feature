@@ -11,9 +11,6 @@ Scenario Outline: Documents that should be valid are pass
 Examples:
 | valid_file     |
 | ../../../content/rev5/examples/ssp/xml/fedramp-ssp-example.oscal.xml |
-# | ../../../content/rev5/examples/ssp/xml/fedramp-poam-example.oscal.xml |
-# | ../../../content/rev5/examples/ssp/xml/fedramp-ap-example.oscal.xml |
-# | ../../../content/rev5/examples/ssp/xml/fedramp-ar-example.oscal.xml |
 
 @full-coverage
 Scenario: Preparing constraint coverage analysis
@@ -98,7 +95,6 @@ Examples:
   | has-network-architecture-diagram-link-href-target |
   | has-network-architecture-diagram-link-rel |
   | has-network-architecture-diagram-link-rel-allowed-value |
-  | has-poam-resource |
   | has-policy |
   | has-procedure |
   | has-published-date |
@@ -130,6 +126,8 @@ Examples:
   | inventory-item-and-component-has-public |
   | inventory-item-has-function |
   | inventory-item-has-scan-type |
+  | inventory-item-has-software-name |
+  | inventory-item-has-software-version |
   | inventory-item-has-valid-mac-address |
   | inventory-item-has-vendor-name |
   | inventory-item-or-component-has-asset-id |
@@ -167,12 +165,6 @@ Examples:
   | scan-type-has-remarks |
   | security-level |
   | security-sensitivity-level-matches-security-impact-level |
-  | ssp-component-has-poam-link |
-  | ssp-has-legacy-poam-warning |
-  | ssp-poam-item-exists |
-  | ssp-poam-link-has-resource-fragment |
-  | ssp-poam-link-references-valid-resource |
-  | ssp-poam-resource-has-oscal-link |
   | statement-has-this-system-component |
   | unique-inventory-item-asset-id |
   | used-by-link-references-component |
@@ -340,8 +332,6 @@ Examples:
   | has-network-architecture-diagram-link-rel-PASS.yaml |
   | has-network-architecture-diagram-link-rel-allowed-value-FAIL.yaml |
   | has-network-architecture-diagram-link-rel-allowed-value-PASS.yaml |
-  | has-poam-resource-FAIL.yaml |
-  | has-poam-resource-PASS.yaml |
   | has-policy-FAIL.yaml |
   | has-policy-PASS.yaml |
   | has-procedure-FAIL.yaml |
@@ -400,10 +390,6 @@ Examples:
   | inventory-item-allows-authenticated-scan-PASS.yaml |
   | inventory-item-and-component-has-public-FAIL.yaml |
   | inventory-item-and-component-has-public-PASS.yaml |
-  | inventory-item-has-function-FAIL.yaml |
-  | inventory-item-has-function-PASS.yaml |
-  | inventory-item-has-scan-type-FAIL.yaml |
-  | inventory-item-has-scan-type-PASS.yaml |
   | inventory-item-has-valid-mac-address-FAIL.yaml |
   | inventory-item-has-valid-mac-address-PASS.yaml |
   | inventory-item-has-vendor-name-FAIL.yaml |
@@ -478,18 +464,6 @@ Examples:
   | security-level-PASS.yaml |
   | security-sensitivity-level-matches-security-impact-level-FAIL.yaml |
   | security-sensitivity-level-matches-security-impact-level-PASS.yaml |
-  | ssp-component-has-poam-link-FAIL.yaml |
-  | ssp-component-has-poam-link-PASS.yaml |
-  | ssp-has-legacy-poam-warning-FAIL.yaml |
-  | ssp-has-legacy-poam-warning-PASS.yaml |
-  | ssp-poam-item-exists-FAIL.yaml |
-  | ssp-poam-item-exists-PASS.yaml |
-  | ssp-poam-link-has-resource-fragment-FAIL.yaml |
-  | ssp-poam-link-has-resource-fragment-PASS.yaml |
-  | ssp-poam-link-references-valid-resource-FAIL.yaml |
-  | ssp-poam-link-references-valid-resource-PASS.yaml |
-  | ssp-poam-resource-has-oscal-link-FAIL.yaml |
-  | ssp-poam-resource-has-oscal-link-PASS.yaml |
   | statement-has-this-system-component-FAIL.yaml |
   | statement-has-this-system-component-PASS.yaml |
   | unique-inventory-item-asset-id-FAIL.yaml |

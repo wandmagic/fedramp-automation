@@ -479,6 +479,7 @@
         <metapath target="/system-security-plan/system-characteristics/security-impact-level/(security-objective-confidentiality|security-objective-integrity|security-objective-availability)"/>
         <metapath target="/system-security-plan/system-characteristics/system-information/information-type/(confidentiality-impact|integrity-impact|availability-impact)/(base|selected)"/> 
         <metapath target="/system-security-plan/system-implementation/leveraged-authorization"/>
+        <metapath target="/system-security-plan/system-implementation/leveraged-authorization"/>
         <constraints>
             <let var="security-level-target" expression="if (prop[@name='impact-level' and @ns='http://fedramp.gov/ns/oscal']) then prop[@name='impact-level' and @ns='http://fedramp.gov/ns/oscal']/@value else ."/>
             <allowed-values id="security-level" target="$security-level-target" allow-other="no" level="ERROR">

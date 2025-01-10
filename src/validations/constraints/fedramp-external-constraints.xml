@@ -123,8 +123,10 @@
             <index-has-key id='extraneous-implemented-requirements' target="//implemented-requirement" name="index-imported-controls" level="WARNING">
                 <formal-name>Additional Controls Implemented Not in Baseline</formal-name>
                 <description>A FedRAMP SSP SHOULD NOT include extraneous controls outside of the FedRAMP baseline.</description>
+                <description>A FedRAMP SSP SHOULD NOT include extraneous controls outside of the FedRAMP baseline.</description>
                 <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/6-security-controls/#implementation-status"/>
                 <key-field target="@control-id"/>
+                <message>A FedRAMP SSP SHOULD NOT include extraneous controls outside of the FedRAMP baseline. Extraneous control: ({@control-id}).</message>
                 <message>A FedRAMP SSP SHOULD NOT include extraneous controls outside of the FedRAMP baseline. Extraneous control: ({@control-id}).</message>
             </index-has-key>
             <index-has-key id="has-required-parameters" target="$required-parameters-map" name="index-implemented-parameters" level="ERROR">
@@ -733,6 +735,7 @@
         </constraints>
     </context>
 
+
     <context>
         <metapath target="/system-security-plan/system-implementation/inventory-item"/>
         <constraints>
@@ -760,6 +763,51 @@
                 <formal-name>Inventory Item Has Scan Type</formal-name>
                 <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/5-attachments/#system-inventory-approach"/>
                 <message>Every inventory-item MUST indicate one or more scan type(s), either within the inventory-item itself, or within the component linked by the inventory-item.</message>
+            </expect>
+             <expect id="inventory-item-has-valid-mac-address" target=".[prop[@name='mac-address']]/prop[@name='mac-address']" test="matches(@value, '^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})|([0-9a-fA-F]{4}\\.[0-9a-fA-F]{4}\\.[0-9a-fA-F]{4})$')" level="ERROR">
+                <formal-name>Inventory Item Has Valid Mac Address</formal-name>
+                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/5-attachments/#system-inventory-approach"/>
+                <message>In a FedRAMP SSP, each inventory item that has a MAC address MUST format the MAC address correctly.</message>
+            </expect>
+            <expect id="inventory-item-has-software-name" target=".[prop[@name='asset-type' and @value=('operating-system', 'container', 'image')] or ../component[uuid=$component-uuid and type='software']]" test="count(prop[@name=('software-name', 'os-name')]) = 1 or count(../component[@uuid=$component-uuid]/prop[@name=('software-name', 'os-name')]) = 1" level="ERROR">
+                <formal-name>Inventory Item Has Software Name</formal-name>
+                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/5-attachments/#system-inventory-approach"/>
+                <message>In a FedRAMP SSP, each inventory item MUST include the software name in the inventory item itself or within the linked component.</message>
+            <let var ="implemented-component" expression="../component[@uuid=$component-uuid]"/>
+            <expect id="authenticated-scan-no-has-remarks" target="prop[@name='allows-authenticated-scan' and @value='no']" test="if ($high-sensitivity or $moderate-sensitivity) then exists(remarks) else true()" level="ERROR">
+                <formal-name>Authenticated Scan No Has Remarks</formal-name>
+                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/5-attachments/#system-inventory-approach"/>
+                <message>A FedRAMP SSP MUST provide justification for any high or moderate impact system inventory item that does not support authenticated scans.</message>
+            </expect>
+             <expect id="high-impact-inventory-item-has-asset-owner" target="." test="if ($high-sensitivity) then count(./responsible-party[@role-id=('asset-owner', 'asset-administrator')] | $implemented-component/responsible-role[@role-id=('asset-owner', 'asset-administrator')][count(party[@uuid=./party-uuid]) >= 1]) >= 1 else true()" level="ERROR">
+                <formal-name>High Impact Inventory Item Has Asset Owner</formal-name>
+                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/5-attachments/#system-inventory-approach"/>
+                <message>For HIGH-impact systems, every inventory-item MUST identify an asset-owner or administrator property either within the inventory-item itself, or within the component linked by the inventory-item.</message>
+            </expect>
+            <expect id="inventory-item-has-function" target="." test="exists(prop[@name='function']/remarks) or exists($implemented-component/prop[@name='function']/remarks)" level="ERROR">
+                <formal-name>Inventory Item Has Function</formal-name>
+                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/5-attachments/#system-inventory-approach"/>
+                <message>Every inventory-item MUST provide remarks to describe the function of the item, either within the inventory-item itself, or within the component linked by the inventory-item.</message>
+            </expect>
+            <expect id="inventory-item-has-scan-type" target="." test="count(prop[@name='scan-type' and @ns='http://fedramp.gov/ns/oscal']) >= 1 or count($implemented-component/prop[@name='scan-type' and @ns='http://fedramp.gov/ns/oscal']) >= 1" level="ERROR">
+                <formal-name>Inventory Item Has Scan Type</formal-name>
+                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/5-attachments/#system-inventory-approach"/>
+                <message>Every inventory-item MUST indicate one or more scan type(s), either within the inventory-item itself, or within the component linked by the inventory-item.</message>
+            </expect>
+            <expect id="inventory-item-has-software-version" target=".[prop[@name='asset-type' and @value=('operating-system', 'container', 'image')] or ../component[uuid=$component-uuid and type='software']]" test="count(prop[@name=('software-version', 'os-version')]) = 1 or count(../component[@uuid=$component-uuid]/prop[@name=('software-version', 'os-version')]) = 1" level="ERROR">
+                <formal-name>Inventory Item Has Software Version</formal-name>
+                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/5-attachments/#system-inventory-approach"/>
+                <message>In a FedRAMP SSP, each inventory item MUST include the software version in the inventory item itself or within the linked component.</message>
+            </expect>
+            <expect id="inventory-item-has-software-name" target=".[prop[@name='asset-type' and @value=('operating-system', 'container', 'image')] or ../component[uuid=$component-uuid and type='software']]" test="count(prop[@name=('software-name', 'os-name')]) = 1 or count(../component[@uuid=$component-uuid]/prop[@name=('software-name', 'os-name')]) = 1" level="ERROR">
+                <formal-name>Inventory Item Has Software Name</formal-name>
+                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/5-attachments/#system-inventory-approach"/>
+                <message>In a FedRAMP SSP, each inventory item MUST include the software name in the inventory item itself or within the linked component.</message>
+            </expect>
+            <expect id="inventory-item-has-software-version" target=".[prop[@name='asset-type' and @value=('operating-system', 'container', 'image')] or ../component[uuid=$component-uuid and type='software']]" test="count(prop[@name=('software-version', 'os-version')]) = 1 or count(../component[@uuid=$component-uuid]/prop[@name=('software-version', 'os-version')]) = 1" level="ERROR">
+                <formal-name>Inventory Item Has Software Version</formal-name>
+                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/5-attachments/#system-inventory-approach"/>
+                <message>In a FedRAMP SSP, each inventory item MUST include the software version in the inventory item itself or within the linked component.</message>
             </expect>
              <expect id="inventory-item-has-valid-mac-address" target=".[prop[@name='mac-address']]/prop[@name='mac-address']" test="matches(@value, '^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})|([0-9a-fA-F]{4}\\.[0-9a-fA-F]{4}\\.[0-9a-fA-F]{4})$')" level="ERROR">
                 <formal-name>Inventory Item Has Valid Mac Address</formal-name>
@@ -858,6 +906,7 @@
             'sc-1_smt.a' : 'at least one procedure that addresses System and Communications Protection MUST be associated with SC-1 part a.',
             'si-1_smt.a' : 'at least one procedure that addresses System and Information Integrity MUST be associated with SI-1 part a.',
             'sr-1_smt.a' : 'at least one procedure that addresses Supply Chain Risk Management MUST be associated with SR-1 part a.'}"/>
+            <let var="component-uuid" expression="by-component/@component-uuid"/>
             <let var="component-uuid" expression="by-component/@component-uuid"/>
             <expect id="has-policy" target=".[@statement-id=$control-statement-ids]" test="some $uuid in $component-uuid satisfies count(../../../system-implementation/component[@uuid=$component-uuid and @type='policy']) >= 1" level="ERROR">
                 <formal-name>Has Policy</formal-name>

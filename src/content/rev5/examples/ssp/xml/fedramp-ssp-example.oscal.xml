@@ -930,6 +930,7 @@ that represents the whole system.</p>
       <prop name="inherited-uuid" value="22222222-0000-4000-9001-009000000001"/>
       <prop ns="http://fedramp.gov/ns/oscal" name="nature-of-agreement" value="sla"/>
       <prop ns="http://fedramp.gov/ns/oscal" name="end-of-life-date" value="2025-12-31"/>
+      <prop ns="http://fedramp.gov/ns/oscal" name="end-of-life-date" value="2025-12-31"/>
       <prop ns="http://fedramp.gov/ns/oscal" name="authentication-method" value="yes">
         <remarks>
           <p>If 'yes', describe the authentication method.</p>
@@ -2317,6 +2318,7 @@ approved.</p>
         <p>Legacy Example (No implemented-component).</p>
       </description>
       <prop name="asset-id" value="unique-asset-ID-01"/>
+      <prop name="software-version" value="software-version"/>
       <prop name="ipv4-address" value="10.1.1.1"/>
       <prop name="ipv6-address" value="2001:db8:3333:4444:5555:6666:7777:8888"/>
       <prop name="virtual" value="no"/>
