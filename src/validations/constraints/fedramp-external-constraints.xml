@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <metaschema-meta-constraints xmlns="http://csrc.nist.gov/ns/oscal/metaschema/1.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://csrc.nist.gov/ns/oscal/metaschema/1.0 https://raw.githubusercontent.com/metaschema-framework/metaschema/refs/heads/develop/schema/xml/metaschema-meta-constraints.xsd">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <!-- ================== -->
     <!-- FedRAMP Extensions -->
     <!-- ================== -->
@@ -572,6 +572,17 @@
     </context>
 
     <context>
+        <metapath target="//(component | inventory-item)"/>
+        <constraints>
+            <matches id="end-of-life-date-type" target="prop[@ns='http://fedramp.gov/ns/oscal' and @name='end-of-life-date']/@value" datatype="date" level="ERROR">
+                <formal-name>End of Life Date Type</formal-name>
+                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/5-attachments/#system-inventory-approach"/>
+                <message>When the end-of-life-date property is present, it MUST be in date format.</message>
+            </matches>
+        </constraints>
+    </context>
+
+    <context>
         <metapath target="/system-security-plan/system-implementation"/>
         <constraints>
             <let var="inter-boundary-component" expression="component[(@type=('service','software') and not(prop[@name='leveraged-authorization-uuid']) and prop[@name='implementation-point' and @value='external']) or (@type='interconnection') or (@type=('service','software') and prop[@name='implementation-point' and @value='internal'] and (prop[@name='communicates-externally' and @value='yes' and @ns='http://fedramp.gov/ns/oscal']))]"/>
@@ -662,7 +673,31 @@
     <context>
         <metapath target="/system-security-plan/system-implementation/inventory-item"/>
         <constraints>
+            <let var="high-sensitivity" expression="../../system-characteristics/security-sensitivity-level='fips-199-high'"/>
+            <let var="moderate-sensitivity" expression="../../system-characteristics/security-sensitivity-level='fips-199-moderate'"/>
+
             <let var ="component-uuid" expression="implemented-component/@component-uuid"/>
+            <let var ="implemented-component" expression="../component[@uuid=$component-uuid]"/>
+            <expect id="authenticated-scan-no-has-remarks" target="prop[@name='allows-authenticated-scan' and @value='no']" test="if ($high-sensitivity or $moderate-sensitivity) then exists(remarks) else true()" level="ERROR">
+                <formal-name>Authenticated Scan No Has Remarks</formal-name>
+                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/5-attachments/#system-inventory-approach"/>
+                <message>A FedRAMP SSP MUST provide justification for any high or moderate impact system inventory item that does not support authenticated scans.</message>
+            </expect>
+             <expect id="high-impact-inventory-item-has-asset-owner" target="." test="if ($high-sensitivity) then count(./responsible-party[@role-id=('asset-owner', 'asset-administrator')] | $implemented-component/responsible-role[@role-id=('asset-owner', 'asset-administrator')][count(party[@uuid=./party-uuid]) >= 1]) >= 1 else true()" level="ERROR">
+                <formal-name>High Impact Inventory Item Has Asset Owner</formal-name>
+                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/5-attachments/#system-inventory-approach"/>
+                <message>For HIGH-impact systems, every inventory-item MUST identify an asset-owner or administrator property either within the inventory-item itself, or within the component linked by the inventory-item.</message>
+            </expect>
+            <expect id="inventory-item-has-function" target="." test="exists(prop[@name='function']/remarks) or exists($implemented-component/prop[@name='function']/remarks)" level="ERROR">
+                <formal-name>Inventory Item Has Function</formal-name>
+                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/5-attachments/#system-inventory-approach"/>
+                <message>Every inventory-item MUST provide remarks to describe the function of the item, either within the inventory-item itself, or within the component linked by the inventory-item.</message>
+            </expect>
+            <expect id="inventory-item-has-scan-type" target="." test="count(prop[@name='scan-type' and @ns='http://fedramp.gov/ns/oscal']) >= 1 or count($implemented-component/prop[@name='scan-type' and @ns='http://fedramp.gov/ns/oscal']) >= 1" level="ERROR">
+                <formal-name>Inventory Item Has Scan Type</formal-name>
+                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/5-attachments/#system-inventory-approach"/>
+                <message>Every inventory-item MUST indicate one or more scan type(s), either within the inventory-item itself, or within the component linked by the inventory-item.</message>
+            </expect>
              <expect id="inventory-item-has-valid-mac-address" target=".[prop[@name='mac-address']]/prop[@name='mac-address']" test="matches(@value, '^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})|([0-9a-fA-F]{4}\\.[0-9a-fA-F]{4}\\.[0-9a-fA-F]{4})$')" level="ERROR">
                 <formal-name>Inventory Item Has Valid Mac Address</formal-name>
                 <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/5-attachments/#system-inventory-approach"/>
@@ -673,6 +708,11 @@
                 <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/5-attachments/#system-inventory-approach"/>
                 <message>In a FedRAMP SSP, each inventory item MUST include the vendor name in the inventory item itself or within the linked component.</message>
             </expect>
+<expect id="scan-type-has-remarks" target="..//prop[@name='scan-type' and @ns='http://fedramp.gov/ns/oscal' and @value=('other','not-applicable')]" test="exists(remarks)" level="ERROR">
+    <formal-name>Scan Type Has Remarks</formal-name>
+    <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/5-attachments/#system-inventory-approach"/>
+    <message>When scan-type is 'other' or 'not-applicable', remarks MUST be provided to explain the selection.</message>
+</expect>
         </constraints>
     </context>
 
