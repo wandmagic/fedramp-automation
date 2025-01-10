@@ -31,6 +31,7 @@ Examples:
   | address-type |
   | aggregate-parameters-warning |
   | attachment-type |
+  | authenticated-scan-no-has-remarks |
   | authentication-method-has-remarks |
   | authorization-type |
   | by-component-has-responsible-role |
@@ -44,6 +45,7 @@ Examples:
   | component-has-provider-responsible-role |
   | component-has-used-by-link |
   | component-type |
+  | connection-security |
   | control-implementation-status |
   | data-center-alternate |
   | data-center-count |
@@ -51,6 +53,7 @@ Examples:
   | data-center-primary |
   | data-center-us |
   | deployment-model |
+  | end-of-life-date-type |
   | external-system-nature-of-agreement |
   | extraneous-implemented-requirements |
   | fedramp-citations-has-correct-link |
@@ -107,6 +110,8 @@ Examples:
   | has-system-id |
   | has-system-name-short |
   | has-user-guide |
+  | high-impact-inventory-item-has-asset-owner |
+  | image-has-checksum |
   | implementation-status-has-remarks |
   | import-profile-has-available-document |
   | import-profile-resolves-to-fedramp-content |
@@ -118,11 +123,16 @@ Examples:
   | information-type-has-confidentiality-impact |
   | information-type-has-integrity-impact |
   | information-type-system |
+  | inter-boundary-component-has-information-type |
   | interconnection-direction |
   | interconnection-security |
   | inventory-item-allows-authenticated-scan |
   | inventory-item-and-component-has-public |
+  | inventory-item-has-function |
+  | inventory-item-has-scan-type |
+  | inventory-item-has-valid-mac-address |
   | inventory-item-has-vendor-name |
+  | inventory-item-or-component-has-asset-id |
   | inventory-item-public |
   | inventory-item-virtual |
   | last-accessed-is-datetime |
@@ -154,6 +164,7 @@ Examples:
   | role-defined-system-owner |
   | saas-has-leveraged-authorization |
   | scan-type |
+  | scan-type-has-remarks |
   | security-level |
   | security-sensitivity-level-matches-security-impact-level |
   | ssp-component-has-poam-link |
@@ -195,6 +206,8 @@ Examples:
   | aggregate-parameters-warning-PASS.yaml |
   | attachment-type-FAIL.yaml |
   | attachment-type-PASS.yaml |
+  | authenticated-scan-no-has-remarks-FAIL.yaml |
+  | authenticated-scan-no-has-remarks-PASS.yaml |
   | authentication-method-has-remarks-FAIL.yaml |
   | authentication-method-has-remarks-PASS.yaml |
   | authorization-type-FAIL.yaml |
@@ -221,6 +234,8 @@ Examples:
   | component-responsible-role-references-party-PASS.yaml |
   | component-type-FAIL.yaml |
   | component-type-PASS.yaml |
+  | connection-security-FAIL.yaml |
+  | connection-security-PASS.yaml |
   | control-implementation-status-FAIL.yaml |
   | control-implementation-status-PASS.yaml |
   | data-center-alternate-FAIL.yaml |
@@ -235,6 +250,8 @@ Examples:
   | data-center-us-PASS.yaml |
   | deployment-model-FAIL.yaml |
   | deployment-model-PASS.yaml |
+  | end-of-life-date-type-FAIL.yaml |
+  | end-of-life-date-type-PASS.yaml |
   | external-system-nature-of-agreement-FAIL.yaml |
   | external-system-nature-of-agreement-PASS.yaml |
   | extraneous-implemented-requirements-FAIL.yaml |
@@ -347,6 +364,10 @@ Examples:
   | has-system-name-short-PASS.yaml |
   | has-user-guide-FAIL.yaml |
   | has-user-guide-PASS.yaml |
+  | high-impact-inventory-item-has-asset-owner-FAIL.yaml |
+  | high-impact-inventory-item-has-asset-owner-PASS.yaml |
+  | image-has-checksum-FAIL.yaml |
+  | image-has-checksum-PASS.yaml |
   | implementation-status-has-remarks-FAIL.yaml |
   | implementation-status-has-remarks-PASS.yaml |
   | import-profile-has-available-document-FAIL.yaml |
@@ -369,6 +390,8 @@ Examples:
   | information-type-id-PASS.yaml |
   | information-type-system-FAIL.yaml |
   | information-type-system-PASS.yaml |
+  | inter-boundary-component-has-information-type-FAIL.yaml |
+  | inter-boundary-component-has-information-type-PASS.yaml |
   | interconnection-direction-FAIL.yaml |
   | interconnection-direction-PASS.yaml |
   | interconnection-security-FAIL.yaml |
@@ -377,8 +400,16 @@ Examples:
   | inventory-item-allows-authenticated-scan-PASS.yaml |
   | inventory-item-and-component-has-public-FAIL.yaml |
   | inventory-item-and-component-has-public-PASS.yaml |
+  | inventory-item-has-function-FAIL.yaml |
+  | inventory-item-has-function-PASS.yaml |
+  | inventory-item-has-scan-type-FAIL.yaml |
+  | inventory-item-has-scan-type-PASS.yaml |
+  | inventory-item-has-valid-mac-address-FAIL.yaml |
+  | inventory-item-has-valid-mac-address-PASS.yaml |
   | inventory-item-has-vendor-name-FAIL.yaml |
   | inventory-item-has-vendor-name-PASS.yaml |
+  | inventory-item-or-component-has-asset-id-FAIL.yaml |
+  | inventory-item-or-component-has-asset-id-PASS.yaml |
   | inventory-item-public-FAIL.yaml |
   | inventory-item-public-PASS.yaml |
   | inventory-item-virtual-FAIL.yaml |
@@ -441,6 +472,8 @@ Examples:
   | saas-has-leveraged-authorization-PASS.yaml |
   | scan-type-FAIL.yaml |
   | scan-type-PASS.yaml |
+  | scan-type-has-remarks-FAIL.yaml |
+  | scan-type-has-remarks-PASS.yaml |
   | security-level-FAIL.yaml |
   | security-level-PASS.yaml |
   | security-sensitivity-level-matches-security-impact-level-FAIL.yaml |
