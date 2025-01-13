@@ -127,7 +127,6 @@ Examples:
   | inventory-item-and-component-has-public |
   | inventory-item-has-function |
   | inventory-item-has-scan-type |
-  | inventory-item-has-software-name |
   | inventory-item-has-software-version |
   | inventory-item-has-valid-mac-address |
   | inventory-item-has-vendor-name |
