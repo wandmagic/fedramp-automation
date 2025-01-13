@@ -2444,10 +2444,8 @@ approved.</p>
       <prop name="ipv6-address" value="0000:0000:0000:0000:0000:ffff:0a04:0404"/>
       <prop name="is-scanned" value="yes"/>
       <prop ns="http://fedramp.gov/ns/oscal" name="vendor-name" value="Vendor"/>
-      <prop ns="http://fedramp.gov/ns/oscal" name="scan-type" value="other">
-        <remarks><p>a different kind of scan</p></remarks>
-      </prop>
-      <implemented-component component-uuid="11111111-2222-4000-8000-009000500006"/>
+      <prop ns="http://fedramp.gov/ns/oscal" name="scan-type" value="infrastructure"/>
+      <implemented-component component-uuid="11111111-2222-4000-8000-009000000007"/>
     </inventory-item>
     <inventory-item uuid="11111111-2222-4000-8000-011000000005">
       <description>
@@ -2486,14 +2484,7 @@ approved.</p>
           <p>Asset wasn't running at time of scan.</p>
         </remarks>
       </prop>
-      <prop name="function" value="Required brief, text-based description.">
-        <remarks>
-          <p>Required, longer, formatted description.</p>
-        </remarks>
-      </prop>
-
-      <prop ns="http://fedramp.gov/ns/oscal" name="scan-type" value="infrastructure"/>
-      <implemented-component component-uuid="11111111-2222-4000-8000-009000500007"/>
+      <implemented-component component-uuid="11111111-2222-4000-8000-009000000007"/>
     </inventory-item>
     <inventory-item uuid="11111111-2222-4000-8000-011000000007">
       <description>
@@ -2531,13 +2522,7 @@ approved.</p>
           <p>Asset wasn't running at time of scan.</p>
         </remarks>
       </prop>
-      <prop name="function" value="Required brief, text-based description.">
-        <remarks>
-          <p>Optional, longer, formatted description.</p>
-        </remarks>
-      </prop>
-      <prop ns="http://fedramp.gov/ns/oscal" name="scan-type" value="infrastructure"/>
-      <implemented-component component-uuid="11111111-2222-4000-8000-009000500005"/>
+      <implemented-component component-uuid="11111111-2222-4000-8000-009000000007"/>
     </inventory-item>
     <inventory-item uuid="11111111-2222-4000-8000-011000000009">
       <description>
