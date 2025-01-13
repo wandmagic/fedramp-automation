@@ -675,7 +675,6 @@
         <constraints>
             <let var="high-sensitivity" expression="../../system-characteristics/security-sensitivity-level='fips-199-high'"/>
             <let var="moderate-sensitivity" expression="../../system-characteristics/security-sensitivity-level='fips-199-moderate'"/>
-
             <let var ="component-uuid" expression="implemented-component/@component-uuid"/>
             <let var ="implemented-component" expression="../component[@uuid=$component-uuid]"/>
             <expect id="inventory-item-has-software-name" target=".[prop[@name='asset-type' and @value=('operating-system', 'container', 'image')] or ../component[uuid=$component-uuid and type='software']]" test="count(prop[@name=('software-name', 'os-name')]) = 1 or count(../component[@uuid=$component-uuid]/prop[@name=('software-name', 'os-name')]) = 1" level="ERROR">
