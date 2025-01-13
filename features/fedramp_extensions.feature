@@ -28,7 +28,6 @@ Examples:
   | address-type |
   | aggregate-parameters-warning |
   | attachment-type |
-  | authenticated-scan-no-has-remarks |
   | authentication-method-has-remarks |
   | authorization-type |
   | by-component-has-responsible-role |
@@ -107,7 +106,6 @@ Examples:
   | has-system-id |
   | has-system-name-short |
   | has-user-guide |
-  | high-impact-inventory-item-has-asset-owner |
   | image-has-checksum |
   | implementation-status-has-remarks |
   | import-profile-has-available-document |
@@ -125,10 +123,6 @@ Examples:
   | interconnection-security |
   | inventory-item-allows-authenticated-scan |
   | inventory-item-and-component-has-public |
-  | inventory-item-has-function |
-  | inventory-item-has-scan-type |
-  | inventory-item-has-software-version |
-  | inventory-item-has-valid-mac-address |
   | inventory-item-has-vendor-name |
   | inventory-item-or-component-has-asset-id |
   | inventory-item-public |

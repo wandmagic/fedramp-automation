@@ -667,7 +667,7 @@
             </expect>
             <expect id="image-has-checksum" target="//component[@type='software' and ./prop[@name='asset-type' and @value='image']]" test="count(./prop[@name='checksum' and @ns='http://fedramp.gov/ns/oscal']) = 1" level="ERROR">
                 <formal-name>Container Image Has Checksum Property</formal-name>
-                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="insert-help-url-here"/>
+                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/4-ssp-template-to-oscal-mapping/#leveraged-fedramp-authorized-services"/>
                 <message>In a FedRAMP SSP, a component that describes a container or operating system image MUST define a checksum property.</message>
             </expect>
             <expect id="information-type-has-class" target="component/prop[@name='information-type' and @ns='http://fedramp.gov/ns/oscal']" test="exists(@class)" level="ERROR">
