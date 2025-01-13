@@ -667,7 +667,7 @@
             </expect>
             <expect id="image-has-checksum" target="//component[@type='software' and ./prop[@name='asset-type' and @value='image']]" test="count(./prop[@name='checksum' and @ns='http://fedramp.gov/ns/oscal']) = 1" level="ERROR">
                 <formal-name>Container Image Has Checksum Property</formal-name>
-                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/4-ssp-template-to-oscal-mapping/#leveraged-fedramp-authorized-services"/>
+                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="insert-help-url-here"/>
                 <message>In a FedRAMP SSP, a component that describes a container or operating system image MUST define a checksum property.</message>
             </expect>
             <expect id="information-type-has-class" target="component/prop[@name='information-type' and @ns='http://fedramp.gov/ns/oscal']" test="exists(@class)" level="ERROR">
@@ -729,9 +729,20 @@
                 <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/4-ssp-template-to-oscal-mapping/#ports-protocols-and-services"/>
                 <message>A FedRAMP SSP's component MUST reference the existing component(s) that use it via network communication. However, component "{../@uuid}" references a nonexistent component "{@href}".</message>
             </expect>
+
         </constraints>
     </context>
 
+    <context>
+        <metapath target="/system-security-plan/system-implementation"/>
+        <constraints>
+            <expect id="inventory-item-or-component-has-asset-id" target="(inventory-item)| (component[@type='software' and prop[@name='asset-type' and @value='image']])" test="count(prop[@name='asset-id']) = 1" level="ERROR">
+                <formal-name>Inventory Item or Component Has Asset ID</formal-name>
+                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/5-attachments/#system-inventory-approach"/>
+                <message>In a FedRAMP SSP, each inventory item and software image component MUST include the asset ID.</message>
+            </expect>
+        </constraints>
+    </context>
 
     <context>
         <metapath target="/system-security-plan/system-implementation/inventory-item"/>
@@ -739,6 +750,20 @@
             <let var="high-sensitivity" expression="../../system-characteristics/security-sensitivity-level='fips-199-high'"/>
             <let var="moderate-sensitivity" expression="../../system-characteristics/security-sensitivity-level='fips-199-moderate'"/>
             <let var ="component-uuid" expression="implemented-component/@component-uuid"/>
+            <expect id="inventory-item-has-software-name" target=".[prop[@name='asset-type' and @value=('operating-system', 'container', 'image')] or ../component[uuid=$component-uuid and type='software']]" test="count(prop[@name=('software-name', 'os-name')]) = 1 or count(../component[@uuid=$component-uuid]/prop[@name=('software-name', 'os-name')]) = 1" level="ERROR">
+                <formal-name>Inventory Item Has Software Name</formal-name>
+                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/5-attachments/#system-inventory-approach"/>
+                <message>In a FedRAMP SSP, each inventory item MUST include the software name in the inventory item itself or within the linked component.</message>
+            <expect id="inventory-item-has-software-version" target=".[prop[@name='asset-type' and @value=('operating-system', 'container', 'image')] or ../component[uuid=$component-uuid and type='software']]" test="count(prop[@name=('software-version', 'os-version')]) = 1 or count(../component[@uuid=$component-uuid]/prop[@name=('software-version', 'os-version')]) = 1" level="ERROR">
+                <formal-name>Inventory Item Has Software Version</formal-name>
+                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/5-attachments/#system-inventory-approach"/>
+                <message>In a FedRAMP SSP, each inventory item MUST include the software version in the inventory item itself or within the linked component.</message>
+            </expect>
+             <expect id="inventory-item-has-valid-mac-address" target=".[prop[@name='mac-address']]/prop[@name='mac-address']" test="matches(@value, '^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})|([0-9a-fA-F]{4}\\.[0-9a-fA-F]{4}\\.[0-9a-fA-F]{4})$')" level="ERROR">
+                <formal-name>Inventory Item Has Valid Mac Address</formal-name>
+                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/5-attachments/#system-inventory-approach"/>
+                <message>In a FedRAMP SSP, each inventory item that has a MAC address MUST format the MAC address correctly.</message>
+            </expect>
             <expect id="inventory-item-has-vendor-name" target="." test="count(prop[@name='vendor-name' and @ns='http://fedramp.gov/ns/oscal']) >= 1 or count(../component[@uuid=$component-uuid]/prop[@name='vendor-name' and @ns='http://fedramp.gov/ns/oscal']) >= 1" level="ERROR">
                 <formal-name>Inventory Item Has Vendor Name</formal-name>
                 <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/5-attachments/#system-inventory-approach"/>

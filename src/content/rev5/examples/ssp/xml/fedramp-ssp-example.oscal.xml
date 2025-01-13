@@ -1674,9 +1674,7 @@ property.</p>
         <p>Describe the virtual appliance and what it is used for.</p>
       </description>
       <prop name="implementation-point" value="internal"/>
-      <prop name='function' value='virtual'><remarks><p>virtual function</p></remarks></prop>
       <status state="operational"/>
-      
     </component>
     
     <!-- Hardware Component -->
@@ -2445,7 +2443,7 @@ approved.</p>
       <prop name="is-scanned" value="yes"/>
       <prop ns="http://fedramp.gov/ns/oscal" name="vendor-name" value="Vendor"/>
       <prop ns="http://fedramp.gov/ns/oscal" name="scan-type" value="infrastructure"/>
-      <implemented-component component-uuid="11111111-2222-4000-8000-009000000007"/>
+      <implemented-component component-uuid="11111111-2222-4000-8000-009000500006"/>
     </inventory-item>
     <inventory-item uuid="11111111-2222-4000-8000-011000000005">
       <description>
@@ -2484,7 +2482,7 @@ approved.</p>
           <p>Asset wasn't running at time of scan.</p>
         </remarks>
       </prop>
-      <implemented-component component-uuid="11111111-2222-4000-8000-009000000007"/>
+      <implemented-component component-uuid="11111111-2222-4000-8000-009000500007"/>
     </inventory-item>
     <inventory-item uuid="11111111-2222-4000-8000-011000000007">
       <description>
@@ -2522,7 +2520,7 @@ approved.</p>
           <p>Asset wasn't running at time of scan.</p>
         </remarks>
       </prop>
-      <implemented-component component-uuid="11111111-2222-4000-8000-009000000007"/>
+      <implemented-component component-uuid="11111111-2222-4000-8000-009000500005"/>
     </inventory-item>
     <inventory-item uuid="11111111-2222-4000-8000-011000000009">
       <description>

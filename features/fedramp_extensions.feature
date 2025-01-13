@@ -42,6 +42,7 @@ Examples:
   | component-has-used-by-link |
   | component-type |
   | connection-security |
+  | connection-security |
   | control-implementation-status |
   | data-center-alternate |
   | data-center-count |
@@ -123,6 +124,9 @@ Examples:
   | interconnection-security |
   | inventory-item-allows-authenticated-scan |
   | inventory-item-and-component-has-public |
+  | inventory-item-has-software-name |
+  | inventory-item-has-software-version |
+  | inventory-item-has-valid-mac-address |
   | inventory-item-has-vendor-name |
   | inventory-item-or-component-has-asset-id |
   | inventory-item-public |
@@ -356,8 +360,6 @@ Examples:
   | has-system-name-short-PASS.yaml |
   | has-user-guide-FAIL.yaml |
   | has-user-guide-PASS.yaml |
-  | high-impact-inventory-item-has-asset-owner-FAIL.yaml |
-  | high-impact-inventory-item-has-asset-owner-PASS.yaml |
   | image-has-checksum-FAIL.yaml |
   | image-has-checksum-PASS.yaml |
   | implementation-status-has-remarks-FAIL.yaml |
@@ -392,10 +394,6 @@ Examples:
   | inventory-item-allows-authenticated-scan-PASS.yaml |
   | inventory-item-and-component-has-public-FAIL.yaml |
   | inventory-item-and-component-has-public-PASS.yaml |
-  | inventory-item-has-function-FAIL.yaml |
-  | inventory-item-has-function-PASS.yaml |
-  | inventory-item-has-scan-type-FAIL.yaml |
-  | inventory-item-has-scan-type-PASS.yaml |
   | inventory-item-has-software-name-FAIL.yaml |
   | inventory-item-has-software-name-PASS.yaml |
   | inventory-item-has-software-version-FAIL.yaml |
