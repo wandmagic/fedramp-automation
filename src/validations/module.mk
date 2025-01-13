@@ -1,8 +1,6 @@
 
 # Get tool versions using Node script
 OSCAL_VERSION := $(shell node src/scripts/ci-get-version.js package oscal)
-OSCAL_CLI_VERSION := $(shell node src/scripts/ci-get-version.js tool oscal-cli) 
-OSCAL_SERVER_VERSION := $(shell node src/scripts/ci-get-version.js tool oscal-server)
 OSCAL_SERVER_PATH := $(shell node -e "console.log(process.cwd())")
 
 # Optional: Add version checking targets
@@ -12,6 +10,15 @@ check-versions:
 	@echo "OSCAL Server: $(OSCAL_SERVER_VERSION)"
 	@echo "OSCAL JS: $(OSCAL_VERSION)"
 	@echo "OSCAL SERVER ALLOWED DIR: $(OSCAL_SERVER_PATH)"
+# Variables
+OSCAL_VERSION = $(shell jq -r .dependencies.oscal package.json)
+ifdef USE_SNAPSHOT
+OSCAL_CLI_VERSION := $(shell node src/scripts/ci-get-version.js tool oscal-cli-snapshot) 
+OSCAL_SERVER_VERSION := $(shell node src/scripts/ci-get-version.js tool oscal-server-snapshot)
+else
+OSCAL_CLI_VERSION := $(shell node src/scripts/ci-get-version.js tool oscal-cli) 
+OSCAL_SERVER_VERSION := $(shell node src/scripts/ci-get-version.js tool oscal-server)
+endif
 OSCAL_CLI = npx oscal@$(OSCAL_VERSION)
 SRC_DIR = ./src
 DIST_DIR = ./dist
