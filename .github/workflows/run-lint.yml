@@ -20,7 +20,7 @@ jobs:
     strategy:
       matrix:
         version: ['latest', 'snapshot']
-    name: Run tests (${{ matrix.version }})
+    name: Run style tests (${{ matrix.version }})
         # Checkout repository and its submodules
     steps:
       # Check-out the repository under $GITHUB_WORKSPACE

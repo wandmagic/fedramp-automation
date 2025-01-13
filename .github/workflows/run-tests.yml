@@ -23,7 +23,7 @@ jobs:
         os: [ubuntu-20.04, windows-2022]
         version: ['latest', 'snapshot']
     runs-on: ${{ matrix.os }}
-    name: Test (${{ matrix.os }}, ${{ matrix.version }})
+    name: Unit Tests (${{ matrix.os }}, ${{ matrix.version }})
     # Checkout repository and its submodules
     steps:
       # Check-out the repository under $GITHUB_WORKSPACE
