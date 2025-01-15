@@ -163,7 +163,7 @@
                 <description>This index includes all UUIDs of resources defined in the back-matter.</description>
                 <key-field target="@uuid"/>
             </index>
-            <index name="index-link-refs" target="map:merge(.//link ! map:entry(substring-after(@href,'#'),.))?*">
+            <index name="index-link-refs" target="map:merge(.//(link|import-profile) ! map:entry(substring-after(@href,'#'),.))?*">
                 <formal-name>Links Referencing Back Matter</formal-name>
                 <description>This index includes all links that reference back-matter resources.</description>
                 <key-field target="substring-after(@href,'#')"/>

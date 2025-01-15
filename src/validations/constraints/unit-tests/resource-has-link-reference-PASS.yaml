@@ -3,7 +3,10 @@ test-case:
   description: >-
     This test case validates the behavior of constraint
     resource-has-link-reference
-  content:  ../content/ssp-resource-has-link-reference-VALID.xml
+  content:
+    - ../content/ssp-resource-has-link-reference-VALID.xml
+    - ../content/ssp-resource-has-link-reference-VALID-2.xml
+    - ../../../content/rev5/examples/ssp/xml/fedramp-ssp-example.oscal.xml
   expectations:
     - constraint-id: resource-has-link-reference
       result: pass
