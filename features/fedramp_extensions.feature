@@ -130,8 +130,6 @@ Examples:
   | inventory-item-has-function |
   | inventory-item-has-is-scanned |
   | inventory-item-has-scan-type |
-  | inventory-item-has-function |
-  | inventory-item-has-scan-type |
   | inventory-item-has-software-name |
   | inventory-item-has-software-version |
   | inventory-item-has-valid-mac-address |
@@ -408,10 +406,6 @@ Examples:
   | inventory-item-has-function-PASS.yaml |
   | inventory-item-has-is-scanned-FAIL.yaml |
   | inventory-item-has-is-scanned-PASS.yaml |
-  | inventory-item-has-scan-type-FAIL.yaml |
-  | inventory-item-has-scan-type-PASS.yaml |
-  | inventory-item-has-function-FAIL.yaml |
-  | inventory-item-has-function-PASS.yaml |
   | inventory-item-has-scan-type-FAIL.yaml |
   | inventory-item-has-scan-type-PASS.yaml |
   | inventory-item-has-software-name-FAIL.yaml |
