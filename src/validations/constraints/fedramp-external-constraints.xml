@@ -158,6 +158,27 @@
                 <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/4-ssp-template-to-oscal-mapping/#external-systems-and-services-not-having-fedramp-authorization"/>
                 <message>A FedRAMP SSP MUST have each component describing leveraged systems, interconnections, or authorized services reference at least one user with an authorized privilege and function performed via the "privilege-uuid" property.</message>
             </expect>
+            <index name="index-resource-uuids" target="map:merge(back-matter/resource ! map:entry(@uuid,.))?*">
+                <formal-name>Resource UUIDs in Back Matter</formal-name>
+                <description>This index includes all UUIDs of resources defined in the back-matter.</description>
+                <key-field target="@uuid"/>
+            </index>
+            <index name="index-link-refs" target="map:merge(.//link ! map:entry(substring-after(@href,'#'),.))?*">
+                <formal-name>Links Referencing Back Matter</formal-name>
+                <description>This index includes all links that reference back-matter resources.</description>
+                <key-field target="substring-after(@href,'#')"/>
+            </index>
+            <index-has-key id="resource-has-link-reference" 
+                target="back-matter/resource"
+                name="index-link-refs"
+                level="WARNING">
+                <formal-name>Resource Has Link Reference</formal-name>
+                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" 
+                    name="help-url" 
+                    value="https://automate.fedramp.gov/documentation/general-concepts/oscal-citations-and-attachments/#citation-and-attachment-details"/>
+                <key-field target="@uuid"/>
+                <message>A resource in the back-matter SHOULD be referenced by at least one link in the document. Resource with UUID '{@uuid}' is not referenced.</message>
+            </index-has-key>
         </constraints>
 
     </context>
@@ -210,6 +231,7 @@
                 <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/general-concepts/oscal-citations-and-attachments/#citation-and-attachment-details"/>
                 <message>Every supporting artifact found in a citation SHOULD have a title.</message>
             </expect>
+            
         </constraints>
     </context>
 

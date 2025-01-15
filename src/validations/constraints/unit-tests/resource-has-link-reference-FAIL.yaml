@@ -1,0 +1,9 @@
+test-case:
+  name: Negative Test for resource-has-link-reference
+  description: >-
+    This test case validates the behavior of constraint
+    resource-has-link-reference
+  content: ../content/ssp-resource-has-link-reference-INVALID.xml
+  expectations:
+    - constraint-id: resource-has-link-reference
+      result: fail
