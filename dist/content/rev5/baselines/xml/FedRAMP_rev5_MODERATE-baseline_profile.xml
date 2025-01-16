@@ -5045,7 +5045,7 @@
             <prop name="label" ns="http://csrc.nist.gov/ns/oscal" value="(a) Requirement:"/>
             <p>The service provider develops test plans in accordance with NIST Special Publication 800-34 (as amended); plans are approved by the JAB/AO prior to initiating testing.</p>
           </part>
-          <part id="cp-4_fr_smt.1" name="item" ns="http://csrc.nist.gov/ns/oscal">
+          <part id="cp-4_fr_smt.2" name="item" ns="http://csrc.nist.gov/ns/oscal">
             <prop name="label" ns="http://csrc.nist.gov/ns/oscal" value="(b) Requirement:"/>
             <p>The service provider must include the Contingency Plan test results with the security package within the Contingency Plan-designated appendix (Appendix G, Contingency Plan Test Report).</p>
           </part>
