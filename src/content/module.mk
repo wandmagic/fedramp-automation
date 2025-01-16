@@ -7,6 +7,7 @@ DIST_DIR = ./dist
 XML_DIR = $(DIST_DIR)/content/rev5/baselines/xml
 JSON_DIR = $(DIST_DIR)/content/rev5/baselines/json
 YAML_DIR = $(DIST_DIR)/content/rev5/baselines/yaml
+XMLLINT := $(shell command -v xmllint 2>/dev/null || command -v /usr/bin/xmllint 2>/dev/null || command -v /mingw64/bin/xmllint 2>/dev/null)
 
 # Format configuration
 XML_FILES := $(shell find $(XML_DIR) -type f -name "*.xml" 2>/dev/null)
@@ -19,6 +20,8 @@ init-content:
 	$(OSCAL_CLI) use $(OSCAL_CLI_VERSION)
 	$(OSCAL_CLI) server update
 	$(OSCAL_CLI) server start -bg
+	@(command -v xmllint >/dev/null 2>&1 || (command -v apt-get >/dev/null 2>&1 && sudo apt-get install -y libxml2-utils) || (command -v brew >/dev/null 2>&1 && brew install libxml2) || (command -v choco >/dev/null 2>&1 && choco install xsltproc) || echo "Please install xmllint manually")
+
 
 # Generate content and perform conversions
 .PHONY: build-content
@@ -54,7 +57,7 @@ format-xml:
 	@echo "Formatting XML files..."
 	@for file in $(XML_FILES); do \
 		echo "Formatting $$file..."; \
-		xmllint --format --output "$$file" "$$file"; \
+		$(XMLLINT) --format --output "$$file" "$$file"; \
 	done
 
 .PHONY: format-json
