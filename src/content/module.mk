@@ -94,18 +94,33 @@ test-content:
 .PHONY: test-dist-content
 test-dist-content: 
 	@echo "Validating Output files"
-	@for file in $(YAML_FILES); do \
+	@set -e; \
+	validation_failed=0; \
+	for file in $(YAML_FILES); do \
 		echo "Validating $$file..."; \
-		$(OSCAL_CLI) validate -f -s "$$file"; \
-	done
-	@for file in $(JSON_FILES); do \
+		if ! $(OSCAL_CLI) validate -f -s "$$file"; then \
+			echo "Error: Validation failed for YAML file: $$file"; \
+			validation_failed=1; \
+		fi; \
+	done; \
+	for file in $(JSON_FILES); do \
 		echo "Validating $$file..."; \
-		$(OSCAL_CLI) validate -f -s "$$file"; \
-	done
-	@for file in $(XML_FILES); do \
+		if ! $(OSCAL_CLI) validate -f -s "$$file"; then \
+			echo "Error: Validation failed for JSON file: $$file"; \
+			validation_failed=1; \
+		fi; \
+	done; \
+	for file in $(XML_FILES); do \
 		echo "Validating $$file..."; \
-		$(OSCAL_CLI) validate -f -s "$$file"; \
-	done
+		if ! $(OSCAL_CLI) validate -f -s "$$file"; then \
+			echo "Error: Validation failed for XML file: $$file"; \
+			validation_failed=1; \
+		fi; \
+	done; \
+	if [ $$validation_failed -eq 1 ]; then \
+		echo "One or more validations failed"; \
+		exit 1; \
+	fi
 
 .PHONY: test-legacy-content
 test-legacy-content: format
