@@ -51,6 +51,12 @@ jobs:
       - name: Auto-convert Content
         run: make build-content
         working-directory: git-content
+      - name: Format output Content
+        run: make format-content
+        working-directory: git-content
+      - name: Test output Content
+        run: make test-dist-content
+        working-directory: git-content
       - name: Setup SSH key
         # Only do this on GSA/master
         if: github.repository == env.HOME_REPO && github.ref == 'refs/heads/master'

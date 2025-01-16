@@ -35,7 +35,7 @@ clean-oci-image:
 
 test: build-validations ## Test all
 
-build: init-content test-content build-content  ## Build all artifacts and copy into dist directory
+build: init-content test-content build-content format-content test-dist-content  ## Build all artifacts and copy into dist directory
 
 build-oci-image: ## Build OCI image
 	docker build \

@@ -8,12 +8,18 @@ XML_DIR = $(DIST_DIR)/content/rev5/baselines/xml
 JSON_DIR = $(DIST_DIR)/content/rev5/baselines/json
 YAML_DIR = $(DIST_DIR)/content/rev5/baselines/yaml
 
+# Format configuration
+XML_FILES := $(shell find $(XML_DIR) -type f -name "*.xml" 2>/dev/null)
+JSON_FILES := $(shell find $(JSON_DIR) -type f -name "*.json" 2>/dev/null)
+YAML_FILES := $(shell find $(YAML_DIR) -type f -name "*.yaml" -o -name "*.yml" 2>/dev/null)
+
 .PHONY: init-content
 init-content:
 	@npm install
 	$(OSCAL_CLI) use $(OSCAL_CLI_VERSION)
 	$(OSCAL_CLI) server update
 	$(OSCAL_CLI) server start -bg
+
 # Generate content and perform conversions
 .PHONY: build-content
 build-content:
@@ -42,13 +48,63 @@ build-content:
 	@echo "Converting Profiles to YAML..."
 	$(OSCAL_CLI) convert -f $(XML_DIR) -o $(YAML_DIR) -t YAML -s
 
+# Format files
+.PHONY: format-xml
+format-xml:
+	@echo "Formatting XML files..."
+	@for file in $(XML_FILES); do \
+		echo "Formatting $$file..."; \
+		xmllint --format --output "$$file" "$$file"; \
+	done
+
+.PHONY: format-json
+format-json:
+	@echo "Formatting JSON files..."
+	@for file in $(JSON_FILES); do \
+		if ! echo "$$file" | grep -q "min"; then \
+			echo "Formatting $$file..."; \
+			npx prettier --write --parser json "$$file"; \
+		fi \
+	done
+.PHONY: format-yaml
+format-yaml:
+	@echo "Formatting YAML files..."
+	@for file in $(YAML_FILES); do \
+		echo "Formatting $$file..."; \
+		npx prettier --write --parser yaml "$$file"; \
+	done
+
+# Combined format target
+.PHONY: format-content
+format-content: format-xml format-json format-yaml
+	@echo "All formatting complete!"
 
 .PHONY: test-content
-test-content:
+test-content: 
 	@echo "Validating Source files"
-	@$(OSCAL_CLI) validate -f  $(SRC_DIR)/content/rev5/baselines/ -r -s
+	@$(OSCAL_CLI) validate -f  $(SRC_DIR)/content/rev5/baselines/xml/FedRAMP_rev5_HIGH-baseline_profile.xml -s
+	@$(OSCAL_CLI) validate -f  $(SRC_DIR)/content/rev5/baselines/xml/FedRAMP_rev5_LI-SaaS-baseline_profile.xml -s
+	@$(OSCAL_CLI) validate -f  $(SRC_DIR)/content/rev5/baselines/xml/FedRAMP_rev5_LOW-baseline_profile.xml -s
+	@$(OSCAL_CLI) validate -f  $(SRC_DIR)/content/rev5/baselines/xml/FedRAMP_rev5_MODERATE-baseline_profile.xml	-s
+
+
+.PHONY: test-dist-content
+test-dist-content: 
+	@echo "Validating Output files"
+	@for file in $(YAML_FILES); do \
+		echo "Validating $$file..."; \
+		$(OSCAL_CLI) validate -f -s "$$file"; \
+	done
+	@for file in $(JSON_FILES); do \
+		echo "Validating $$file..."; \
+		$(OSCAL_CLI) validate -f -s "$$file"; \
+	done
+	@for file in $(XML_FILES); do \
+		echo "Validating $$file..."; \
+		$(OSCAL_CLI) validate -f -s "$$file"; \
+	done
 
 .PHONY: test-legacy-content
-test-legacy-content:
+test-legacy-content: format
 	@echo "Validating Source files"
 	@$(OSCAL_CLI) validate -f  $(SRC_DIR)/content/rev4/baselines/ -r -s
