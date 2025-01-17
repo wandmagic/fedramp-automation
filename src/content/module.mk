@@ -98,21 +98,21 @@ test-dist-content:
 	validation_failed=0; \
 	for file in $(YAML_FILES); do \
 		echo "Validating $$file..."; \
-		if ! $(OSCAL_CLI) validate -f -s "$$file"; then \
+		if ! $(OSCAL_CLI) validate -s -f "$$file"; then \
 			echo "Error: Validation failed for YAML file: $$file"; \
 			validation_failed=1; \
 		fi; \
 	done; \
 	for file in $(JSON_FILES); do \
 		echo "Validating $$file..."; \
-		if ! $(OSCAL_CLI) validate -f -s "$$file"; then \
+		if ! $(OSCAL_CLI) validate -s -f "$$file"; then \
 			echo "Error: Validation failed for JSON file: $$file"; \
 			validation_failed=1; \
 		fi; \
 	done; \
 	for file in $(XML_FILES); do \
 		echo "Validating $$file..."; \
-		if ! $(OSCAL_CLI) validate -f -s "$$file"; then \
+		if ! $(OSCAL_CLI) validate -s -f "$$file"; then \
 			echo "Error: Validation failed for XML file: $$file"; \
 			validation_failed=1; \
 		fi; \
