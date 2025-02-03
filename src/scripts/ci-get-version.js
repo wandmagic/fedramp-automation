@@ -21,13 +21,12 @@ function findRepoRoot(startDir) {
 
 // Get repo root
 const repoRoot = findRepoRoot(__dirname);
-console.info('Repository root:', repoRoot);
 
 // Get source, name and default version from command line arguments
 const [source, name, defaultVersion = '0.5.0'] = process.argv.slice(2);
 
 if (!source || !name) {
-  console.error('Usage: node get-version.mjs [package|tool] [name] [defaultVersion]');
+  console.error('Usage: node ci-get-version.js [package|tool] [name] [defaultVersion]');
   process.exit(1);
 }
 
