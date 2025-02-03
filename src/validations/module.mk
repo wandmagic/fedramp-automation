@@ -1,7 +1,17 @@
-# Variables
-OSCAL_VERSION = $(shell jq -r .dependencies.oscal package.json)
-OSCAL_CLI_VERSION = $(shell awk '/^oscal-cli/ {print $$2}' .tool-versions)
-OSCAL_SERVER_VERSION = $(shell awk '/^oscal-server/ {print $$2}' .tool-versions)
+
+# Get tool versions using Node script
+OSCAL_VERSION := $(shell node src/scripts/ci-get-version.js package oscal)
+OSCAL_CLI_VERSION := $(shell node src/scripts/ci-get-version.js tool oscal-cli) 
+OSCAL_SERVER_VERSION := $(shell node src/scripts/ci-get-version.js tool oscal-server)
+OSCAL_SERVER_PATH := $(shell node -e "console.log(process.cwd())")
+
+# Optional: Add version checking targets
+check-versions:
+	@echo "Using versions:"
+	@echo "OSCAL CLI: $(OSCAL_CLI_VERSION)"
+	@echo "OSCAL Server: $(OSCAL_SERVER_VERSION)"
+	@echo "OSCAL JS: $(OSCAL_VERSION)"
+	@echo "OSCAL SERVER ALLOWED DIR: $(OSCAL_SERVER_PATH)"
 OSCAL_CLI = npx oscal@$(OSCAL_VERSION)
 SRC_DIR = ./src
 DIST_DIR = ./dist
@@ -14,7 +24,7 @@ init-validations:
 	@echo "Installing node modules..."
 	npm install
 	$(OSCAL_CLI) use $(OSCAL_CLI_VERSION)
-	$(OSCAL_CLI) server update $(OSCAL_SERVER_VERSION)
+	$(OSCAL_CLI) server update -t $(OSCAL_SERVER_VERSION)
 
 # Style lint
 .PHONY: lint-style
@@ -27,7 +37,7 @@ lint-validations:
 build-validations:
 	@echo "Running Cucumber Tests"
 	$(OSCAL_CLI) server stop
-	npx cross-env OSCAL_SERVER_PATH=* $(OSCAL_CLI) server start -bg
+	npx cross-env OSCAL_SERVER_PATH=$(OSCAL_SERVER_PATH)  $(OSCAL_CLI) server start -bg
 	@npm run test:server
 	$(OSCAL_CLI) server stop
 
