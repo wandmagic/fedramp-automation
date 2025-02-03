@@ -21,7 +21,7 @@ function findRepoRoot(startDir) {
 
 // Get repo root
 const repoRoot = findRepoRoot(__dirname);
-console.error('Repository root:', repoRoot);
+console.info('Repository root:', repoRoot);
 
 // Get source, name and default version from command line arguments
 const [source, name, defaultVersion = '0.5.0'] = process.argv.slice(2);
