@@ -1857,8 +1857,6 @@ compliance (e.g., Module in Process).</p>
       <prop name="implementation-point" value="external"/>
       <prop name="direction" value="incoming" ns="http://fedramp.gov/ns/oscal"/>
       <prop name="direction" value="outgoing" ns="http://fedramp.gov/ns/oscal"/>
-      <prop ns="http://fedramp.gov/ns/oscal" name="information-type" class="incoming" value="C.3.5.1"/>
-      <prop ns="http://fedramp.gov/ns/oscal" name="information-type" class="outgoing" value="C.3.5.8"/>
 
       <prop ns="http://fedramp.gov/ns/oscal" name="information-type" class="incoming" value="C.3.5.1"/>
       <prop ns="http://fedramp.gov/ns/oscal" name="information-type" class="outgoing" value="C.3.5.8"/>
@@ -2596,6 +2594,12 @@ approved.</p>
           <p>Asset wasn't running at time of scan.</p>
         </remarks>
       </prop>
+      <prop name="function" value="Required brief, text-based description.">
+        <remarks>
+          <p>Optional, longer, formatted description.</p>
+        </remarks>
+      </prop>
+      <prop ns="http://fedramp.gov/ns/oscal" name="scan-type" value="infrastructure"/>
       <prop name="function" value="Required brief, text-based description.">
         <remarks>
           <p>Optional, longer, formatted description.</p>
