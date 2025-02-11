@@ -9,12 +9,16 @@
     <control id="sample-1">
         <title>Sample 1</title>
         <part name="statement" id="sample-1">
+            <p>Parent statement Should be EXCLUDED (sample-1)</p>
             <part name="statement" id="sample-1_smt">
+                <p>Parent statement Should be EXCLUDED (sample-1_smt)</p>
                 <part name="item" id="sample-1_smt.a">
-                    <prop ns="https://fedramp.gov/ns/oscal" name="response-point" value="You must fill in this response point." />
+                    <prop ns="https://fedramp.gov/ns/oscal" name="response-point"
+                        value="You must fill in this response point." />
                     <p>Should be INCLUDED (sample-1_smt.a)</p>
                     <part name="item" id="sample-1_smt.a.1">
-                        <prop ns="https://fedramp.gov/ns/oscal" name="response-point" value="You must fill in this response point." />
+                        <prop ns="https://fedramp.gov/ns/oscal" name="response-point"
+                            value="You must fill in this response point." />
                         <p>Should be INCLUDED (sample-1_smt.a.1)</p>
                     </part>
                 </part>
@@ -23,10 +27,12 @@
 
         <part id="sample-1_obj" name="assessment-objective">
             <part id="sample-1_obj.a" name="assessment-objective">
-                <prop ns="https://fedramp.gov/ns/oscal" name="response-point" value="You must fill in this response point."/>
+                <prop ns="https://fedramp.gov/ns/oscal" name="response-point"
+                    value="You must fill in this response point." />
                 <p>this should be EXCLUDED (sample-1_obj.a)</p>
                 <part id="sample-1_obj.a-1" name="assessment-objective">
-                    <prop ns="https://fedramp.gov/ns/oscal" name="response-point" value="You must fill in this response point."/>
+                    <prop ns="https://fedramp.gov/ns/oscal" name="response-point"
+                        value="You must fill in this response point." />
                     <p>this should be EXCLUDED (sample-1_obj.a-1)</p>
                 </part>
             </part>

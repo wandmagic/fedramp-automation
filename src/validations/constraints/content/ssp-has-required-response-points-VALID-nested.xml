@@ -2,7 +2,7 @@
 <?xml-model href="https://raw.githubusercontent.com/usnistgov/OSCAL/v1.0.4/xml/schema/oscal_complete_schema.xsd" schematypens="http://www.w3.org/2001/XMLSchema" title="OSCAL complete schema"?>
 <system-security-plan xmlns="http://csrc.nist.gov/ns/oscal/1.0" uuid="11111111-2222-4000-8000-000000000000">
 <metadata></metadata>
-     <import-profile href="resolved-example-profile-telos.xml"/>
+     <import-profile href="resolved-example-profile-nested.xml"/>
      <control-implementation>
      <description></description>
          <implemented-requirement uuid="11111111-2222-4000-8000-012000000001" control-id="unsupported-id">
