@@ -6,7 +6,7 @@ test-case:
   content: 
     - ../../../content/rev5/examples/ssp/xml/fedramp-ssp-example.oscal.xml
     - ../content/ssp-has-required-response-points-VALID.xml
-    - ../content/ssp-has-required-response-points-VALID-telos.xml
+    - ../content/ssp-has-required-response-points-VALID-nested.xml
   expectations:
     - constraint-id: has-required-response-points
       result: pass
