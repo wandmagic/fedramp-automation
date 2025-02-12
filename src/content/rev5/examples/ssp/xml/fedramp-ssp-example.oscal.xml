@@ -1713,11 +1713,26 @@ compliance (e.g., Module in Process).</p>
       <prop name="validation-type" value="fips-140-2"/>
       <!-- Provide the certificate number (CMVP #) -->
       <prop name="validation-reference" value="4811"/>
-      <link rel="proof-of-compliance" href="https://csrc.nist.gov/projects/cryptographic-module-validation-program/certificate/4811"/>
+      <link rel="proof-of-compliance" href="11111111-2222-4000-8000-009001200002"/>
       <status state="operational"/>
     </component>
     <!-- List all cryptographic modules for Data-in-Transit (DIT) - must referenced by using component(s), provide CMVP #, FIPS validation status, Vendor Name, Module Name, and brief usage description -->
     <component uuid="11111111-2222-4000-8000-009001200002" type="validation">
+      <title>Compliance Validation Proof</title>
+      <description>
+        <p>Provide a description and any pertinent note regarding the use of this Compliance Evidence.</p>
+      </description>
+      <!-- Rev5 new props for CMs -->
+      <prop ns="http://fedramp.gov/ns/oscal" name="asset-type" value="other"/>
+      <prop ns="http://fedramp.gov/ns/oscal" name="vendor-name" value="CM Vendor"/>
+      <!-- Provide the validation type for this CM -->
+      <prop name="validation-type" value="fips-140-3"/>
+      <!-- Provide the certificate number (CMVP #) -->
+      <prop name="validation-reference" value="4811"/>
+      <link rel="resource" href="#49fb4631-1da2-41ca-b0b3-e1b1006d4026"/>
+      <status state="operational"/>
+    </component>
+    <component uuid="11111111-2222-4000-8000-009001200003" type="validation">
       <title>[SAMPLE]Cryptographic Module Name</title>
       <description>
         <p>Provide a description and any pertinent note regarding the use of this CM.</p>
@@ -1732,9 +1747,10 @@ compliance (e.g., Module in Process).</p>
       <prop name="validation-type" value="fips-140-3"/>
       <!-- Provide the certificate number (CMVP #) -->
       <prop name="validation-reference" value="4811"/>
-      <link rel="proof-of-compliance" href="https://csrc.nist.gov/projects/cryptographic-module-validation-program/certificate/4811"/>
+      <link rel="proof-of-compliance" href="11111111-2222-4000-8000-009001200002"/>
       <status state="operational"/>
     </component>
+    
 
 
 
@@ -9463,7 +9479,15 @@ and the value is "citation".</p>
       </remarks>
     </resource>
 
-
+    <resource uuid="49fb4631-1da2-41ca-b0b3-e1b1006d4026">
+      <title>Proof of compliance Artifact</title>
+      <description>
+        <p>Proof of compliance</p>
+      </description>
+      <prop name="published" value="2023-01-01T00:00:00Z"/>
+      <prop name="version" value="Document Version"/>
+      <rlink href="https://csrc.nist.gov/projects/cryptographic-module-validation-program/certificate/4811"/>
+    </resource>
 
   </back-matter>
 </system-security-plan>
