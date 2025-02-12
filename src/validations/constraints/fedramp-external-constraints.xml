@@ -8,12 +8,13 @@
     <context>
         <metapath target="//component"/>
         <constraints>
+
             <expect id="component-has-proof-of-compliance-link" target=".[@type='validation' and prop[@name='asset-type' and @value='cryptographic-module'] and prop[@name='validation-type' and @value=('fips-140-2', 'fips-140-3')]]" test="count(link[@rel='proof-of-compliance']) eq 1" level="ERROR">
                 <formal-name>Component Has Proof of Compliance Link</formal-name>
                 <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/5-attachments/#system-inventory-approach"/>
                 <message>In a FedRAMP SSP, a validation component MUST include a proof of compliance link.</message>
             </expect>
-            <expect id="component-has-valid-proof-of-compliance-link" target=".[@type='validation' and prop[@name='asset-type' and @value='cryptographic-module'] and prop[@name='validation-type' and @value=('fips-140-2', 'fips-140-3')]]/link[@rel='proof-of-compliance']"  test="exists(../[@uuid=./@href])"  level="ERROR">
+            <expect id="component-has-valid-proof-of-compliance-link" target=".[@type='validation' and prop[@name='asset-type' and @value='cryptographic-module'] and prop[@name='validation-type' and @value=('fips-140-2', 'fips-140-3')]]/link[@rel='proof-of-compliance']"          test="@href=../..//component/@uuid"  level="ERROR">
                 <formal-name>Component Has Valid Proof of Compliance Link</formal-name>
                 <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/5-attachments/#system-inventory-approach"/>
                 <message>In a FedRAMP SSP, a validation component MUST include a valid proof of compliance link.</message>
