@@ -6,6 +6,32 @@
     <!-- ================== -->
 
     <context>
+        <metapath target="//component"/>
+        <constraints>
+            <expect id="component-has-proof-of-compliance-link" target=".[@type='validation' and prop[@name='asset-type' and @value='cryptographic-module'] and prop[@name='validation-type' and @value=('fips-140-2', 'fips-140-3')]]" test="count(link[@rel='proof-of-compliance']) eq 1" level="ERROR">
+                <formal-name>Component Has Proof of Compliance Link</formal-name>
+                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/5-attachments/#system-inventory-approach"/>
+                <message>In a FedRAMP SSP, a validation component MUST include a proof of compliance link.</message>
+            </expect>
+            <expect id="component-has-valid-proof-of-compliance-link" target=".[@type='validation' and prop[@name='asset-type' and @value='cryptographic-module'] and prop[@name='validation-type' and @value=('fips-140-2', 'fips-140-3')]]/link[@rel='proof-of-compliance']" test="doc-available(@href)" level="ERROR">
+                <formal-name>Component Has Valid Proof of Compliance Link</formal-name>
+                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/5-attachments/#system-inventory-approach"/>
+                <message>In a FedRAMP SSP, a validation component MUST include a valid proof of compliance link.</message>
+            </expect>
+            <expect id="component-has-validation-reference" target=".[@type='validation' and prop[@name='asset-type' and @value='cryptographic-module'] and prop[@name='validation-type' and @value=('fips-140-2', 'fips-140-3')]]" test="count(prop[@name='validation-reference']) eq 1" level="ERROR">
+                <formal-name>Component Has Validation Reference</formal-name>
+                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/5-attachments/#system-inventory-approach"/>
+                <message>In a FedRAMP SSP, a validation component MUST include a validation reference.</message>
+            </expect>
+            <expect id="validation-reference-has-correct-format" target=".[@type='validation' and prop[@name='asset-type' and @value='cryptographic-module'] and prop[@name='validation-type' and @value=('fips-140-2', 'fips-140-3')]]/prop[@name='validation-reference']" test="matches(@value, '^\d{4}$')" level="ERROR">
+                <formal-name>Validation Reference Has Correct Format</formal-name>
+                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/5-attachments/#system-inventory-approach"/>
+                <message>In a FedRAMP SSP, a validation component MUST include a validation reference with the correct 4-digit format.</message>
+            </expect>
+        </constraints>
+    </context>
+
+    <context>
         <metapath target="//user"/>
         <constraints>
             <expect id="user-has-authorized-privilege" target="." test="count(authorized-privilege) gt 0" level="ERROR">

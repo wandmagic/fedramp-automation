@@ -1,0 +1,9 @@
+test-case:
+  name: Negative Test for component-has-proof-of-compliance-link
+  description: >-
+    This test case validates the behavior of constraint
+    component-has-proof-of-compliance-link
+  content: ../content/ssp-component-has-proof-of-compliance-link-INVALID.xml
+  expectations:
+    - constraint-id: component-has-proof-of-compliance-link
+      result: fail
