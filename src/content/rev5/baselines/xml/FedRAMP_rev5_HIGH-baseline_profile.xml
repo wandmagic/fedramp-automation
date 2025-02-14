@@ -1615,13 +1615,6 @@
 				</description>
 			</constraint>
 		</set-parameter>
-		<set-parameter param-id="mp-04_odp.01">
-			<constraint>
-				<description>
-					<p>all types of digital and non-digital media with sensitive information</p>
-				</description>
-			</constraint>
-		</set-parameter>
 		<set-parameter param-id="mp-04_odp.02">
 			<constraint>
 				<description>

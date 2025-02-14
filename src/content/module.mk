@@ -1,7 +1,9 @@
 # Variables
-OSCAL_VERSION = $(shell jq -r .dependencies.oscal package.json)
-OSCAL_CLI_VERSION = $(shell awk '/^oscal-cli/ {print $$2}' .tool-versions)
-OSCAL_CLI = npx oscal@$(OSCAL_VERSION)
+OSCAL_VERSION := $(shell node src/scripts/ci-get-version.js package oscal)
+OSCAL_CLI_VERSION := $(shell node src/scripts/ci-get-version.js tool oscal-cli) 
+OSCAL_SERVER_VERSION := $(shell node src/scripts/ci-get-version.js tool oscal-server)
+OSCAL_SERVER_PATH := $(shell node -e "console.log(process.cwd())")
+
 SRC_DIR = ./src
 DIST_DIR = ./dist
 XML_DIR = $(DIST_DIR)/content/rev5/baselines/xml
@@ -18,7 +20,7 @@ YAML_FILES := $(shell find $(YAML_DIR) -type f -name "*.yaml" -o -name "*.yml" 2
 init-content:
 	@npm install
 	$(OSCAL_CLI) use $(OSCAL_CLI_VERSION)
-	$(OSCAL_CLI) server update
+	$(OSCAL_CLI) server update -t $(OSCAL_SERVER_VERSION)
 	$(OSCAL_CLI) server start -bg
 	@(command -v xmllint >/dev/null 2>&1 || (command -v apt-get >/dev/null 2>&1 && sudo apt-get install -y libxml2-utils) || (command -v brew >/dev/null 2>&1 && brew install libxml2) || (command -v choco >/dev/null 2>&1 && choco install xsltproc) || echo "Please install xmllint manually")
 
