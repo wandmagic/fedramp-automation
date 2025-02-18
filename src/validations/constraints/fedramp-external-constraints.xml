@@ -98,7 +98,7 @@
                 <description>This index includes all statements defined in a FedRAMP SSP</description>
                 <key-field target="@statement-id"/>
             </index>
-            <expect id="aggregate-parameters-warning" target="//set-parameter" test="every $param in $aggregate-parameters satisfies @param-id != $param" level="WARNING">
+            <expect id="aggregate-parameters-warning" target="//set-parameter" test="not($aggregate-parameters = @param-id)" level="WARNING">
                 <formal-name>No Aggregate Parameters in SSP</formal-name>
                 <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://automate.fedramp.gov/documentation/ssp/6-security-controls/#responsible-roles-and-parameter-assignments"/>
                 <message>A FedRAMP SSP SHOULD NOT set aggregate parameters directly. Parameter {@param-id} is an aggregate parameter that should not be set in the SSP.</message>
