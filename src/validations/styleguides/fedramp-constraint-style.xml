@@ -62,7 +62,7 @@
                 <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://github.com/GSA/fedramp-automation/blob/develop/src/validations/styleguides/README.md#frr116"/>
                 <message>A FedRAMP constraint MUST include a formal name.</message>
             </expect>
-            <expect id="frr117" target="//let[@var = $duplicate-vars]" test="false()" level="ERROR">
+            <expect id="frr120" target="//let[@var = $duplicate-vars]" test="false()" level="ERROR">
                 <formal-name>Let Variables Must Have Unique Names</formal-name>
                 <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://github.com/GSA/fedramp-automation/blob/develop/src/validations/styleguides/README.md#frr117"/>
                 <message>A let variable MUST have a unique name. Variable "{@var}" is used multiple times.</message>
