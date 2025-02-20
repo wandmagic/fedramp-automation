@@ -41,6 +41,16 @@ build-validations:
 	@npm run test:server
 	$(OSCAL_CLI) server stop
 
+# Validation
+.PHONY: performance-validations
+performance-validations:
+	@echo "Running Performance Tests"
+	$(OSCAL_CLI) server stop
+	npx cross-env OSCAL_SERVER_PATH=$(OSCAL_SERVER_PATH)  $(OSCAL_CLI) server start -bg
+	@npm run test:performance
+	$(OSCAL_CLI) server stop
+
+
 clean-validations:
 	@echo "Nothing to clean"
 

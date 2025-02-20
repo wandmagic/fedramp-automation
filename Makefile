@@ -35,6 +35,8 @@ clean-oci-image:
 
 test: build-validations ## Test all
 
+performance: performance-validations # test performance
+
 build: init-content test-content build-content  ## Build all artifacts and copy into dist directory
 
 build-oci-image: ## Build OCI image
