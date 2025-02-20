@@ -55,11 +55,18 @@ async function extractConstraints(xmlPath) {
   const constraints = [];
 
   for (const context of contexts) {
-    // Get metapath and variables
+    // Get metapath, variables, and indexes
     const metapaths = Array.from(context.getElementsByTagName('metapath')).map(m => m.getAttribute('target'));
     const variables = Array.from(context.getElementsByTagName('let')).map(v => ({
       var: v.getAttribute('var'),
       expression: v.getAttribute('expression')
+    }));
+    const indexes = Array.from(context.getElementsByTagName('index')).map(idx => ({
+      name: idx.getAttribute('name'),
+      target: idx.getAttribute('target'),
+      formalName: idx.getElementsByTagName('formal-name')[0]?.textContent,
+      description: idx.getElementsByTagName('description')[0]?.textContent,
+      keyField: idx.getElementsByTagName('key-field')[0]?.getAttribute('target')
     }));
 
     // Get individual constraints
@@ -80,6 +87,11 @@ async function extractConstraints(xmlPath) {
         ${metapaths.map(mp => `<metapath target="${mp}"/>`).join('\n        ')}
         <constraints>
             ${variables.map(v => `<let var="${v.var}" expression="${v.expression}"/>`).join('\n            ')}
+            ${indexes.map(idx => `<index name="${idx.name}" target="${idx.target}">
+                <formal-name>${idx.formalName || ''}</formal-name>
+                <description>${idx.description || ''}</description>
+                <key-field target="${idx.keyField}"/>
+            </index>`).join('\n            ')}
             ${child.outerHTML.replace(' xmlns="http://csrc.nist.gov/ns/oscal/metaschema/1.0"', '')}
         </constraints>
     </context>
