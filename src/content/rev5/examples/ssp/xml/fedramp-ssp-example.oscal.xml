@@ -1717,7 +1717,7 @@ compliance (e.g., Module in Process).</p>
       <prop name="validation-type" value="fips-140-2"/>
       <!-- Provide the certificate number (CMVP #) -->
       <prop name="validation-reference" value="4811"/>
-      <link rel="validation-details" href="https://csrc.nist.gov/projects/cryptographic-module-validation-program/certificate/4811"/>
+      <link rel="validation-details" href="https://csrc.nist.gov/CSRC/media/projects/cryptographic-module-validation-program/documents/certificates/September%202024_011024_0217.pdf"/>
       <status state="operational"/>
     </component>
     <!-- List all cryptographic modules for Data-in-Transit (DIT) - must referenced by using component(s), provide CMVP #, FIPS validation status, Vendor Name, Module Name, and brief usage description -->
@@ -1736,7 +1736,7 @@ compliance (e.g., Module in Process).</p>
       <prop name="validation-type" value="fips-140-3"/>
       <!-- Provide the certificate number (CMVP #) -->
       <prop name="validation-reference" value="4811"/>
-      <link rel="validation-details" href="https://csrc.nist.gov/projects/cryptographic-module-validation-program/certificate/4811"/>
+      <link rel="validation-details" href="https://csrc.nist.gov/CSRC/media/projects/cryptographic-module-validation-program/documents/certificates/September%202024_011024_0217.pdf"/>
       <status state="operational"/>
     </component>
 
