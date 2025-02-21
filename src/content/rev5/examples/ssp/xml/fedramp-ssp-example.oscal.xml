@@ -2299,6 +2299,7 @@
       <prop name="asset-type" value="operating-system"/>
       <prop name="serial-number" value="Serial #"/>
       <prop name="asset-tag" value="Asset Tag"/>
+      <prop name="software-version" value="1.0.0"/>
       <prop name="vlan-id" value="VLAN Identifier"/>
       <prop name="network-id" value="Network Identifier"/>
       <prop name="diagram-label" value="Legacy Inventory Item" ns="http://fedramp.gov/ns/oscal"/>
@@ -2383,6 +2384,9 @@
       <prop name="ipv4-address" value="10.3.3.3"/>
       <prop name="ipv6-address" value="0000:0000:0000:0000:0000:ffff:0a03:0303"/>
       <prop name="is-scanned" value="yes"/>
+      <prop name="hardware-model" value="v0"/>
+      <prop name="allows-authenticated-scan" value="yes"/>
+      <prop ns="http://fedramp.gov/ns/oscal" name="vendor-name" value="Vendor"/>
       <prop ns="http://fedramp.gov/ns/oscal" name="scan-type" value="infrastructure"/>
       <link rel="baseline-configuration-name" href="#11111111-2222-4000-8000-001000000059"/>
       <responsible-party role-id="asset-owner">
@@ -2403,11 +2407,17 @@
       <prop name="ipv6-address" value="0000:0000:0000:0000:0000:ffff:0a04:0404"/>
       <prop name="is-scanned" value="yes"/>
       <prop ns="http://fedramp.gov/ns/oscal" name="scan-type" value="infrastructure"/>
+      <prop name="hardware-model" value="v0"/>
+      <prop name="allows-authenticated-scan" value="yes"/>
+      <prop ns="http://fedramp.gov/ns/oscal" name="vendor-name" value="Vendor"/>
+      <prop ns="http://fedramp.gov/ns/oscal" name="scan-type" value="other">
+        <remarks><p>a different kind of scan</p></remarks>
+      </prop>
       <link rel="baseline-configuration-name" href="#11111111-2222-4000-8000-001000000059"/>
       <responsible-party role-id="asset-owner">
         <party-uuid>11111111-2222-4000-8000-004000000016</party-uuid>
       </responsible-party>
-      <implemented-component component-uuid="11111111-2222-4000-8000-009000300100"/>
+      <implemented-component component-uuid="11111111-2222-4000-8000-009000500006"/>
     </inventory-item>
     <inventory-item uuid="11111111-2222-4000-8000-011000000005">
       <description>
@@ -2437,6 +2447,8 @@
       <prop name="asset-type" value="router"/>
       <prop name="virtual" value="no"/>
       <prop name="public" value="no"/>
+      <prop name="hardware-model" value="v0"/>
+      <prop ns="http://fedramp.gov/ns/oscal" name="vendor-name" value="Vendor"/>
       <prop name="is-scanned" value="no">
         <remarks>
           <p>Asset wasn't running at time of scan.</p>
