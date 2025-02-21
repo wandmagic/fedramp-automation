@@ -143,8 +143,11 @@ Examples:
   | inventory-item-has-baseline-link |
   | inventory-item-has-diagram-label |
   | inventory-item-has-function |
+  | inventory-item-has-hardware-model |
   | inventory-item-has-is-scanned |
   | inventory-item-has-scan-type |
+  | inventory-item-has-software-name |
+  | inventory-item-has-software-version |
   | inventory-item-has-valid-mac-address |
   | inventory-item-has-vendor-name |
   | inventory-item-not-system-or-validation |
