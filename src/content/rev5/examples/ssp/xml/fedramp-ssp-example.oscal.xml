@@ -2349,6 +2349,8 @@
       <prop name="public" value="no"/>
       <prop name="is-scanned" value="yes"/>
       <prop name="fqdn" value="dns.name"/>
+      <prop name="asset-type" value="hardware"/>
+      <prop name="hardware-model" value="rtx5090"/>
       <prop name="uri" value="uniform.resource.locator"/>
       <prop name="netbios-name" value="netbios-name"/>
       <prop name="physical-location" value="Physical location of Asset"/>
