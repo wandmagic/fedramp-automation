@@ -2286,7 +2286,6 @@
         <p>Legacy Example (No implemented-component).</p>
       </description>
       <prop name="asset-id" value="unique-asset-ID-01"/>
-      <!-- <prop name="software-version" value="software-version"/> -->
       <prop name="ipv4-address" value="10.1.1.1"/>
       <prop name="ipv6-address" value="2001:db8:3333:4444:5555:6666:7777:8888"/>
       <prop name="virtual" value="no"/>
@@ -2295,7 +2294,8 @@
       <prop name="uri" value="uniform.resource.identifier"/>
       <prop name="netbios-name" value="netbios-name"/>
       <prop name="mac-address" value="00:00:00:00:00:00"/>
-      <!-- <prop name="software-name" value="software-name"/> -->
+      <prop name="software-name" value="software-name"/>
+      <prop name="software-version" value="software-version"/>      
       <prop name="asset-type" value="operating-system"/>
       <prop name="serial-number" value="Serial #"/>
       <prop name="asset-tag" value="Asset Tag"/>
@@ -2399,6 +2399,7 @@
       <description>
         <p>None.</p>
       </description>
+      <prop name="function" value="network-security-appliance"/>
       <prop name="asset-id" value="unique-asset-ID-04"/>
       <prop name="asset-type" value="appliance"/>
       <prop name="virtual" value="yes"/>
