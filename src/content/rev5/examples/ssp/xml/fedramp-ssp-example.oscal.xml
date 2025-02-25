@@ -2133,7 +2133,7 @@
       <responsible-role role-id="administrator">
         <party-uuid>11111111-2222-4000-8000-004000000010</party-uuid>
       </responsible-role>
-      <protocol name="smtp">
+      <protocol name="smtp" uuid="3835d249-9c84-4f3d-8935-ee177fd70c8d">
         <port-range start="23" end="23" transport="TCP"/>
         <port-range start="23" end="23" transport="UDP"/>
       </protocol>
@@ -2294,12 +2294,11 @@
       <prop name="uri" value="uniform.resource.identifier"/>
       <prop name="netbios-name" value="netbios-name"/>
       <prop name="mac-address" value="00:00:00:00:00:00"/>
-      <prop name="software-name" value="software-name"/>
-      <prop name="software-version" value="software-version"/>      
+      <prop name="software-name" value="AwesomeOS"/>
+      <prop name="software-version" value="1.2.3"/>      
       <prop name="asset-type" value="operating-system"/>
       <prop name="serial-number" value="Serial #"/>
       <prop name="asset-tag" value="Asset Tag"/>
-      <prop name="software-version" value="1.0.0"/>
       <prop name="vlan-id" value="VLAN Identifier"/>
       <prop name="network-id" value="Network Identifier"/>
       <prop name="diagram-label" value="Legacy Inventory Item" ns="http://fedramp.gov/ns/oscal"/>
@@ -2399,7 +2398,11 @@
       <description>
         <p>None.</p>
       </description>
-      <prop name="function" value="network-security-appliance"/>
+      <prop name="function" value="network-security-appliance">
+        <remarks>
+          <p>The function of this network security appliance is to mediate traffic between other sub-systems and enforce organizational and system network access policies for machine-to-machine communication.</p>
+        </remarks>
+      </prop>
       <prop name="asset-id" value="unique-asset-ID-04"/>
       <prop name="asset-type" value="appliance"/>
       <prop name="virtual" value="yes"/>
