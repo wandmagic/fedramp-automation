@@ -37,6 +37,10 @@ test: build-validations ## Test all
 
 build: init-content test-content build-content format-content test-dist-content  ## Build all artifacts and copy into dist directory
 
+performance: performance-validations # test performance
+
+build: init-content test-content build-content  ## Build all artifacts and copy into dist directory
+
 build-oci-image: ## Build OCI image
 	docker build \
 		--build-arg APK_EXTRA_ARGS="--no-check-certificate" \

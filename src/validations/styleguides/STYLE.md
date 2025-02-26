@@ -27,6 +27,7 @@ This document is to instruct FedRAMP developers and community members on mandato
 | [FRR117](#frr117) | Limit Informational Constraint Usage | Recommended| Structure; Metadata |
 | [FRR118](#frr118) | Keep Let Bindings Adjacent to Their Constraints | Recommended| Structure; Sorting |
 | [FRR119](#frr119) | Keep Invalid Sample Content under 100 lines | Recommended| Structure; Sorting |
+| [FRR120](#frr120) | Let Variables Must Have Unique Names | Recommended| Structure; Sorting |
 
 ### FRR101
 
@@ -1260,3 +1261,70 @@ Below is a non-conformant example.
 ```
 
 [back to top](#summary)
+
+
+### FRR120
+
+ID: `frr120`
+
+Formal Name: Let Variables Must Have Unique Names
+
+State: Required
+
+Categories: Structure; Variables
+
+Guidance: Developers MUST ensure that each `let` variable within a context has a unique name. The same variable name MUST NOT be used multiple times within the same context. This ensures clarity and prevents potential conflicts in variable references.
+
+[back to top](#summary)
+
+#### FRR120 Conformant Example
+
+Below is a conformant example.
+
+```xml
+<metaschema-meta-constraints xmlns="http://csrc.nist.gov/ns/oscal/metaschema/1.0">
+    <context>
+        <metapath target="/system-security-plan/metadata/location"/>
+        <constraints>
+            <let var="data-center-count" expression="count(location/prop[@name = 'data-center'])"/>
+            <let var="us-data-center-count" expression="count(location[address/country = 'US'])"/>
+            <let var="total-locations" expression="count(location)"/>
+            <expect id="data-center-analysis" target="." test="$data-center-count > 0" level="WARNING">
+                <message>A FedRAMP SSP must define at least one data center location.</message>
+            </expect>
+        </constraints>
+    </context>
+</metaschema-meta-constraints>
+```
+
+[back to top](#summary)
+
+#### FRR120 Non-conformant Example
+
+Below is a non-conformant example.
+
+```xml
+<metaschema-meta-constraints xmlns="http://csrc.nist.gov/ns/oscal/metaschema/1.0">
+    <context>
+        <metapath target="/system-security-plan/metadata/location"/>
+        <constraints>
+            <!-- This example does not conform because it uses the same variable name twice -->
+            <let var="count" expression="count(location/prop[@name = 'data-center'])"/>
+            <expect id="data-center-analysis" target="." test="$count > 0" level="WARNING">
+                <message>A FedRAMP SSP must define at least one data center location.</message>
+            </expect>
+        </constraints>
+    </context>
+    <context>
+        <metapath target="/system-security-plan/metadata/location"/>
+        <constraints>
+            <!-- This example does not conform because it uses the same variable name twice -->
+            <let var="count" expression="count(location[address/country = 'US'])"/>
+            <expect id="data-center-analysis" target="." test="$count > 0" level="WARNING">
+                <message>A FedRAMP SSP must define at least one data center location.</message>
+            </expect>
+        </constraints>
+    </context>
+
+</metaschema-meta-constraints>
+```

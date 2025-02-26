@@ -16,7 +16,10 @@
             <let var="single-metapath-contexts" expression="//context[count(metapath) = 1]"/>
             <let var="target-map" expression="map:merge($single-metapath-contexts/metapath ! map:entry(@target, ''))"/>
             <let var="duplicate-targets" expression="map:keys($target-map)[for $key in . return count($single-metapath-contexts/metapath[@target = $key]) > 1]"/>
-            <expect id="frr102" target="$single-metapath-contexts/metapath[@target = $duplicate-targets]" 
+            <let var="all-lets" expression="//let"/>
+            <let var="let-var-map" expression="map:merge($all-lets ! map:entry(@var, ''))"/>
+            <let var="duplicate-vars" expression="map:keys($let-var-map)[for $key in . return count($all-lets[@var = $key]) > 1]"/>
+        <expect id="frr102" target="$single-metapath-contexts/metapath[@target = $duplicate-targets]" 
                     test="false()" level="ERROR">
                 <formal-name>Single Metapath Target Must Be Unique</formal-name>
                 <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://github.com/GSA/fedramp-automation/blob/develop/src/validations/styleguides/README.md#frr102"/>
@@ -58,6 +61,11 @@
                 <formal-name>Constraints Formal Names Required</formal-name>
                 <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://github.com/GSA/fedramp-automation/blob/develop/src/validations/styleguides/README.md#frr116"/>
                 <message>A FedRAMP constraint MUST include a formal name.</message>
+            </expect>
+            <expect id="frr120" target="//let[@var = $duplicate-vars]" test="false()" level="ERROR">
+                <formal-name>Let Variables Must Have Unique Names</formal-name>
+                <prop namespace="https://docs.oasis-open.org/sarif/sarif/v2.1.0" name="help-url" value="https://github.com/GSA/fedramp-automation/blob/develop/src/validations/styleguides/README.md#frr117"/>
+                <message>A let variable MUST have a unique name. Variable "{@var}" is used multiple times.</message>
             </expect>
 
         </constraints>
